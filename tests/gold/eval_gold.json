@@ -1,0 +1,26 @@
+{
+  "docs": [
+    {
+      "id": "rag",
+      "text": "Retrieval augmented generation combines a vector search index with a large language model to answer questions over private documents."
+    },
+    {
+      "id": "rerank",
+      "text": "A reranker reorders the top candidate passages using a cross encoder model to improve answer relevance for the search query."
+    },
+    {
+      "id": "crawl",
+      "text": "A web crawler fetches pages respecting robots dot txt and a per host rate limit to ingest web sites politely without overloading servers."
+    },
+    {
+      "id": "oidc",
+      "text": "OIDC single sign on verifies a JWT token signature against a JWKS public key for enterprise authentication and authorization."
+    }
+  ],
+  "queries": [
+    { "query": "what is retrieval augmented generation", "relevant": ["rag"] },
+    { "query": "how does a reranker improve answer relevance", "relevant": ["rerank"] },
+    { "query": "how does a web crawler stay polite", "relevant": ["crawl"] },
+    { "query": "how does OIDC authentication verify tokens", "relevant": ["oidc"] }
+  ]
+}

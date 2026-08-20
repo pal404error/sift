@@ -1,0 +1,4046 @@
+{
+  "schema_version": "1.0",
+  "project": "LLM-search",
+  "generated_at": "2026-08-21",
+  "nodes": [
+    {
+      "id": "mod:llm_search.crawl",
+      "type": "module",
+      "label": "llm_search.crawl",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.crawl.CrawlState",
+      "type": "class",
+      "label": "CrawlState",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.same_domain",
+      "type": "function",
+      "label": "same_domain",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.extract_links",
+      "type": "function",
+      "label": "extract_links",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.discover_sitemap",
+      "type": "function",
+      "label": "discover_sitemap",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl._call_fetch",
+      "type": "function",
+      "label": "_call_fetch",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.crawl_site",
+      "type": "function",
+      "label": "crawl_site",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.load",
+      "type": "function",
+      "label": "load",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.save",
+      "type": "function",
+      "label": "save",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.is_fresh",
+      "type": "function",
+      "label": "is_fresh",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.record",
+      "type": "function",
+      "label": "record",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.pending",
+      "type": "function",
+      "label": "pending",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "llm_search.crawl.process",
+      "type": "function",
+      "label": "process",
+      "meta": {
+        "module": "llm_search.crawl"
+      }
+    },
+    {
+      "id": "mod:llm_search.auth",
+      "type": "module",
+      "label": "llm_search.auth",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.auth.parse_api_keys",
+      "type": "function",
+      "label": "parse_api_keys",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.TokenVerifier",
+      "type": "class",
+      "label": "TokenVerifier",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.ApiKeyVerifier",
+      "type": "class",
+      "label": "ApiKeyVerifier",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.OidcVerifier",
+      "type": "class",
+      "label": "OidcVerifier",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.build_verifier",
+      "type": "function",
+      "label": "build_verifier",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.audit",
+      "type": "function",
+      "label": "audit",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.require_role",
+      "type": "function",
+      "label": "require_role",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.verify",
+      "type": "function",
+      "label": "verify",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth._fetch_jwks",
+      "type": "function",
+      "label": "_fetch_jwks",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "llm_search.auth.dependency",
+      "type": "function",
+      "label": "dependency",
+      "meta": {
+        "module": "llm_search.auth"
+      }
+    },
+    {
+      "id": "mod:llm_search.rerank",
+      "type": "module",
+      "label": "llm_search.rerank",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.rerank.Reranker",
+      "type": "class",
+      "label": "Reranker",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank._tokens",
+      "type": "function",
+      "label": "_tokens",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.LexicalReranker",
+      "type": "class",
+      "label": "LexicalReranker",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.FakeReranker",
+      "type": "class",
+      "label": "FakeReranker",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.CrossEncoderReranker",
+      "type": "class",
+      "label": "CrossEncoderReranker",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.build_reranker",
+      "type": "function",
+      "label": "build_reranker",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.rerank",
+      "type": "function",
+      "label": "rerank",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "llm_search.rerank._scores",
+      "type": "function",
+      "label": "_scores",
+      "meta": {
+        "module": "llm_search.rerank"
+      }
+    },
+    {
+      "id": "mod:llm_search.config",
+      "type": "module",
+      "label": "llm_search.config",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.config.Settings",
+      "type": "class",
+      "label": "Settings",
+      "meta": {
+        "module": "llm_search.config"
+      }
+    },
+    {
+      "id": "llm_search.config.get_settings",
+      "type": "function",
+      "label": "get_settings",
+      "meta": {
+        "module": "llm_search.config"
+      }
+    },
+    {
+      "id": "mod:llm_search.__init__",
+      "type": "module",
+      "label": "llm_search.__init__",
+      "meta": {}
+    },
+    {
+      "id": "mod:llm_search.api",
+      "type": "module",
+      "label": "llm_search.api",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.api.get_engine",
+      "type": "function",
+      "label": "get_engine",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "llm_search.api._redact",
+      "type": "function",
+      "label": "_redact",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "llm_search.api.health",
+      "type": "function",
+      "label": "health",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/health:health",
+      "type": "route",
+      "label": "GET /health",
+      "meta": {
+        "handler": "llm_search.api.health"
+      }
+    },
+    {
+      "id": "llm_search.api.provider_health",
+      "type": "function",
+      "label": "provider_health",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/health/providers:provider_health",
+      "type": "route",
+      "label": "GET /health/providers",
+      "meta": {
+        "handler": "llm_search.api.provider_health"
+      }
+    },
+    {
+      "id": "llm_search.api.ingest",
+      "type": "function",
+      "label": "ingest",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/ingest:ingest",
+      "type": "route",
+      "label": "POST /ingest",
+      "meta": {
+        "handler": "llm_search.api.ingest"
+      }
+    },
+    {
+      "id": "llm_search.api.crawl",
+      "type": "function",
+      "label": "crawl",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/crawl:crawl",
+      "type": "route",
+      "label": "POST /crawl",
+      "meta": {
+        "handler": "llm_search.api.crawl"
+      }
+    },
+    {
+      "id": "llm_search.api.search",
+      "type": "function",
+      "label": "search",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/search:search",
+      "type": "route",
+      "label": "GET /search",
+      "meta": {
+        "handler": "llm_search.api.search"
+      }
+    },
+    {
+      "id": "llm_search.api.ask",
+      "type": "function",
+      "label": "ask",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/ask:ask",
+      "type": "route",
+      "label": "GET /ask",
+      "meta": {
+        "handler": "llm_search.api.ask"
+      }
+    },
+    {
+      "id": "mod:llm_search.engine",
+      "type": "module",
+      "label": "llm_search.engine",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.engine.SearchEngine",
+      "type": "class",
+      "label": "SearchEngine",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine._index_doc",
+      "type": "function",
+      "label": "_index_doc",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine.ingest_url",
+      "type": "function",
+      "label": "ingest_url",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine.crawl_site",
+      "type": "function",
+      "label": "crawl_site",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine.search",
+      "type": "function",
+      "label": "search",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "llm_search.engine.ask",
+      "type": "function",
+      "label": "ask",
+      "meta": {
+        "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "mod:llm_search.eval",
+      "type": "module",
+      "label": "llm_search.eval",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.eval.recall_at_k",
+      "type": "function",
+      "label": "recall_at_k",
+      "meta": {
+        "module": "llm_search.eval"
+      }
+    },
+    {
+      "id": "llm_search.eval.precision_at_k",
+      "type": "function",
+      "label": "precision_at_k",
+      "meta": {
+        "module": "llm_search.eval"
+      }
+    },
+    {
+      "id": "llm_search.eval.mrr",
+      "type": "function",
+      "label": "mrr",
+      "meta": {
+        "module": "llm_search.eval"
+      }
+    },
+    {
+      "id": "llm_search.eval.evaluate_retrieval",
+      "type": "function",
+      "label": "evaluate_retrieval",
+      "meta": {
+        "module": "llm_search.eval"
+      }
+    },
+    {
+      "id": "mod:llm_search.main",
+      "type": "module",
+      "label": "llm_search.main",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.main.main",
+      "type": "function",
+      "label": "main",
+      "meta": {
+        "module": "llm_search.main"
+      }
+    },
+    {
+      "id": "mod:tests.conftest",
+      "type": "module",
+      "label": "tests.conftest",
+      "meta": {}
+    },
+    {
+      "id": "tests.conftest.engine",
+      "type": "function",
+      "label": "engine",
+      "meta": {
+        "module": "tests.conftest"
+      }
+    },
+    {
+      "id": "mod:tests.test_providers",
+      "type": "module",
+      "label": "tests.test_providers",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_providers.test_fake_embedding_deterministic_and_normalized",
+      "type": "function",
+      "label": "test_fake_embedding_deterministic_and_normalized",
+      "meta": {
+        "module": "tests.test_providers"
+      }
+    },
+    {
+      "id": "tests.test_providers.test_fake_llm_grounds_on_prompt",
+      "type": "function",
+      "label": "test_fake_llm_grounds_on_prompt",
+      "meta": {
+        "module": "tests.test_providers"
+      }
+    },
+    {
+      "id": "mod:tests.test_auth",
+      "type": "module",
+      "label": "tests.test_auth",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_auth.test_parse_api_keys",
+      "type": "function",
+      "label": "test_parse_api_keys",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_parse_api_keys_ignores_empty",
+      "type": "function",
+      "label": "test_parse_api_keys_ignores_empty",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_apikey_verifier_maps_role_and_subject",
+      "type": "function",
+      "label": "test_apikey_verifier_maps_role_and_subject",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth._make_oidc",
+      "type": "function",
+      "label": "_make_oidc",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_oidc_verifier_verifies_signature_and_extracts_role",
+      "type": "function",
+      "label": "test_oidc_verifier_verifies_signature_and_extracts_role",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_oidc_verifier_rejects_wrong_issuer",
+      "type": "function",
+      "label": "test_oidc_verifier_rejects_wrong_issuer",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_oidc_verifier_rejects_no_role",
+      "type": "function",
+      "label": "test_oidc_verifier_rejects_no_role",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_oidc_verifier_rejects_tampered_signature",
+      "type": "function",
+      "label": "test_oidc_verifier_rejects_tampered_signature",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_require_role_open_when_auth_disabled",
+      "type": "function",
+      "label": "test_require_role_open_when_auth_disabled",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_require_role_rejects_missing_token",
+      "type": "function",
+      "label": "test_require_role_rejects_missing_token",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_require_role_rejects_insufficient_role",
+      "type": "function",
+      "label": "test_require_role_rejects_insufficient_role",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_require_role_allows_with_role",
+      "type": "function",
+      "label": "test_require_role_allows_with_role",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.test_audit_writes_log",
+      "type": "function",
+      "label": "test_audit_writes_log",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "tests.test_auth.Req",
+      "type": "class",
+      "label": "Req",
+      "meta": {
+        "module": "tests.test_auth"
+      }
+    },
+    {
+      "id": "mod:tests.test_engine_ingest",
+      "type": "module",
+      "label": "tests.test_engine_ingest",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_engine_ingest.test_ingest_url_chunks_and_stores",
+      "type": "function",
+      "label": "test_ingest_url_chunks_and_stores",
+      "meta": {
+        "module": "tests.test_engine_ingest"
+      }
+    },
+    {
+      "id": "tests.test_engine_ingest.test_ask_without_context_returns_empty",
+      "type": "function",
+      "label": "test_ask_without_context_returns_empty",
+      "meta": {
+        "module": "tests.test_engine_ingest"
+      }
+    },
+    {
+      "id": "tests.test_engine_ingest.test_search_returns_reranked_top_k",
+      "type": "function",
+      "label": "test_search_returns_reranked_top_k",
+      "meta": {
+        "module": "tests.test_engine_ingest"
+      }
+    },
+    {
+      "id": "tests.test_engine_ingest._Resp",
+      "type": "class",
+      "label": "_Resp",
+      "meta": {
+        "module": "tests.test_engine_ingest"
+      }
+    },
+    {
+      "id": "tests.test_engine_ingest.raise_for_status",
+      "type": "function",
+      "label": "raise_for_status",
+      "meta": {
+        "module": "tests.test_engine_ingest"
+      }
+    },
+    {
+      "id": "mod:tests.test_ci",
+      "type": "module",
+      "label": "tests.test_ci",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_ci._yaml_docs",
+      "type": "function",
+      "label": "_yaml_docs",
+      "meta": {
+        "module": "tests.test_ci"
+      }
+    },
+    {
+      "id": "tests.test_ci.test_ci_workflow_parses",
+      "type": "function",
+      "label": "test_ci_workflow_parses",
+      "meta": {
+        "module": "tests.test_ci"
+      }
+    },
+    {
+      "id": "tests.test_ci.test_release_workflow_parses",
+      "type": "function",
+      "label": "test_release_workflow_parses",
+      "meta": {
+        "module": "tests.test_ci"
+      }
+    },
+    {
+      "id": "tests.test_ci.test_makefile_has_ci_targets",
+      "type": "function",
+      "label": "test_makefile_has_ci_targets",
+      "meta": {
+        "module": "tests.test_ci"
+      }
+    },
+    {
+      "id": "mod:tests.test_store",
+      "type": "module",
+      "label": "tests.test_store",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_store.test_memory_store_upsert_search_roundtrip",
+      "type": "function",
+      "label": "test_memory_store_upsert_search_roundtrip",
+      "meta": {
+        "module": "tests.test_store"
+      }
+    },
+    {
+      "id": "tests.test_store.test_memory_store_upsert_dedup_by_id",
+      "type": "function",
+      "label": "test_memory_store_upsert_dedup_by_id",
+      "meta": {
+        "module": "tests.test_store"
+      }
+    },
+    {
+      "id": "mod:tests.test_integration_providers",
+      "type": "module",
+      "label": "tests.test_integration_providers",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_integration_providers.test_openai_embedding_real",
+      "type": "function",
+      "label": "test_openai_embedding_real",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "tests.test_integration_providers.test_openai_llm_real",
+      "type": "function",
+      "label": "test_openai_llm_real",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "tests.test_integration_providers.test_anthropic_llm_real",
+      "type": "function",
+      "label": "test_anthropic_llm_real",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "tests.test_integration_providers.test_factory_builds_real_providers_when_configured",
+      "type": "function",
+      "label": "test_factory_builds_real_providers_when_configured",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "tests.test_integration_providers.test_build_embedding_fails_fast_without_openai",
+      "type": "function",
+      "label": "test_build_embedding_fails_fast_without_openai",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "tests.test_integration_providers.test_build_llm_fails_fast_without_anthropic",
+      "type": "function",
+      "label": "test_build_llm_fails_fast_without_anthropic",
+      "meta": {
+        "module": "tests.test_integration_providers"
+      }
+    },
+    {
+      "id": "mod:tests.test_rerank",
+      "type": "module",
+      "label": "tests.test_rerank",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_rerank._item",
+      "type": "function",
+      "label": "_item",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_lexical_reranker_prefers_overlap",
+      "type": "function",
+      "label": "test_lexical_reranker_prefers_overlap",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_lexical_reranker_empty_query_passthrough",
+      "type": "function",
+      "label": "test_lexical_reranker_empty_query_passthrough",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_fake_reranker_passthrough",
+      "type": "function",
+      "label": "test_fake_reranker_passthrough",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_build_reranker_dispatch",
+      "type": "function",
+      "label": "test_build_reranker_dispatch",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_cross_encoder_reranker_uses_injected_scorer",
+      "type": "function",
+      "label": "test_cross_encoder_reranker_uses_injected_scorer",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.test_cross_encoder_reranker_empty",
+      "type": "function",
+      "label": "test_cross_encoder_reranker_empty",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "tests.test_rerank.scorer",
+      "type": "function",
+      "label": "scorer",
+      "meta": {
+        "module": "tests.test_rerank"
+      }
+    },
+    {
+      "id": "mod:tests.test_crawl",
+      "type": "module",
+      "label": "tests.test_crawl",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_crawl._doc",
+      "type": "function",
+      "label": "_doc",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_extract_links_same_domain_only",
+      "type": "function",
+      "label": "test_extract_links_same_domain_only",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_bfs_respects_max_pages_and_dedupes",
+      "type": "function",
+      "label": "test_crawl_bfs_respects_max_pages_and_dedupes",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_dedupes_within_run",
+      "type": "function",
+      "label": "test_crawl_dedupes_within_run",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_incremental_skips_unchanged_etag",
+      "type": "function",
+      "label": "test_crawl_incremental_skips_unchanged_etag",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_incremental_reingests_changed_etag",
+      "type": "function",
+      "label": "test_crawl_incremental_reingests_changed_etag",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_concurrency_fetches_all",
+      "type": "function",
+      "label": "test_crawl_concurrency_fetches_all",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_discover_sitemap_via_robots",
+      "type": "function",
+      "label": "test_discover_sitemap_via_robots",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_discover_sitemap_fallback",
+      "type": "function",
+      "label": "test_discover_sitemap_fallback",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_same_domain",
+      "type": "function",
+      "label": "test_same_domain",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_state_save_load",
+      "type": "function",
+      "label": "test_crawl_state_save_load",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.test_crawl_state_load_non_existent",
+      "type": "function",
+      "label": "test_crawl_state_load_non_existent",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "tests.test_crawl.fake_fetch",
+      "type": "function",
+      "label": "fake_fetch",
+      "meta": {
+        "module": "tests.test_crawl"
+      }
+    },
+    {
+      "id": "mod:tests.test_api",
+      "type": "module",
+      "label": "tests.test_api",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_api.test_health",
+      "type": "function",
+      "label": "test_health",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "tests.test_api.test_ask_via_api",
+      "type": "function",
+      "label": "test_ask_via_api",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "mod:tests.test_rag",
+      "type": "module",
+      "label": "tests.test_rag",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_rag.test_ingest_then_ask_returns_grounded_answer",
+      "type": "function",
+      "label": "test_ingest_then_ask_returns_grounded_answer",
+      "meta": {
+        "module": "tests.test_rag"
+      }
+    },
+    {
+      "id": "tests.test_rag.test_search_returns_ranked_results",
+      "type": "function",
+      "label": "test_search_returns_ranked_results",
+      "meta": {
+        "module": "tests.test_rag"
+      }
+    },
+    {
+      "id": "mod:tests.test_api_auth",
+      "type": "module",
+      "label": "tests.test_api_auth",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_api_auth.test_provider_health_redacts_secrets",
+      "type": "function",
+      "label": "test_provider_health_redacts_secrets",
+      "meta": {
+        "module": "tests.test_api_auth"
+      }
+    },
+    {
+      "id": "tests.test_api_auth.test_auth_required_blocks_without_key",
+      "type": "function",
+      "label": "test_auth_required_blocks_without_key",
+      "meta": {
+        "module": "tests.test_api_auth"
+      }
+    },
+    {
+      "id": "tests.test_api_auth.test_auth_wrong_key_401",
+      "type": "function",
+      "label": "test_auth_wrong_key_401",
+      "meta": {
+        "module": "tests.test_api_auth"
+      }
+    },
+    {
+      "id": "tests.test_api_auth.test_health_open_without_auth",
+      "type": "function",
+      "label": "test_health_open_without_auth",
+      "meta": {
+        "module": "tests.test_api_auth"
+      }
+    },
+    {
+      "id": "mod:tests.test_fetch_robots",
+      "type": "module",
+      "label": "tests.test_fetch_robots",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_fetch_robots._Resp",
+      "type": "class",
+      "label": "_Resp",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_fetch_strips_scripts_and_extracts_text",
+      "type": "function",
+      "label": "test_fetch_strips_scripts_and_extracts_text",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_fetch_respects_robots",
+      "type": "function",
+      "label": "test_fetch_respects_robots",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_throttle_sleeps_when_too_soon",
+      "type": "function",
+      "label": "test_throttle_sleeps_when_too_soon",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_robots_allowed_real_path",
+      "type": "function",
+      "label": "test_robots_allowed_real_path",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_throttle_no_sleep_when_enough_time",
+      "type": "function",
+      "label": "test_throttle_no_sleep_when_enough_time",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_fetch_handles_429_backoff",
+      "type": "function",
+      "label": "test_fetch_handles_429_backoff",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.test_fetch_handles_429_exponential_backoff",
+      "type": "function",
+      "label": "test_fetch_handles_429_exponential_backoff",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.raise_for_status",
+      "type": "function",
+      "label": "raise_for_status",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots._RP",
+      "type": "class",
+      "label": "_RP",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots._RPDeny",
+      "type": "class",
+      "label": "_RPDeny",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots._Resp429",
+      "type": "class",
+      "label": "_Resp429",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.fake_get",
+      "type": "function",
+      "label": "fake_get",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.set_url",
+      "type": "function",
+      "label": "set_url",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.read",
+      "type": "function",
+      "label": "read",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "tests.test_fetch_robots.can_fetch",
+      "type": "function",
+      "label": "can_fetch",
+      "meta": {
+        "module": "tests.test_fetch_robots"
+      }
+    },
+    {
+      "id": "mod:tests.test_chunk",
+      "type": "module",
+      "label": "tests.test_chunk",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_chunk.test_chunk_respects_size_and_overlap",
+      "type": "function",
+      "label": "test_chunk_respects_size_and_overlap",
+      "meta": {
+        "module": "tests.test_chunk"
+      }
+    },
+    {
+      "id": "tests.test_chunk.test_empty_document_yields_no_chunks",
+      "type": "function",
+      "label": "test_empty_document_yields_no_chunks",
+      "meta": {
+        "module": "tests.test_chunk"
+      }
+    },
+    {
+      "id": "tests.test_chunk.test_chunk_index_monotonic",
+      "type": "function",
+      "label": "test_chunk_index_monotonic",
+      "meta": {
+        "module": "tests.test_chunk"
+      }
+    },
+    {
+      "id": "mod:tests.test_eval",
+      "type": "module",
+      "label": "tests.test_eval",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_eval.test_recall_at_k_basic",
+      "type": "function",
+      "label": "test_recall_at_k_basic",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_precision_at_k_basic",
+      "type": "function",
+      "label": "test_precision_at_k_basic",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_mrr_basic",
+      "type": "function",
+      "label": "test_mrr_basic",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_mrr_requires_aligned_lists",
+      "type": "function",
+      "label": "test_mrr_requires_aligned_lists",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_run_eval_script_runs_offline",
+      "type": "function",
+      "label": "test_run_eval_script_runs_offline",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_run_eval_with_gold_file",
+      "type": "function",
+      "label": "test_run_eval_with_gold_file",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_run_eval_gate_passes_above_threshold",
+      "type": "function",
+      "label": "test_run_eval_gate_passes_above_threshold",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_run_eval_gate_fails_when_mrr_low",
+      "type": "function",
+      "label": "test_run_eval_gate_fails_when_mrr_low",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "mod:scripts.run_eval",
+      "type": "module",
+      "label": "scripts.run_eval",
+      "meta": {}
+    },
+    {
+      "id": "scripts.run_eval.load_gold",
+      "type": "function",
+      "label": "load_gold",
+      "meta": {
+        "module": "scripts.run_eval"
+      }
+    },
+    {
+      "id": "scripts.run_eval.run_eval",
+      "type": "function",
+      "label": "run_eval",
+      "meta": {
+        "module": "scripts.run_eval"
+      }
+    },
+    {
+      "id": "scripts.run_eval.main",
+      "type": "function",
+      "label": "main",
+      "meta": {
+        "module": "scripts.run_eval"
+      }
+    },
+    {
+      "id": "mod:scripts.rebuild_knowledge_graph",
+      "type": "module",
+      "label": "scripts.rebuild_knowledge_graph",
+      "meta": {}
+    },
+    {
+      "id": "scripts.rebuild_knowledge_graph.add_node",
+      "type": "function",
+      "label": "add_node",
+      "meta": {
+        "module": "scripts.rebuild_knowledge_graph"
+      }
+    },
+    {
+      "id": "scripts.rebuild_knowledge_graph.add_edge",
+      "type": "function",
+      "label": "add_edge",
+      "meta": {
+        "module": "scripts.rebuild_knowledge_graph"
+      }
+    },
+    {
+      "id": "scripts.rebuild_knowledge_graph.py_analysis",
+      "type": "function",
+      "label": "py_analysis",
+      "meta": {
+        "module": "scripts.rebuild_knowledge_graph"
+      }
+    },
+    {
+      "id": "scripts.rebuild_knowledge_graph.ts_analysis",
+      "type": "function",
+      "label": "ts_analysis",
+      "meta": {
+        "module": "scripts.rebuild_knowledge_graph"
+      }
+    },
+    {
+      "id": "scripts.rebuild_knowledge_graph.main",
+      "type": "function",
+      "label": "main",
+      "meta": {
+        "module": "scripts.rebuild_knowledge_graph"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.fake",
+      "type": "module",
+      "label": "llm_search.providers.fake",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.fake._hash_vec",
+      "type": "function",
+      "label": "_hash_vec",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "llm_search.providers.fake.FakeEmbedding",
+      "type": "class",
+      "label": "FakeEmbedding",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "llm_search.providers.fake.FakeLLM",
+      "type": "class",
+      "label": "FakeLLM",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "llm_search.providers.fake.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "llm_search.providers.fake.embed",
+      "type": "function",
+      "label": "embed",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "llm_search.providers.fake.generate",
+      "type": "function",
+      "label": "generate",
+      "meta": {
+        "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.__init__",
+      "type": "module",
+      "label": "llm_search.providers.__init__",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.__init__.build_embedding",
+      "type": "function",
+      "label": "build_embedding",
+      "meta": {
+        "module": "llm_search.providers.__init__"
+      }
+    },
+    {
+      "id": "llm_search.providers.__init__.build_llm",
+      "type": "function",
+      "label": "build_llm",
+      "meta": {
+        "module": "llm_search.providers.__init__"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.openai_provider",
+      "type": "module",
+      "label": "llm_search.providers.openai_provider",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.openai_provider.OpenAIEmbedding",
+      "type": "class",
+      "label": "OpenAIEmbedding",
+      "meta": {
+        "module": "llm_search.providers.openai_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.openai_provider.OpenAILLM",
+      "type": "class",
+      "label": "OpenAILLM",
+      "meta": {
+        "module": "llm_search.providers.openai_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.openai_provider.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.providers.openai_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.openai_provider.embed",
+      "type": "function",
+      "label": "embed",
+      "meta": {
+        "module": "llm_search.providers.openai_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.openai_provider.generate",
+      "type": "function",
+      "label": "generate",
+      "meta": {
+        "module": "llm_search.providers.openai_provider"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.ollama_provider",
+      "type": "module",
+      "label": "llm_search.providers.ollama_provider",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.ollama_provider.OllamaEmbedding",
+      "type": "class",
+      "label": "OllamaEmbedding",
+      "meta": {
+        "module": "llm_search.providers.ollama_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.ollama_provider.OllamaLLM",
+      "type": "class",
+      "label": "OllamaLLM",
+      "meta": {
+        "module": "llm_search.providers.ollama_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.ollama_provider.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.providers.ollama_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.ollama_provider.embed",
+      "type": "function",
+      "label": "embed",
+      "meta": {
+        "module": "llm_search.providers.ollama_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.ollama_provider.generate",
+      "type": "function",
+      "label": "generate",
+      "meta": {
+        "module": "llm_search.providers.ollama_provider"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.anthropic_provider",
+      "type": "module",
+      "label": "llm_search.providers.anthropic_provider",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.anthropic_provider.AnthropicLLM",
+      "type": "class",
+      "label": "AnthropicLLM",
+      "meta": {
+        "module": "llm_search.providers.anthropic_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.anthropic_provider.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.providers.anthropic_provider"
+      }
+    },
+    {
+      "id": "llm_search.providers.anthropic_provider.generate",
+      "type": "function",
+      "label": "generate",
+      "meta": {
+        "module": "llm_search.providers.anthropic_provider"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.base",
+      "type": "module",
+      "label": "llm_search.providers.base",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.base.EmbeddingProvider",
+      "type": "class",
+      "label": "EmbeddingProvider",
+      "meta": {
+        "module": "llm_search.providers.base"
+      }
+    },
+    {
+      "id": "llm_search.providers.base.LLMProvider",
+      "type": "class",
+      "label": "LLMProvider",
+      "meta": {
+        "module": "llm_search.providers.base"
+      }
+    },
+    {
+      "id": "llm_search.providers.base.cosine_similarity",
+      "type": "function",
+      "label": "cosine_similarity",
+      "meta": {
+        "module": "llm_search.providers.base"
+      }
+    },
+    {
+      "id": "llm_search.providers.base.embed",
+      "type": "function",
+      "label": "embed",
+      "meta": {
+        "module": "llm_search.providers.base"
+      }
+    },
+    {
+      "id": "llm_search.providers.base.generate",
+      "type": "function",
+      "label": "generate",
+      "meta": {
+        "module": "llm_search.providers.base"
+      }
+    },
+    {
+      "id": "mod:llm_search.ingest.fetch",
+      "type": "module",
+      "label": "llm_search.ingest.fetch",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.ingest.fetch.RobotDisallowed",
+      "type": "class",
+      "label": "RobotDisallowed",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch._host_key",
+      "type": "function",
+      "label": "_host_key",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.robots_allowed",
+      "type": "function",
+      "label": "robots_allowed",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.throttle",
+      "type": "function",
+      "label": "throttle",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.fetch_url",
+      "type": "function",
+      "label": "fetch_url",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.Document",
+      "type": "class",
+      "label": "Document",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.html_to_text",
+      "type": "function",
+      "label": "html_to_text",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "llm_search.ingest.fetch.sanitize_query",
+      "type": "function",
+      "label": "sanitize_query",
+      "meta": {
+        "module": "llm_search.ingest.fetch"
+      }
+    },
+    {
+      "id": "mod:llm_search.ingest.__init__",
+      "type": "module",
+      "label": "llm_search.ingest.__init__",
+      "meta": {}
+    },
+    {
+      "id": "mod:llm_search.ingest.chunk",
+      "type": "module",
+      "label": "llm_search.ingest.chunk",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.ingest.chunk.Chunk",
+      "type": "class",
+      "label": "Chunk",
+      "meta": {
+        "module": "llm_search.ingest.chunk"
+      }
+    },
+    {
+      "id": "llm_search.ingest.chunk.chunk_document",
+      "type": "function",
+      "label": "chunk_document",
+      "meta": {
+        "module": "llm_search.ingest.chunk"
+      }
+    },
+    {
+      "id": "mod:llm_search.store.memory",
+      "type": "module",
+      "label": "llm_search.store.memory",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.store.memory.InMemoryStore",
+      "type": "class",
+      "label": "InMemoryStore",
+      "meta": {
+        "module": "llm_search.store.memory"
+      }
+    },
+    {
+      "id": "llm_search.store.memory.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.store.memory"
+      }
+    },
+    {
+      "id": "llm_search.store.memory.upsert",
+      "type": "function",
+      "label": "upsert",
+      "meta": {
+        "module": "llm_search.store.memory"
+      }
+    },
+    {
+      "id": "llm_search.store.memory.search",
+      "type": "function",
+      "label": "search",
+      "meta": {
+        "module": "llm_search.store.memory"
+      }
+    },
+    {
+      "id": "llm_search.store.memory.count",
+      "type": "function",
+      "label": "count",
+      "meta": {
+        "module": "llm_search.store.memory"
+      }
+    },
+    {
+      "id": "mod:llm_search.store.qdrant",
+      "type": "module",
+      "label": "llm_search.store.qdrant",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.store.qdrant.QdrantStore",
+      "type": "class",
+      "label": "QdrantStore",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "llm_search.store.qdrant.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "llm_search.store.qdrant._ensure_collection",
+      "type": "function",
+      "label": "_ensure_collection",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "llm_search.store.qdrant.upsert",
+      "type": "function",
+      "label": "upsert",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "llm_search.store.qdrant.search",
+      "type": "function",
+      "label": "search",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "llm_search.store.qdrant.count",
+      "type": "function",
+      "label": "count",
+      "meta": {
+        "module": "llm_search.store.qdrant"
+      }
+    },
+    {
+      "id": "mod:llm_search.store.__init__",
+      "type": "module",
+      "label": "llm_search.store.__init__",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.store.__init__.build_store",
+      "type": "function",
+      "label": "build_store",
+      "meta": {
+        "module": "llm_search.store.__init__"
+      }
+    },
+    {
+      "id": "mod:llm_search.store.base",
+      "type": "module",
+      "label": "llm_search.store.base",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.store.base.VectorStore",
+      "type": "class",
+      "label": "VectorStore",
+      "meta": {
+        "module": "llm_search.store.base"
+      }
+    },
+    {
+      "id": "llm_search.store.base.upsert",
+      "type": "function",
+      "label": "upsert",
+      "meta": {
+        "module": "llm_search.store.base"
+      }
+    },
+    {
+      "id": "llm_search.store.base.search",
+      "type": "function",
+      "label": "search",
+      "meta": {
+        "module": "llm_search.store.base"
+      }
+    },
+    {
+      "id": "llm_search.store.base.count",
+      "type": "function",
+      "label": "count",
+      "meta": {
+        "module": "llm_search.store.base"
+      }
+    },
+    {
+      "id": "repo:LLM-search",
+      "type": "module",
+      "label": "LLM-search project root",
+      "meta": {
+        "language": "python+typescript",
+        "status": "active"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.CrawlState",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.same_domain",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.extract_links",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.discover_sitemap",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl._call_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.crawl_site",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.load",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.save",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.is_fresh",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.record",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.pending",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "llm_search.crawl.process",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:inspect",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:json",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:collections",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:collections.abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:concurrent.futures",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:dataclasses",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:typing",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:urllib.parse",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:bs4",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.crawl",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.parse_api_keys",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.TokenVerifier",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.ApiKeyVerifier",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.OidcVerifier",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.build_verifier",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.audit",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.require_role",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.verify",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.verify",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth._fetch_jwks",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.verify",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "llm_search.auth.dependency",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:json",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:time",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:collections.abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:typing",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:fastapi",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:fastapi.security",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:cryptography.hazmat.primitives.asymmetric.rsa",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:httpx",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:jwt",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.auth",
+      "target": "ext:jwt.algorithms",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.Reranker",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank._tokens",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.LexicalReranker",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.FakeReranker",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.CrossEncoderReranker",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.build_reranker",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.rerank",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.rerank",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.rerank",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank._scores",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "llm_search.rerank.rerank",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:re",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:collections.abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.rerank",
+      "target": "ext:sentence_transformers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.config",
+      "target": "llm_search.config.Settings",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.config",
+      "target": "llm_search.config.get_settings",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.config",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.config",
+      "target": "ext:functools",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.config",
+      "target": "ext:pydantic_settings",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.__init__",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.__init__",
+      "target": "ext:llm_search.providers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.get_engine",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api._redact",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.health",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.health",
+      "target": "route:/health:health",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.provider_health",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.provider_health",
+      "target": "route:/health/providers:provider_health",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.ingest",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.ingest",
+      "target": "route:/ingest:ingest",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.crawl",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.crawl",
+      "target": "route:/crawl:crawl",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.search",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.search",
+      "target": "route:/search:search",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.ask",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.ask",
+      "target": "route:/ask:ask",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:fastapi",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.auth",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.engine",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.ingest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.providers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:llm_search.store",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.SearchEngine",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine._index_doc",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.ingest_url",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.crawl_site",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.search",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "llm_search.engine.ask",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:hashlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.ingest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.rerank",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.store.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.engine",
+      "target": "ext:llm_search.crawl",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.eval",
+      "target": "llm_search.eval.recall_at_k",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.eval",
+      "target": "llm_search.eval.precision_at_k",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.eval",
+      "target": "llm_search.eval.mrr",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.eval",
+      "target": "llm_search.eval.evaluate_retrieval",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.eval",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.main",
+      "target": "llm_search.main.main",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.main",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.main",
+      "target": "ext:uvicorn",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.main",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.main",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "tests.conftest.engine",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "ext:pytest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "ext:llm_search.engine",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "ext:llm_search.providers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.conftest",
+      "target": "ext:llm_search.store",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_providers",
+      "target": "tests.test_providers.test_fake_embedding_deterministic_and_normalized",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_providers",
+      "target": "tests.test_providers.test_fake_llm_grounds_on_prompt",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_providers",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_providers",
+      "target": "ext:llm_search.providers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_parse_api_keys",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_parse_api_keys_ignores_empty",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_apikey_verifier_maps_role_and_subject",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth._make_oidc",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_oidc_verifier_verifies_signature_and_extracts_role",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_oidc_verifier_rejects_wrong_issuer",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_oidc_verifier_rejects_no_role",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_oidc_verifier_rejects_tampered_signature",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_require_role_open_when_auth_disabled",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_require_role_rejects_missing_token",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_require_role_rejects_insufficient_role",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_require_role_allows_with_role",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.test_audit_writes_log",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.Req",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.Req",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.Req",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "tests.test_auth.Req",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:pytest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:fastapi",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:fastapi.security",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:llm_search.auth",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:cryptography.hazmat.primitives.asymmetric",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:jwt.algorithms",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:jwt",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:cryptography.hazmat.primitives.asymmetric",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:jwt.algorithms",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_auth",
+      "target": "ext:jwt",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "tests.test_engine_ingest.test_ingest_url_chunks_and_stores",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "tests.test_engine_ingest.test_ask_without_context_returns_empty",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "tests.test_engine_ingest.test_search_returns_reranked_top_k",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "tests.test_engine_ingest._Resp",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "tests.test_engine_ingest.raise_for_status",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "ext:llm_search.engine",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_engine_ingest",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "tests.test_ci._yaml_docs",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "tests.test_ci.test_ci_workflow_parses",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "tests.test_ci.test_release_workflow_parses",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "tests.test_ci.test_makefile_has_ci_targets",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_ci",
+      "target": "ext:yaml",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_store",
+      "target": "tests.test_store.test_memory_store_upsert_search_roundtrip",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_store",
+      "target": "tests.test_store.test_memory_store_upsert_dedup_by_id",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_store",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_store",
+      "target": "ext:llm_search.store",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_openai_embedding_real",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_openai_llm_real",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_anthropic_llm_real",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_factory_builds_real_providers_when_configured",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_build_embedding_fails_fast_without_openai",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "tests.test_integration_providers.test_build_llm_fails_fast_without_anthropic",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:importlib.util",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:os",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:pytest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_integration_providers",
+      "target": "ext:llm_search.providers",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank._item",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_lexical_reranker_prefers_overlap",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_lexical_reranker_empty_query_passthrough",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_fake_reranker_passthrough",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_build_reranker_dispatch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_cross_encoder_reranker_uses_injected_scorer",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.test_cross_encoder_reranker_empty",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "tests.test_rerank.scorer",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "ext:llm_search.rerank",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_rerank",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl._doc",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_extract_links_same_domain_only",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_bfs_respects_max_pages_and_dedupes",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_dedupes_within_run",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_incremental_skips_unchanged_etag",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_incremental_reingests_changed_etag",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_concurrency_fetches_all",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_discover_sitemap_via_robots",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_discover_sitemap_fallback",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_same_domain",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_state_save_load",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.test_crawl_state_load_non_existent",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "tests.test_crawl.fake_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "ext:llm_search.crawl",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_crawl",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.test_health",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.test_ask_via_api",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "ext:fastapi.testclient",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_rag",
+      "target": "tests.test_rag.test_ingest_then_ask_returns_grounded_answer",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rag",
+      "target": "tests.test_rag.test_search_returns_ranked_results",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_rag",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_rag",
+      "target": "ext:llm_search.engine",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "tests.test_api_auth.test_provider_health_redacts_secrets",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "tests.test_api_auth.test_auth_required_blocks_without_key",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "tests.test_api_auth.test_auth_wrong_key_401",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "tests.test_api_auth.test_health_open_without_auth",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "ext:fastapi.testclient",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api_auth",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots._Resp",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_fetch_strips_scripts_and_extracts_text",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_fetch_respects_robots",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_throttle_sleeps_when_too_soon",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_robots_allowed_real_path",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_throttle_no_sleep_when_enough_time",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_fetch_handles_429_backoff",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.test_fetch_handles_429_exponential_backoff",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.raise_for_status",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots._RP",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots._RPDeny",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots._Resp429",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.fake_get",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots._Resp429",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.fake_get",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.set_url",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.read",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.can_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.set_url",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.read",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.can_fetch",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.raise_for_status",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "tests.test_fetch_robots.raise_for_status",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "ext:pytest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "ext:llm_search.ingest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_fetch_robots",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_chunk",
+      "target": "tests.test_chunk.test_chunk_respects_size_and_overlap",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_chunk",
+      "target": "tests.test_chunk.test_empty_document_yields_no_chunks",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_chunk",
+      "target": "tests.test_chunk.test_chunk_index_monotonic",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_chunk",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_chunk",
+      "target": "ext:llm_search.ingest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_recall_at_k_basic",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_precision_at_k_basic",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_mrr_basic",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_mrr_requires_aligned_lists",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_run_eval_script_runs_offline",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_run_eval_with_gold_file",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_run_eval_gate_passes_above_threshold",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_run_eval_gate_fails_when_mrr_low",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:subprocess",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:sys",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:llm_search.eval",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:pytest",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "scripts.run_eval.load_gold",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "scripts.run_eval.run_eval",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "scripts.run_eval.main",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:argparse",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:json",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:sys",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:types",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.engine",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.eval",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.providers.fake",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.rerank",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.store.memory",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "scripts.rebuild_knowledge_graph.add_node",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "scripts.rebuild_knowledge_graph.add_edge",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "scripts.rebuild_knowledge_graph.py_analysis",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "scripts.rebuild_knowledge_graph.ts_analysis",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "scripts.rebuild_knowledge_graph.main",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "ext:ast",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "ext:json",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "ext:re",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.rebuild_knowledge_graph",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake._hash_vec",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake.FakeEmbedding",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake.FakeLLM",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake.embed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "llm_search.providers.fake.generate",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "ext:hashlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "ext:math",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "ext:re",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.fake",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "llm_search.providers.__init__.build_embedding",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "llm_search.providers.__init__.build_llm",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.anthropic_provider",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.fake",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.ollama_provider",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.openai_provider",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.OpenAIEmbedding",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.OpenAILLM",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.embed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "llm_search.providers.openai_provider.generate",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "ext:os",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.openai_provider",
+      "target": "ext:openai",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.OllamaEmbedding",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.OllamaLLM",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.embed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "llm_search.providers.ollama_provider.generate",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "ext:httpx",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.ollama_provider",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "llm_search.providers.anthropic_provider.AnthropicLLM",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "llm_search.providers.anthropic_provider.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "llm_search.providers.anthropic_provider.generate",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.anthropic_provider",
+      "target": "ext:anthropic",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "llm_search.providers.base.EmbeddingProvider",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "llm_search.providers.base.LLMProvider",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "llm_search.providers.base.cosine_similarity",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "llm_search.providers.base.embed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "llm_search.providers.base.generate",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "ext:abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.base",
+      "target": "ext:math",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.RobotDisallowed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch._host_key",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.robots_allowed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.throttle",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.fetch_url",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.Document",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.html_to_text",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "llm_search.ingest.fetch.sanitize_query",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:time",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:urllib.robotparser",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:collections.abc",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:dataclasses",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:urllib.parse",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:httpx",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.fetch",
+      "target": "ext:bs4",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.__init__",
+      "target": "ext:llm_search.ingest.chunk",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.__init__",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.chunk",
+      "target": "llm_search.ingest.chunk.Chunk",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.chunk",
+      "target": "llm_search.ingest.chunk.chunk_document",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.ingest.chunk",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.chunk",
+      "target": "ext:dataclasses",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.ingest.chunk",
+      "target": "ext:llm_search.ingest.fetch",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "llm_search.store.memory.InMemoryStore",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "llm_search.store.memory.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "llm_search.store.memory.upsert",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "llm_search.store.memory.search",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "llm_search.store.memory.count",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.memory",
+      "target": "ext:llm_search.store.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant.QdrantStore",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant._ensure_collection",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant.upsert",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant.search",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "llm_search.store.qdrant.count",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "ext:llm_search.store.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "ext:qdrant_client",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "ext:qdrant_client.models",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.qdrant",
+      "target": "ext:qdrant_client.models",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "llm_search.store.__init__.build_store",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "ext:llm_search.store.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "ext:llm_search.store.memory",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.__init__",
+      "target": "ext:llm_search.store.qdrant",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "llm_search.store.base.VectorStore",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "llm_search.store.base.upsert",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "llm_search.store.base.search",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "llm_search.store.base.count",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.store.base",
+      "target": "ext:abc",
+      "kind": "imports"
+    }
+  ],
+  "stats": {
+    "node_count": 250,
+    "edge_count": 422
+  }
+}

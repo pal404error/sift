@@ -1,0 +1,34 @@
+# Secrets & env
+.env
+.env.*
+*.key
+*.pem
+secrets/
+credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Node/TS
+node_modules/
+dist/
+coverage/
+
+# Tooling / data
+.scrape/
+*.log
+.DS_Store
+
+# Model weights & indexes (large binaries)
+*.bin
+*.gguf
+qdrant_storage/
