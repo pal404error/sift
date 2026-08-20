@@ -1,8 +1,10 @@
-# LLM-search
+# LLM-search (Sift)
 
 Enterprise, self-hostable **multi-provider RAG search engine** over web content.
 Ingest URLs → chunk → embed → store in a vector DB → answer natural-language questions
 with a pluggable LLM.
+
+Repo: [github.com/pal404error/sift](https://github.com/pal404error/sift)
 
 ## Why
 Keyword search fails on semantics. LLM-search returns grounded answers from crawled
@@ -132,6 +134,22 @@ Lint/format via `ruff`; hooks in `.pre-commit-config.yaml`.
   `CRAWL_CONCURRENCY` pages in parallel and supports **incremental re-crawl**: pass a
   `CrawlState` seeded with prior ETags; unchanged pages return 304 and are skipped
   (not re-ingested). `fetch_url` sends conditional `If-None-Match`/`If-Modified-Since`.
+
+## Command-line
+Install the package (`pip install -e .`) to get the `sift` CLI:
+```bash
+sift serve                       # run the API (uvicorn, http://127.0.0.1:8000)
+sift ingest <url>               # index a single page
+sift crawl  <url> [--max-pages N]   # crawl + index a site
+sift search <query>             # print top retrieved chunks
+sift ask    <query>             # print a grounded answer + sources
+```
+The data subcommands use fake providers automatically when no API keys are set, so the
+CLI is usable end-to-end offline.
+
+## Web UI
+The API serves a minimal single-page UI at `GET /` (`static/index.html`): a search/ask
+box that calls `/search` and `/ask` via `fetch`. No build step required.
 
 ## Roadmap
 - Offline eval comparing lexical vs cross-encoder rerank; tune `rerank_multiplier`.

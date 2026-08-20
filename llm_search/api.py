@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 
 from llm_search.auth import require_role
 from llm_search.config import get_settings
@@ -10,6 +13,11 @@ from llm_search.providers import build_embedding, build_llm
 from llm_search.store import build_store
 
 app = FastAPI(title=get_settings().app_name, version="0.1.0")
+
+@app.get("/", response_class=HTMLResponse)
+def index() -> str:
+    path = Path(__file__).parent.parent / "static" / "index.html"
+    return path.read_text(encoding="utf-8")
 
 _engine: SearchEngine | None = None
 

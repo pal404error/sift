@@ -5,7 +5,7 @@ from llm_search.providers.base import LLMProvider
 try:
     import anthropic
 except Exception:  # pragma: no cover - import guard
-    anthropic = None
+    anthropic = None  # type: ignore[assignment]
 
 
 class AnthropicLLM(LLMProvider):
@@ -28,5 +28,5 @@ class AnthropicLLM(LLMProvider):
             max_tokens=1024,
             system=system,
             messages=[{"role": "user", "content": prompt}],
-        )
+        )  # type: ignore[call-overload]
         return "".join(block.text for block in resp.content if hasattr(block, "text"))

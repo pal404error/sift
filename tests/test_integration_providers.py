@@ -48,8 +48,8 @@ def test_anthropic_llm_real():
 
 @pytest.mark.integration
 @pytest.mark.skipif(
-    not (_HAS_OPENAI_PKG and _HAS_ANTH_PKG),
-    reason="openai/anthropic packages not installed",
+    not (_HAS_OPENAI_PKG and _HAS_ANTH_PKG and _HAS_OPENAI and _HAS_ANTHROPIC),
+    reason="openai/anthropic packages or API keys not configured",
 )
 def test_factory_builds_real_providers_when_configured():
     s = Settings(embedding_provider="openai", llm_provider="anthropic")

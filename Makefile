@@ -26,5 +26,11 @@ ci: lint type cov audit eval
 docker:
 	docker build -t llm-search:local .
 
+serve:
+	python -m llm_search.cli serve
+
+cli:
+	python -m llm_search.cli --help
+
 pre-commit:
 	pre-commit run --all-files

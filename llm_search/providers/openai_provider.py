@@ -7,7 +7,7 @@ from llm_search.providers.base import EmbeddingProvider, LLMProvider
 try:
     from openai import OpenAI
 except Exception:  # pragma: no cover - import guard
-    OpenAI = None
+    OpenAI = None  # type: ignore
 
 
 class OpenAIEmbedding(EmbeddingProvider):

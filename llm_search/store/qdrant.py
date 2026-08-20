@@ -36,8 +36,17 @@ class QdrantStore(VectorStore):
             self.client.upsert(collection_name=self.collection, points=points)
 
     def search(self, vector: list[float], top_k: int = 5) -> list[dict]:
-        res = self.client.search(collection_name=self.collection, query_vector=vector, limit=top_k)
-        return [{"id": str(p.id), "score": p.score, "payload": p.payload or {}} for p in res]
+        if hasattr(self.client, "query_points"):
+            res = self.client.query_points(
+                collection_name=self.collection, query=vector, limit=top_k
+            )
+            points = res.points
+        else:  # older qdrant-client API
+            res = self.client.search(  # type: ignore[attr-defined]
+                collection_name=self.collection, query_vector=vector, limit=top_k
+            )
+            points = res
+        return [{"id": str(p.id), "score": p.score, "payload": p.payload or {}} for p in points]
 
     def count(self) -> int:
         return self.client.count(self.collection).count
