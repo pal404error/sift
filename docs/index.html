@@ -3,223 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sift - Enterprise RAG Search Engine</title>
+    <title>Sift — Enterprise, Self-Hostable RAG Search Engine</title>
+    <meta name="description" content="Sift is an enterprise-ready, self-hostable, multi-provider RAG search engine. Bring your own LLMs and embeddings, crawl and index your content, and answer with source-backed retrieval. MIT licensed.">
+    <meta name="keywords" content="RAG, search engine, LLM, retrieval augmented generation, self-hosted, semantic search, vector database, embeddings, FastAPI, OIDC, enterprise search, web crawler, cross-encoder, Qdrant">
+    <meta name="author" content="pal404error">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sift — Enterprise, Self-Hostable RAG Search Engine">
+    <meta property="og:description" content="Bring your own models, keep your own data. A pluggable, self-hostable RAG search engine with crawl orchestration, OIDC auth, and offline eval.">
+    <meta property="og:url" content="https://pal404error.github.io/sift/">
+    <meta property="og:site_name" content="Sift">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sift — Enterprise, Self-Hostable RAG Search Engine">
+    <meta name="twitter:description" content="Bring your own models, keep your own data. A pluggable, self-hostable RAG search engine.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Sift",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, macOS, Windows (Docker)",
+      "description": "Enterprise-ready, self-hostable, multi-provider RAG search engine over web content.",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://pal404error.github.io/sift/",
+      "sameAs": ["https://github.com/pal404error/sift"],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
     <style>
         :root {
             --primary: #3b82f6;
             --primary-hover: #2563eb;
+            --accent: #c084fc;
             --bg: #0f172a;
             --surface: #1e293b;
+            --surface-2: #334155;
             --text: #f8fafc;
             --text-muted: #94a3b8;
             --border: #334155;
+            --radius: 0.75rem;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        a { color: inherit; text-decoration: none; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Nav */
-        nav {
-            padding: 2rem 0;
+        /* Header & Nav */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            height: 72px;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
+        
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.5rem; }
+        .logo span { color: var(--primary); }
+        
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        
+        .menu-toggle { display: none; background: transparent; border: none; color: var(--text); cursor: pointer; padding: 0.5rem; }
+        .menu-toggle svg { width: 24px; height: 24px; fill: currentColor; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            gap: 0.5rem;
         }
+        .btn-primary { background: var(--primary); color: #fff; border: 1px solid var(--primary); box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { background: var(--surface); border-color: var(--text-muted); }
 
         /* Hero */
         .hero {
+            position: relative;
             padding: 8rem 0 6rem;
             text-align: center;
+            overflow: hidden;
         }
-
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+        }
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(3rem, 5vw, 4.5rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #60a5fa, #c084fc);
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #60a5fa, var(--accent), #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
-
         .hero p {
             font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 3rem;
+            max-width: 640px;
+            margin: 0 auto 2.5rem;
         }
-
-        .buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        .hero-actions {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 0.875rem 1.75rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
+        .hero-snippet {
+            display: inline-flex; align-items: center; justify-content: space-between;
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 0.5rem 0.5rem 0.5rem 1.25rem; border-radius: 99px;
+            gap: 1rem; margin: 0 auto;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border: 1px solid var(--primary);
+        .hero-snippet code { font-family: ui-monospace, monospace; color: var(--text); font-size: 0.9rem; }
+        .hero-snippet button {
+            background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted);
+            padding: 0.4rem 1rem; border-radius: 99px; cursor: pointer; transition: 0.2s;
+            font-size: 0.85rem; font-weight: 600;
         }
+        .hero-snippet button:hover { background: var(--border); color: var(--text); }
 
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
+        /* Sections */
+        .section { padding: 6rem 0; border-top: 1px solid var(--border); }
+        .section-header { text-align: center; max-width: 720px; margin: 0 auto 4rem; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* Feature Grid */
+        .grid-6 {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
         }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text);
+        .feature-card {
+            background: var(--surface);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-
-        .btn-outline:hover {
-            border-color: var(--text-muted);
-            background-color: var(--surface);
+        .feature-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .feature-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(59, 130, 246, 0.1); color: var(--primary);
+            margin-bottom: 1.5rem; font-size: 1.5rem;
         }
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        .feature-card p { color: var(--text-muted); font-size: 1rem; }
 
-        /* Why Section */
-        .why-section {
-            padding: 4rem 0;
-            text-align: center;
+        /* How it works */
+        .steps {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+            position: relative;
+        }
+        .step {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 2rem;
+            position: relative; z-index: 1;
+        }
+        .step-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 3rem; height: 3rem; border-radius: 50%;
+            background: var(--primary); color: white; font-weight: 700; font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 0 4px var(--bg);
+        }
+        .step h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        .step p { color: var(--text-muted); }
+
+        /* Code Block */
+        .code-block-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             max-width: 800px;
             margin: 0 auto;
+            overflow: hidden;
         }
+        .code-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 1.25rem; background: var(--surface-2); border-bottom: 1px solid var(--border);
+        }
+        .code-header .dots { display: flex; gap: 0.5rem; }
+        .code-header .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
+        .code-header .dot:nth-child(1) { background: #ef4444; }
+        .code-header .dot:nth-child(2) { background: #eab308; }
+        .code-header .dot:nth-child(3) { background: #22c55e; }
+        .code-block {
+            padding: 1.5rem; overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.95rem; color: #e2e8f0;
+        }
+        .code-block .comment { color: #64748b; }
+        .code-block .cmd { color: #38bdf8; }
         
-        .why-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+        /* FAQ */
+        .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        details {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); overflow: hidden;
         }
-        
-        .why-section p {
-            color: var(--text-muted);
-            font-size: 1.125rem;
+        summary {
+            padding: 1.5rem; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            list-style: none; outline: none;
         }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: "+"; font-size: 1.5rem; font-weight: 400; color: var(--text-muted); transition: transform 0.2s;
+        }
+        details[open] summary::after { content: "−"; transform: rotate(180deg); }
+        details[open] summary { border-bottom: 1px solid var(--border); }
+        .faq-content { padding: 1.5rem; color: var(--text-muted); line-height: 1.6; }
 
-        /* Features */
-        .features {
-            padding: 4rem 0 8rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background-color: var(--surface);
-            padding: 2rem;
-            border-radius: 1rem;
-            border: 1px solid var(--border);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        /* CTA Section */
+        .cta-section { text-align: center; background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.05)); }
 
         /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 0;
-            text-align: center;
-            color: var(--text-muted);
-        }
-        
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
+        footer { border-top: 1px solid var(--border); padding: 4rem 0 2rem; background: var(--bg); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-col.brand { grid-column: span 2; }
+        .footer-col h4 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); margin-bottom: 1.5rem; }
+        .footer-col a { display: block; color: var(--text-muted); margin-bottom: 0.75rem; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--primary); }
+        .footer-bottom {
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+            padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;
         }
 
+        /* Mobile */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .hero { padding: 4rem 0; }
+            .nav-links {
+                display: none; flex-direction: column; width: 100%; position: absolute;
+                top: 72px; left: 0; background: var(--bg); padding: 1.5rem;
+                border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: flex-start;
+                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+            .hero { padding: 5rem 0 4rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-snippet { flex-direction: column; width: 100%; padding: 0.75rem; border-radius: 0.75rem; gap: 0.5rem; }
+            .hero-snippet button { width: 100%; }
+            .section { padding: 4rem 0; }
+            .footer-col.brand { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <div class="logo">Sift.</div>
-        </nav>
 
-        <section class="hero">
-            <h1>Intelligence, Grounded.</h1>
-            <p>The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data.</p>
-            <div class="buttons">
-                <a href="https://github.com/pal404error/sift#readme" class="btn btn-primary">Quickstart</a>
-                <a href="https://github.com/pal404error/sift" class="btn btn-outline">GitHub</a>
-                <a href="https://github.com/pal404error/sift/tree/main/docs" class="btn btn-outline">Documentation</a>
+    <header>
+        <div class="container nav">
+            <a href="#" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                Sift<span>.</span>
+            </a>
+            <button class="menu-toggle" id="menu-btn" aria-label="Toggle menu">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how">How it works</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://github.com/pal404error/sift#readme">Docs</a>
+                <a href="https://github.com/pal404error/sift" class="btn btn-primary" style="color:white">View on GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <h1>Intelligence, Grounded.</h1>
+                <p>The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data, and answer with source-backed retrieval.</p>
+                
+                <div class="hero-actions">
+                    <a href="#quickstart" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/pal404error/sift" class="btn btn-outline">GitHub Repository</a>
+                </div>
+
+                <div class="hero-snippet">
+                    <code id="snippet-code">pip install "sift @ git+https://github.com/pal404error/sift.git"</code>
+                    <button onclick="copySnippet()" id="snippet-btn">Copy</button>
+                </div>
             </div>
         </section>
 
-        <section class="why-section">
-            <h2>Why Sift?</h2>
-            <p>Building generative search shouldn't mean vendor lock-in. Sift provides a powerful, pluggable foundation with a clean API, built-in crawl orchestration, and enterprise SSO—all while staying completely open for your custom embedding and LLM providers.</p>
+        <!-- Features Section -->
+        <section class="section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Everything you need to ship search</h2>
+                    <p>A clean, pluggable foundation — not a walled garden. Wire in your stack and stay in control.</p>
+                </div>
+                
+                <div class="grid-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔌</div>
+                        <h3>Pluggable Providers</h3>
+                        <p>Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Flexible Storage</h3>
+                        <p>Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Enterprise Security</h3>
+                        <p>Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Advanced Retrieval</h3>
+                        <p>Achieve higher precision by combining lexical search capabilities with cross-encoder rerankers for top-tier semantic accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🕷️</div>
+                        <h3>Concurrent Crawler</h3>
+                        <p>Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛠️</div>
+                        <h3>Ops &amp; Monitoring</h3>
+                        <p>Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="features">
-            <div class="feature-card">
-                <h3>🔌 Pluggable Architecture</h3>
-                <p>Swap out vector stores, LLMs, and embedding models with simple config changes. Out-of-the-box support for the heavy hitters, completely open for custom providers.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🛠️ Developer Experience</h3>
-                <p>Clean FastAPI endpoints, a powerful `sift` CLI, and an instant static web UI. We sweat the details so you can ship faster.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🕷️ Crawl & Evaluate</h3>
-                <p>Built-in crawl orchestration to keep your data fresh, and offline evaluation pipelines to ensure your retrieval and generation stay sharp over time.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🔐 Enterprise Ready</h3>
-                <p>Deploy securely on your own infrastructure. First-class OIDC/SSO integration, robust audit logging, and deep health metrics.</p>
+        <!-- How it works Section -->
+        <section class="section" id="how">
+            <div class="container">
+                <div class="section-header">
+                    <h2>How it works</h2>
+                    <p>Three stages between your sources and a grounded answer.</p>
+                </div>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <h3>Ingest &amp; Crawl</h3>
+                        <p>The orchestrator concurrently pulls pages from your sources, respecting robots.txt and gracefully handling incremental re-crawls via ETags.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <h3>Embed &amp; Store</h3>
+                        <p>Content is intelligently chunked, passed through your chosen embedding provider, and indexed into your active vector store.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <h3>Retrieve &amp; Generate</h3>
+                        <p>Queries are vectorized, optionally reranked with cross-encoders, and answered by your preferred LLM with transparent sources attached.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <footer>
-            <p>Released under the MIT License. Built by <a href="https://github.com/pal404error">pal404error</a>.</p>
-        </footer>
-    </div>
+        <!-- Quickstart Section -->
+        <section class="section" id="quickstart">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Up and running in seconds</h2>
+                    <p>Sift ships with mock providers natively, letting you test the full RAG pipeline offline with zero API keys.</p>
+                </div>
+                
+                <div class="code-block-wrapper">
+                    <div class="code-header">
+                        <div class="dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <span style="color: var(--text-muted); font-size: 0.85rem; font-family: monospace;">terminal</span>
+                    </div>
+                    <div class="code-block">
+<span class="comment"># Clone the repository</span><br>
+<span class="cmd">git clone</span> https://github.com/pal404error/sift.git<br>
+<span class="cmd">cd</span> sift<br><br>
+
+<span class="comment"># Install locally</span><br>
+<span class="cmd">pip install</span> -e .<br><br>
+
+<span class="comment"># Start the server (fakes enabled by default for zero-config testing)</span><br>
+<span class="cmd">sift serve</span><br><br>
+
+<span class="comment"># Or deploy using Docker Compose</span><br>
+<span class="cmd">docker compose up</span> -d
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Common questions about architecture, hosting, and features.</p>
+                </div>
+                
+                <div class="faq-list">
+                    <details name="faq">
+                        <summary>Is Sift fully open source?</summary>
+                        <div class="faq-content">
+                            Yes, Sift is completely open source and released under the permissive MIT license. You can fork it, modify it, and use it freely for both personal and commercial enterprise projects.
+                        </div>
+                    </details>
+                    <details name="faq">
+                        <summary>Which AI models does Sift support?</summary>
+                        <div class="faq-content">
+                            Sift features a highly pluggable architecture. Out of the box, we provide first-class support for OpenAI, Anthropic, and Ollama (for local inference). We also include mock fake providers that let you test the entire pipeline without requiring API keys or internet access.
+                        </div>
+                    </details>
+                    <details name="faq">
+                        <summary>How does the crawl orchestrator work?</summary>
+                        <div class="faq-content">
+                            The built-in concurrent crawler orchestrator is designed for production efficiency. It strictly obeys <code>robots.txt</code>, supports ETags for bandwidth-saving incremental crawls, and handles chunking securely before passing data to the embedding pipeline.
+                        </div>
+                    </details>
+                    <details name="faq">
+                        <summary>Can I integrate this with my existing identity provider?</summary>
+                        <div class="faq-content">
+                            Absolutely. Sift includes enterprise-ready OIDC and JWKS authentication, alongside API-key based Role Based Access Control (RBAC). It's built to drop straight into corporate environments securely.
+                        </div>
+                    </details>
+                    <details name="faq">
+                        <summary>How do I monitor Sift in production?</summary>
+                        <div class="faq-content">
+                            Sift comes instrumented with <code>/metrics</code> and <code>/health</code> endpoints natively. It seamlessly integrates with Prometheus and Grafana for comprehensive observability, and maintains a robust audit log for security tracing.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section cta-section">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 2.5rem;">
+                    <h2>Ready to self-host?</h2>
+                    <p>Bring your own models. Keep your own data. MIT licensed, forever.</p>
+                </div>
+                <div class="hero-actions" style="margin-bottom: 0;">
+                    <a href="https://github.com/pal404error/sift" class="btn btn-primary">Star on GitHub</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/README.md" class="btn btn-outline">Read the docs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col brand">
+                    <a href="#" class="logo" style="margin-bottom: 1rem;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                        Sift<span>.</span>
+                    </a>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 300px;">Enterprise-ready, self-hostable multi-provider RAG search engine over web content.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#how">How it works</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/CHANGELOG.md">Changelog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Developers</h4>
+                    <a href="https://github.com/pal404error/sift">GitHub</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/README.md">Documentation</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/CONTRIBUTING.md">Contributing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Community & Legal</h4>
+                    <a href="https://github.com/pal404error/sift/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/SECURITY.md">Security</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/LICENSE">MIT License</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Released under the MIT License.</p>
+                <p>Built by <a href="https://github.com/pal404error" style="color:var(--text); font-weight: 500;">pal404error</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Copy Code Snippet
+        function copySnippet() {
+            const codeText = document.getElementById('snippet-code').innerText;
+            const btn = document.getElementById('snippet-btn');
+            
+            navigator.clipboard.writeText(codeText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.style.backgroundColor = 'var(--primary)';
+                btn.style.color = 'white';
+                btn.style.borderColor = 'var(--primary)';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
