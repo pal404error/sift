@@ -12,6 +12,42 @@ class EmbeddingProvider(ABC):
         """Return one vector per input text."""
 
 
+class CachedEmbeddingProvider(EmbeddingProvider):
+    """Transparent LRU-ish cache around an :class:`EmbeddingProvider`.
+
+    Embeddings are expensive (model inference or API calls) and the same chunk
+    text is embedded repeatedly across re-indexes and evaluation sweeps. This
+    wrapper memoizes per-text vectors so each unique string is computed once.
+    The cache is bounded; on overflow it is cleared rather than growing unbounded.
+    """
+
+    def __init__(self, delegate: EmbeddingProvider, maxsize: int = 65536) -> None:
+        self._delegate = delegate
+        self.dim = delegate.dim
+        self._maxsize = maxsize
+        self._cache: dict[str, list[float]] = {}
+
+    def embed(self, texts: list[str]) -> list[list[float]]:
+        out: list[list[float] | None] = [None] * len(texts)
+        miss_idx: list[int] = []
+        miss_texts: list[str] = []
+        for i, t in enumerate(texts):
+            vec = self._cache.get(t)
+            if vec is None:
+                miss_idx.append(i)
+                miss_texts.append(t)
+            else:
+                out[i] = vec
+        if miss_idx:
+            vecs = self._delegate.embed(miss_texts)
+            for idx, vec in zip(miss_idx, vecs, strict=True):
+                self._cache[texts[idx]] = vec
+                out[idx] = vec
+            if len(self._cache) > self._maxsize:
+                self._cache.clear()
+        return [v for v in out if v is not None]
+
+
 class LLMProvider(ABC):
     @abstractmethod
     def generate(self, system: str, prompt: str) -> str:

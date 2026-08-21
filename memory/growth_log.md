@@ -162,3 +162,17 @@
 - **Tests:** `tests/test_audit_fixes.py` (env prefix, SSRF, BFS, robots arg order, cosine strict,
   API bounds). Updated `test_api_auth`/`.env.example` to `SIFT_` names. All gates green.
 - **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. **Committed + pushed.**
+
+## Cycle 13.5 — 2026-08-22 (deferred audit items)
+- Implemented the remaining low-risk auditor suggestions:
+  - **Embedding cache**: `CachedEmbeddingProvider` (bounded per-text memoization) wraps the
+    embedder in `SearchEngine` — avoids re-embedding identical chunks across re-index/eval.
+  - **Prompt-injection hardening**: `ask`/`ask_stream` enclose retrieved passages in
+    `<context>` tags and instruct the model the passages are UNTRUSTED data, not instructions
+    (defends against indirect injection from scraped pages).
+  - **Result de-dup**: `_unique_sources` returns distinct source URLs (first-seen order).
+- **Tests:** `test_cached_embedding_memoizes_per_text`, `test_unique_sources_dedupes_...`,
+  `test_ask_hardens_against_prompt_injection` in `tests/test_audit_fixes.py`.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. **Committed + pushed.**
+- **Deferred (documented future work):** FAISS/ANN vector store (in-memory store is fine <10k
+  docs per auditors); these changeset is enough to keep quality gates honest.

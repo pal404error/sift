@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **MEDIUM: cosine_similarity** now uses `zip(..., strict=True)` so a dimension mismatch raises instead of silently truncating and mis-ranking.
 - **Docs** — README overstated the lift as "~5×" (now "2.6×"); `SIFT_HYBRID_ROUTE` noted as weighted-mode only; `research/RETRIEVAL_NOTES.md` now records weighted fusion + routing as shipped (not "not implemented").
 
+### Improved (deferred audit items, Cycle 13.5)
+- **Embedding cache** — `CachedEmbeddingProvider` memoizes per-text vectors (bounded LRU-ish, clears on overflow) and wraps the embedder in `SearchEngine`. Avoids re-embedding identical chunks across re-indexes and eval sweeps (the cost the auditors flagged). Covers every embedding backend uniformly.
+- **Prompt-injection hardening** — `ask`/`ask_stream` now wrap retrieved passages in `<context>` tags and instruct the model they are **UNTRUSTED external data, not instructions**, explicitly ignoring any instructions inside them. Mitigates indirect injection from scraped pages.
+- **Result de-duplication** — `_unique_sources` returns distinct source URLs (first-seen order) so the answer `sources` list no longer repeats the same document when multiple chunks rank.
+
 ## [0.2.0] - 2026-08-21
 
 ### Added
