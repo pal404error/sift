@@ -23,7 +23,7 @@ from types import SimpleNamespace
 
 from llm_search.config import Settings, get_settings
 from llm_search.engine import SearchEngine
-from llm_search.eval import mrr, precision_at_k, recall_at_k
+from llm_search.eval import mrr, ndcg_at_k, precision_at_k, recall_at_k
 from llm_search.providers.fake import FakeEmbedding, FakeLLM
 from llm_search.providers.local import LocalEmbedding
 from llm_search.rerank import CrossEncoderReranker, build_reranker
@@ -121,12 +121,16 @@ def run_eval(
     prec = sum(
         precision_at_k(r, ret, k) for r, ret in zip(relevant_lists, retrieved_lists, strict=True)
     )
+    ndcg = sum(
+        ndcg_at_k(r, ret, k) for r, ret in zip(relevant_lists, retrieved_lists, strict=True)
+    )
     n = len(relevant_lists) or 1
     return {
         "k": k,
         "n_queries": len(relevant_lists),
         "recall@k": recall / n,
         "precision@k": prec / n,
+        "ndcg@k": ndcg / n,
         "mrr": mrr(relevant_lists, retrieved_lists),
     }
 
@@ -181,10 +185,13 @@ def main() -> int:
             embedding=LocalEmbedding(),
             reranker=CrossEncoderReranker(),
         )
-        print(f"{'config':<26}{'recall@k':>10}{'precision@k':>12}{'mrr':>7}")
+        print(f"{'config':<26}{'recall@k':>10}{'precision@k':>12}{'ndcg@k':>9}{'mrr':>7}")
 
         def _row(label: str, r: dict) -> str:
-            return f"{label:<26}{r['recall@k']:>10.3f}{r['precision@k']:>12.3f}{r['mrr']:>7.3f}"
+            return (
+                f"{label:<26}{r['recall@k']:>10.3f}{r['precision@k']:>12.3f}"
+                f"{r['ndcg@k']:>9.3f}{r['mrr']:>7.3f}"
+            )
 
         print(_row("fake + lexical", base))
         print(_row("local + cross-encoder", sem))

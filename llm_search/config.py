@@ -45,6 +45,10 @@ class Settings(BaseSettings):
     rerank_model: str = ""  # cross-encoder model name (empty -> default)
     rerank_multiplier: int = 2
 
+    # Hybrid retrieval (lexical + vector via Reciprocal Rank Fusion)
+    hybrid: bool = False
+    rrf_k: int = 60
+
     # Auth / enterprise
     require_auth: bool = False
     auth_method: str = "apikey"  # "apikey" | "oidc"

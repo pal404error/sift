@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 
 def recall_at_k(relevant: list[str], retrieved: list[str], k: int) -> float:
     """Fraction of relevant docs present in the top-k retrieved."""
@@ -43,6 +45,23 @@ def mrr(queries: list[list[str]], retrieved_lists: list[list[str]]) -> float:
     return total / len(queries)
 
 
+def ndcg_at_k(relevant: list[str], retrieved: list[str], k: int) -> float:
+    """Normalized Discounted Cumulative Gain at k (binary relevance).
+
+    Rewards placing relevant docs higher in the ranking; normalized against the
+    ideal ordering so the score is in [0, 1].
+    """
+
+    def dcg(rels: list[float]) -> float:
+        return sum(r / math.log2(i + 2) for i, r in enumerate(rels))
+
+    rel_set = set(relevant)
+    gains = [1.0 if d in rel_set else 0.0 for d in retrieved[:k]]
+    ideal = [1.0] * min(len(rel_set), k)
+    denom = dcg(ideal)
+    return dcg(gains) / denom if denom else 0.0
+
+
 def evaluate_retrieval(
     relevant: list[str],
     retrieved: list[str],
@@ -52,4 +71,5 @@ def evaluate_retrieval(
     return {
         "recall@k": recall_at_k(relevant, retrieved, k),
         "precision@k": precision_at_k(relevant, retrieved, k),
+        "ndcg@k": ndcg_at_k(relevant, retrieved, k),
     }

@@ -4,6 +4,7 @@ import hashlib
 
 from llm_search.config import Settings, get_settings
 from llm_search.ingest import chunk_document, fetch_url
+from llm_search.lexical_index import LexicalIndex
 from llm_search.providers.base import EmbeddingProvider, LLMProvider
 from llm_search.rerank import Reranker, build_reranker
 from llm_search.store.base import VectorStore
@@ -17,12 +18,17 @@ class SearchEngine:
         llm: LLMProvider,
         settings: Settings | None = None,
         reranker: Reranker | None = None,
+        lexical: LexicalIndex | None = None,
+        hybrid: bool | None = None,
     ) -> None:
         self.store = store
         self.embedding = embedding
         self.llm = llm
         self.settings = settings or get_settings()
         self.reranker = reranker or build_reranker(self.settings)
+        self.lexical = lexical
+        if self.lexical is None and (hybrid if hybrid is not None else self.settings.hybrid):
+            self.lexical = LexicalIndex()
 
     def _index_doc(self, doc) -> int:
         chunks = chunk_document(doc, self.settings.chunk_size, self.settings.chunk_overlap)
@@ -33,18 +39,15 @@ class SearchEngine:
         items = []
         for chunk, vec in zip(chunks, vectors, strict=True):
             cid = hashlib.sha256(f"{chunk.doc_url}:{chunk.index}".encode()).hexdigest()[:16]
-            items.append(
-                {
-                    "id": cid,
-                    "vector": vec,
-                    "payload": {
-                        "doc_url": chunk.doc_url,
-                        "doc_title": chunk.doc_title,
-                        "index": chunk.index,
-                        "text": chunk.text,
-                    },
-                }
-            )
+            payload = {
+                "doc_url": chunk.doc_url,
+                "doc_title": chunk.doc_title,
+                "index": chunk.index,
+                "text": chunk.text,
+            }
+            items.append({"id": cid, "vector": vec, "payload": payload})
+            if self.lexical is not None:
+                self.lexical.add(cid, chunk.text, payload)
         self.store.upsert(items)
         return len(items)
 
@@ -71,7 +74,26 @@ class SearchEngine:
     def search(self, query: str, top_k: int = 5) -> list[dict]:
         qvec = self.embedding.embed([query])[0]
         wide = top_k * self.settings.rerank_multiplier
-        candidates = self.store.search(qvec, top_k=max(wide, top_k))
+        vector_hits = self.store.search(qvec, top_k=max(wide, top_k))
+        if self.lexical is None:
+            return self.reranker.rerank(query, vector_hits, top_n=top_k)
+
+        # Hybrid: fuse vector + lexical ranks via Reciprocal Rank Fusion (RRF).
+        lexical_hits = self.lexical.search(query, top_n=max(wide, top_k))
+        fused: dict[str, float] = {}
+        for rank, hit in enumerate(vector_hits):
+            fused[hit["id"]] = fused.get(hit["id"], 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
+        for rank, (doc_id, _score) in enumerate(lexical_hits):
+            fused[doc_id] = fused.get(doc_id, 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
+
+        ordered = sorted(fused.keys(), key=lambda i: fused[i], reverse=True)
+        by_id = {h["id"]: h for h in vector_hits}
+        candidates = []
+        for cid in ordered:
+            if cid in by_id:
+                candidates.append(by_id[cid])
+            elif (p := self.lexical.payload(cid)) is not None:
+                candidates.append({"id": cid, "score": fused[cid], "payload": p})
         return self.reranker.rerank(query, candidates, top_n=top_k)
 
     def ask(self, query: str, top_k: int = 5) -> dict:

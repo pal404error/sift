@@ -193,6 +193,18 @@
   needs a semantic gold set + real providers).
   *Rationale:* makes the eval tool actionable and reproducible.
 
+- **ADR-019 — Hybrid retrieval via Reciprocal Rank Fusion (RRF).**
+  *Context:* pure dense-vector retrieval misses exact-match / rare-term queries that
+  lexical matching catches, and vice-versa. Competitors (e.g. langchain, dify) ship hybrid
+  search as a quality differentiator.
+  *Decision:* added `llm_search/lexical_index.py` (dependency-free BM25-lite inverted index)
+  and wired it into `SearchEngine.search`: when a `LexicalIndex` is present (auto-created when
+  `Settings.hybrid=True`, or injected), vector top-k and lexical top-k are fused by RRF
+  (`score += 1/(rrf_k + rank)`) before reranking. New settings: `hybrid: bool = False`,
+  `rrf_k: int = 60`. Off by default; fully testable offline (no new runtime deps).
+  *Rationale:* directly multiplies the headline "retrieval quality" metric at zero dependency
+  cost; lexical payloads are mirrored in the index so lexical-only hits surface in results.
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

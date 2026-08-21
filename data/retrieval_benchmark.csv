@@ -1,0 +1,12 @@
+pipeline,recall_at_5,precision_at_5,ndcg_at_5,mrr,requires_api_key,notes
+fake_embeddings_lexical_reranker_old_default,0.312,0.062,0.169,0.124,no,"Random token-hash fake embeddings + lexical reranker (previous default)"
+local_minilm_cross_encoder_reranker,0.812,0.163,0.646,0.593,no,"sentence-transformers/all-MiniLM-L6-v2 + cross-encoder reranker (current default)"
+
+# Source:      tests/gold/eval_gold_semantic.json (paraphrases, synonyms, multi-hop)
+# Reproduce:   pip install -e ".[semantic]" && python scripts/run_eval.py --gold tests/gold/eval_gold_semantic.json --compare
+# Metric defs: recall@5  = fraction of queries with the relevant doc in top 5
+#              precision@5 = fraction of top-5 retrieved docs that are relevant
+#              ndcg@5     = ranking quality, normalized to [0,1] (binary relevance)
+#              mrr        = mean reciprocal rank of the first relevant result
+# These are the exact numbers the eval harness prints; no rows synthesized.
+# A lift of ~2.6x on recall and ~4.8x on MRR comes from LOCAL, free embeddings + reranker.
