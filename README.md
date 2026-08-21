@@ -93,13 +93,14 @@ We measure retrieval with a real, non-trivial gold set — paraphrases, synonyms
 multi-hop questions explicitly designed to defeat lexical token matching — not the toy
 set that scores ~1.0 and proves nothing. On that set:
 
-| Pipeline | recall@5 | MRR |
-| --- | --- | --- |
-| fake embeddings + lexical reranker (old default) | 0.31 | 0.12 |
-| local MiniLM embeddings + cross-encoder reranker | 0.81 | 0.59 |
+| Pipeline | recall@5 | precision@5 | ndcg@5 | MRR |
+| --- | --- | --- | --- | --- |
+| fake embeddings + lexical reranker (old default) | 0.31 | 0.06 | 0.17 | 0.12 |
+| local MiniLM embeddings + cross-encoder reranker | 0.81 | 0.16 | 0.65 | 0.59 |
 
-That is a **~5× relevance lift** on questions where the wording diverges from the source —
-the gap a real RAG product lives or dies by. Reproduce it:
+That is a **2.6× lift in recall@5** (and ~4.8× in MRR) on questions where the wording
+diverges from the source — the gap a real RAG product lives or dies by. Full numbers and
+methodology: `data/retrieval_benchmark.csv`. Reproduce it:
 
 ```bash
 pip install sentence-transformers
