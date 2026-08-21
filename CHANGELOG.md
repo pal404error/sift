@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Embedding-model sweep**: `scripts/run_eval.py --embedding-models "m1,m2,..."` builds a fresh index per model and prints a recall/precision/ndcg/MRR comparison; skips models that fail to load. Ran on the semantic gold set: `all-MiniLM-L6-v2` (recall@5 0.812) > `paraphrase-MiniLM-L3-v2` (0.750).
+
 ## [0.2.0] - 2026-08-21
 
 ### Added

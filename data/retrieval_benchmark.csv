@@ -1,9 +1,11 @@
 pipeline,recall_at_5,precision_at_5,ndcg_at_5,mrr,requires_api_key,notes
 fake_embeddings_lexical_reranker_old_default,0.312,0.062,0.169,0.124,no,"Random token-hash fake embeddings + lexical reranker (previous default)"
 local_minilm_cross_encoder_reranker,0.812,0.163,0.646,0.593,no,"sentence-transformers/all-MiniLM-L6-v2 + cross-encoder reranker (current default)"
+paraphrase_minilm_l3_cross_encoder_reranker,0.750,0.150,0.626,0.585,no,"sentence-transformers/paraphrase-MiniLM-L3-v2 + cross-encoder reranker (smaller alternative)"
 
 # Source:      tests/gold/eval_gold_semantic.json (paraphrases, synonyms, multi-hop)
 # Reproduce:   pip install -e ".[semantic]" && python scripts/run_eval.py --gold tests/gold/eval_gold_semantic.json --compare
+# Model sweep:  python scripts/run_eval.py --gold tests/gold/eval_gold_semantic.json --embedding-models "sentence-transformers/all-MiniLM-L6-v2,sentence-transformers/paraphrase-MiniLM-L3-v2"
 # Metric defs: recall@5  = fraction of queries with the relevant doc in top 5
 #              precision@5 = fraction of top-5 retrieved docs that are relevant
 #              ndcg@5     = ranking quality, normalized to [0,1] (binary relevance)

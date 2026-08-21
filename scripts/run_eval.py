@@ -158,6 +158,16 @@ def main() -> int:
         help="Embedding provider for the run (local = sentence-transformers MiniLM).",
     )
     ap.add_argument(
+        "--embedding-models",
+        type=str,
+        default=None,
+        help=(
+            "Comma-separated sentence-transformers model names to sweep (semantic, "
+            "cross-encoder reranker). Builds a fresh index per model and prints a "
+            "comparison. Skips models that fail to load (e.g. download error)."
+        ),
+    )
+    ap.add_argument(
         "--reranker",
         choices=["lexical", "cross-encoder"],
         default="lexical",
@@ -171,6 +181,27 @@ def main() -> int:
     args = ap.parse_args()
 
     gold = load_gold(args.gold)
+
+    if args.embedding_models:
+        names = [x.strip() for x in args.embedding_models.split(",") if x.strip()]
+        print(f"embedding model sweep (k={args.k}, cross-encoder reranker):")
+        print(f"{'model':<48}{'recall@k':>10}{'precision@k':>12}{'ndcg@k':>9}{'mrr':>7}")
+        for name in names:
+            try:
+                rep = run_eval(
+                    gold,
+                    k=args.k,
+                    embedding=LocalEmbedding(model=name),
+                    reranker=CrossEncoderReranker(),
+                )
+            except Exception as e:  # model download/load failure, OOM, etc.
+                print(f"  ! skipped {name}: {type(e).__name__}: {e}", file=sys.stderr)
+                continue
+            print(
+                f"{name:<48}{rep['recall@k']:>10.3f}{rep['precision@k']:>12.3f}"
+                f"{rep['ndcg@k']:>9.3f}{rep['mrr']:>7.3f}"
+            )
+        return 0
 
     if args.compare:
         base = run_eval(

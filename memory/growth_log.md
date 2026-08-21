@@ -111,3 +111,13 @@
   router needs an eval set to tune. Mitigation: keep it opt-in, document the heuristic caveat
   in ADR + README, no claim it's better without tuning. Honest.
 - **Gates:** ruff ✓ mypy ✓ pytest ✓ (9 hybrid tests); coverage 82%. **Committed + pushed.**
+
+## Cycle 10 — 2026-08-21 (embedding-model sweep / research)
+- **Feature:** `scripts/run_eval.py --embedding-models "m1,m2,..."` — fresh index per model,
+  prints recall/precision/ndcg/MRR comparison, gracefully skips unloadable models. This is the
+  real "research" frontier from the roadmap.
+- **Finding (reproducible):** on `tests/gold/eval_gold_semantic.json`, `all-MiniLM-L6-v2`
+  (recall@5 0.812) beats `paraphrase-MiniLM-L3-v2` (0.750). Recorded in RETRIEVAL_NOTES.md +
+  benchmark CSV. Honest caveat logged: n=35, single corpus — directional, not definitive.
+- **Tests:** `tests/test_eval_sweep.py` asserts unloadable models are skipped (exit 0).
+- **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. new sweep skip test); coverage 82%. **Committed + pushed.**
