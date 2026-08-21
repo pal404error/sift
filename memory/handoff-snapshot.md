@@ -156,3 +156,17 @@ tune rerank_multiplier, (b) more AGY collab (e.g. /metrics Prometheus scrape con
 (c) DB-backed CrawlState, (d) cut a v0.1.0 release tag + CHANGELOG.
 
 **Key references:** `RTK.md` (truth), `trending-insights.md` (seed), `memory/*`, `skills/`.
+
+### Update 2026-08-20 — Professional repo polish (GH Pages + tags + humanized docs)
+**Done (collab with AGY + own corrections):** Humanized `README.md` (accurate shields.io badges:
+live CI status, 83% coverage, MIT, Python 3.12+, Docker, OIDC; fixed a fabricated 95% coverage
+and a "React" UI claim → plain HTML). `docs/index.html` responsive GitHub Pages landing page
++ `docs/.nojekyll`. `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `CHANGELOG.md`,
+`LICENSE` (MIT). Set repo metadata via API: description, homepage `https://pal404error.github.io/sift/`,
+14 discovery topics. Enabled GitHub Pages (source main `/docs`, legacy build). Cut annotated
+`v0.1.0` tag + GitHub release.
+**Verification:** `git push` OK; `curl https://pal404error.github.io/sift/` → HTTP 200;
+`curl https://github.com/pal404error/sift` → HTTP 200; release at `/releases/tag/v0.1.0`.
+**Next action:** Phase 11 options — (a) real gold set + cross-encoder eval to truly tune
+rerank_multiplier, (b) AGY: /metrics Prometheus scrape config / React UI, (c) DB-backed
+CrawlState, (d) future tags v0.1.x as fixes land.
