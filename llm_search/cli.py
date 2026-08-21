@@ -85,6 +85,9 @@ def main() -> None:
     demo_parser = subparsers.add_parser("demo", help="Serve with a seeded demo corpus")
     demo_parser.add_argument("--host", default="127.0.0.1")
     demo_parser.add_argument("--port", type=int, default=8000)
+    demo_parser.add_argument(
+        "--no-hybrid", action="store_true", help="Disable hybrid (lexical+vector) retrieval"
+    )
 
     args = parser.parse_args()
 
@@ -94,6 +97,8 @@ def main() -> None:
         # Settings are cached on first use, so apply providers before building.
         os.environ.setdefault("EMBEDDING_PROVIDER", "local")
         os.environ.setdefault("RERANKER", "cross-encoder")
+        if not args.no_hybrid:
+            os.environ.setdefault("SIFT_HYBRID", "true")
         get_settings.cache_clear()
         engine = get_engine()
         for d in DEMO_DOCS:

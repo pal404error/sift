@@ -92,3 +92,13 @@
 - **Self-debate:** a release is a legitimate visibility lever (shows up in feeds, gives the
   human something real to announce). Must be honest — no inflated claims, no "we're trending".
 - **Committed + tagged + released** via `gh` (authed as repo owner). Loop continues.
+
+## Cycle 8 — 2026-08-21 (demo + community)
+- **Feature:** `sift demo` now enables hybrid retrieval by default (best showcase in 60s);
+  added `--no-hybrid` to disable. README notes it.
+- **Community infra:** `promo/discussions.md` — 3 honest GitHub Discussion seeds (model
+  benchmark poll, hardest retrieval case, RRF vs weighted). Genuine infrastructure, no bait,
+  no "we're trending" framing.
+- **Self-debate:** community is built on real questions, not seeded engagement. These ask for
+  reproducible cases we'll fold into ROADMAP/benchmark — honest flywheel.
+- **Committed + pushed.** Loop continues.

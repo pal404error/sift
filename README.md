@@ -120,7 +120,8 @@ sift demo
 ```
 
 `sift demo` starts the API with local embeddings + a cross-encoder reranker and seeds a
-small built-in corpus, so the web UI returns real sourced results immediately.
+small built-in corpus, so the web UI returns real sourced results immediately. Hybrid
+(lexical + vector) retrieval is enabled by default — pass `--no-hybrid` to disable.
 
 ## Get Involved
 
