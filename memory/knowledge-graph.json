@@ -1520,6 +1520,14 @@
       }
     },
     {
+      "id": "tests.test_eval.test_semantic_gold_defeats_lexical_matching",
+      "type": "function",
+      "label": "test_semantic_gold_defeats_lexical_matching",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
       "id": "tests.test_eval.test_run_eval_gate_passes_above_threshold",
       "type": "function",
       "label": "test_run_eval_gate_passes_above_threshold",
@@ -1561,6 +1569,14 @@
       "id": "scripts.run_eval.main",
       "type": "function",
       "label": "main",
+      "meta": {
+        "module": "scripts.run_eval"
+      }
+    },
+    {
+      "id": "scripts.run_eval._row",
+      "type": "function",
+      "label": "_row",
       "meta": {
         "module": "scripts.run_eval"
       }
@@ -1663,6 +1679,44 @@
       "label": "generate",
       "meta": {
         "module": "llm_search.providers.fake"
+      }
+    },
+    {
+      "id": "mod:llm_search.providers.local",
+      "type": "module",
+      "label": "llm_search.providers.local",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.providers.local.LocalEmbedding",
+      "type": "class",
+      "label": "LocalEmbedding",
+      "meta": {
+        "module": "llm_search.providers.local"
+      }
+    },
+    {
+      "id": "llm_search.providers.local.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.providers.local"
+      }
+    },
+    {
+      "id": "llm_search.providers.local._ensure",
+      "type": "function",
+      "label": "_ensure",
+      "meta": {
+        "module": "llm_search.providers.local"
+      }
+    },
+    {
+      "id": "llm_search.providers.local.embed",
+      "type": "function",
+      "label": "embed",
+      "meta": {
+        "module": "llm_search.providers.local"
       }
     },
     {
@@ -2763,12 +2817,27 @@
     },
     {
       "source": "mod:llm_search.cli",
+      "target": "ext:os",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "ext:types",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
       "target": "ext:uvicorn",
       "kind": "imports"
     },
     {
       "source": "mod:llm_search.cli",
       "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "ext:llm_search.config",
       "kind": "imports"
     },
     {
@@ -3708,6 +3777,11 @@
     },
     {
       "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_semantic_gold_defeats_lexical_matching",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
       "target": "tests.test_eval.test_run_eval_gate_passes_above_threshold",
       "kind": "defines"
     },
@@ -3719,6 +3793,11 @@
     {
       "source": "mod:tests.test_eval",
       "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "ext:json",
       "kind": "imports"
     },
     {
@@ -3759,6 +3838,11 @@
     {
       "source": "mod:scripts.run_eval",
       "target": "scripts.run_eval.main",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "scripts.run_eval._row",
       "kind": "defines"
     },
     {
@@ -3809,6 +3893,11 @@
     {
       "source": "mod:scripts.run_eval",
       "target": "ext:llm_search.providers.fake",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:scripts.run_eval",
+      "target": "ext:llm_search.providers.local",
       "kind": "imports"
     },
     {
@@ -3927,6 +4016,51 @@
       "kind": "imports"
     },
     {
+      "source": "mod:llm_search.providers.local",
+      "target": "llm_search.providers.local.LocalEmbedding",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "llm_search.providers.local.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "llm_search.providers.local._ensure",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "llm_search.providers.local.embed",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "ext:__future__",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "ext:typing",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "ext:llm_search.config",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "ext:llm_search.providers.base",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.local",
+      "target": "ext:sentence_transformers",
+      "kind": "imports"
+    },
+    {
       "source": "mod:llm_search.providers.__init__",
       "target": "llm_search.providers.__init__.build_embedding",
       "kind": "defines"
@@ -3959,6 +4093,11 @@
     {
       "source": "mod:llm_search.providers.__init__",
       "target": "ext:llm_search.providers.fake",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.providers.__init__",
+      "target": "ext:llm_search.providers.local",
       "kind": "imports"
     },
     {
@@ -4408,7 +4547,7 @@
     }
   ],
   "stats": {
-    "node_count": 274,
-    "edge_count": 458
+    "node_count": 281,
+    "edge_count": 475
   }
 }

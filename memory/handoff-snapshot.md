@@ -199,3 +199,26 @@ terminal "wire" code box, uppercase bold CTAs. Kept all sections/FAQ/copy/hambur
 still self-contained (no external resources).
 **Verification:** python3 parse OK; Helvetica+bold confirmed; zero external refs; sections/SEO present;
 no fabricated claims. Pushed `74acda9`.
+
+### Update 2026-08-20 — 3-Hour "100x" plan + execution (collab: agent + AGY)
+**Plan:** Created PLAN_100x.md via AGY (3 hourly blocks). NotebookLM could NOT be used —
+auth expired (AUTH_EXPIRED); user must run `save_auth_tokens` with fresh cookies to loop it in.
+Agent analysis found the **eval was a tautology** (lexical fake embeddings + lexical reranker
+over a 4-doc gold set where queries share tokens with answers -> MRR~1.0 proves nothing) and
+the demo started empty. That is the real "100x" lever.
+**Hour 1 executed + verified (pushed `a9fd184`):**
+- Added `local` embedding provider (`llm_search/providers/local.py`, sentence-transformers MiniLM;
+  optional dep). `build_embedding` now supports "local".
+- `scripts/run_eval.py` gained `--embedding {fake,local}`, `--reranker {lexical,cross-encoder}`,
+  `--compare` (side-by-side table).
+- New `tests/gold/eval_gold_semantic.json` (16 docs / 16 queries: paraphrases, synonyms,
+  multi-hop, no token overlap) -> CI gate asserts MRR < 0.7 (non-trivial).
+- Measured: fake+lexical MRR **0.124** vs local+cross-encoder MRR **0.593** (recall@5 0.81) ->
+  a real ~5x relevance lift on hard queries. `rerank_multiplier=2` already optimal.
+- Added `sift demo` zero-config command (seeds bundled corpus, local+cross-encoder; verified
+  live: OIDC query ranks 'oidc' #1). Added `semantic` pyproject extra; README retrieval-quality
+  + live-demo sections. New offline CI test.
+**Verification:** ruff clean; mypy clean (42 files); pytest 100% pass (6 skipped, 81.6% cov).
+**Remaining (Hour 2/3):** polish in-app static UI (scores/highlights/citations), gate semantic
+eval into CI as network-skippable job, crawl robustness (noindex/timeout/retry/tests), honest
+README screenshot. NotebookLM synthesis once re-authed.
