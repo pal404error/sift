@@ -73,6 +73,8 @@ Sift is highly configurable via environment variables. Check out `.env.example` 
 | `SIFT_RERANK_MULTIPLIER` | `2` | Candidate pool size = `top_k × multiplier` |
 | `SIFT_HYBRID` | `false` | Enable lexical + vector fusion (RRF) |
 | `SIFT_RRF_K` | `60` | RRF constant for the fusion formula |
+| `SIFT_HYBRID_MODE` | `rrf` | `rrf` (rank fusion) or `weighted` (normalized score blend) |
+| `SIFT_HYBRID_ALPHA` | `0.5` | Vector weight when `weighted` (0 = lexical-only, 1 = vector-only) |
 
 ## Monitoring
 

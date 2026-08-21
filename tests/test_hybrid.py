@@ -58,6 +58,28 @@ def test_hybrid_still_returns_vector_match():
     assert res and res[0]["id"] == "x"
 
 
+def test_weighted_fusion_mode_surfaces_lexical_only_match():
+    eng = _hybrid_engine()
+    eng.settings.hybrid_mode = "weighted"
+    eng.settings.hybrid_alpha = 0.0  # pure lexical
+    eng.lexical.add(  # only in the lexical index
+        "lx1",
+        "kubernetes operator pattern",
+        {"doc_url": "u", "doc_title": "t", "index": 0, "text": "kubernetes operator pattern"},
+    )
+    res = eng.search("kubernetes operator pattern", top_k=3)
+    assert any(r["id"] == "lx1" for r in res)
+
+
+def test_weighted_fuse_blend_respects_alpha():
+    vec = [{"id": "a", "score": 0.9}, {"id": "b", "score": 0.1}]
+    lex = [("a", 0.2), ("b", 0.8)]
+    pure_lex = SearchEngine._weighted_fuse(vec, lex, alpha=0.0)
+    assert pure_lex["b"] > pure_lex["a"]  # lexical leader wins when alpha=0
+    pure_vec = SearchEngine._weighted_fuse(vec, lex, alpha=1.0)
+    assert pure_vec["a"] > pure_vec["b"]  # vector leader wins when alpha=1
+
+
 def test_hybrid_off_by_default():
     eng = SearchEngine(
         store=InMemoryStore(),

@@ -64,3 +64,15 @@
   insight). Streaming makes "it works, and fast" visceral. No fake progress UI.
 - **Committed + pushed.** Loop continues — next candidate: weighted/query-style hybrid fusion
   (roadmap) or a multi-model benchmark sweep (needs model downloads).
+
+## Cycle 5 — 2026-08-21 (fusion configurability)
+- **Feature:** `SIFT_HYBRID_MODE` (`rrf` | `weighted`) + `SIFT_HYBRID_ALPHA`. Weighted path
+  min-max-normalizes each signal to [0,1] before blending (required because cosine [-1,1] and
+  BM25-lite are not comparable — per research notes). RRF remains the robust default; weighted
+  is opt-in for teams with an eval set to tune alpha. ADR-022.
+- **Self-debate:** shipping weighted fusion could invite misuse (tuning without an eval set is
+  guessing — the research explicitly warns). Mitigation: keep RRF default, document the caveat
+  in ADR + README, and expose alpha only as an advanced knob. Honest, not hidden.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. One test initially asserted a false premise
+  (symmetric tie) — corrected, not the code.
+- **Committed + pushed.** Loop continues.

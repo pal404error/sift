@@ -230,6 +230,18 @@
   *Rationale:* genuine demo/UX lift, fully testable offline (FakeLLM fallback), and consistent
   with the "developer-first, batteries-included" posture.
 
+- **ADR-022 — Configurable hybrid fusion (RRF vs weighted).**
+  *Context:* research (`research/RETRIEVAL_NOTES.md`) notes RRF is the robust default but
+  weighted fusion with a tuned `alpha` can help once you have an eval set. We should support
+  both without forcing a choice at code level.
+  *Decision:* added `Settings.hybrid_mode` (`"rrf"` | `"weighted"`, default `"rrf"`) and
+  `hybrid_alpha` (default `0.5`). `SearchEngine.search` dispatches: RRF (rank positions) or
+  weighted (min-max normalize each signal to [0,1], blend `alpha*vector + (1-alpha)*lexical`).
+  Normalization is mandatory because cosine ([-1,1]) and BM25-lite (unbounded) are not
+  comparable. RRF stays default; weighted is opt-in. Covered by `tests/test_hybrid.py`.
+  *Rationale:* gives advanced users a tunable lever (and a path to query-style routing later)
+  while keeping the safe default. Honest: weighted is only better *with* an eval set to tune.
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

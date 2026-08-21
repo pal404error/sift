@@ -79,13 +79,22 @@ class SearchEngine:
         if self.lexical is None:
             return self.reranker.rerank(query, vector_hits, top_n=top_k)
 
-        # Hybrid: fuse vector + lexical ranks via Reciprocal Rank Fusion (RRF).
+        # Hybrid: fuse vector + lexical results.
         lexical_hits = self.lexical.search(query, top_n=max(wide, top_k))
-        fused: dict[str, float] = {}
-        for rank, hit in enumerate(vector_hits):
-            fused[hit["id"]] = fused.get(hit["id"], 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
-        for rank, (doc_id, _score) in enumerate(lexical_hits):
-            fused[doc_id] = fused.get(doc_id, 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
+        if self.settings.hybrid_mode == "weighted":
+            fused = self._weighted_fuse(
+                vector_hits, lexical_hits, self.settings.hybrid_alpha
+            )
+        else:  # "rrf" (default)
+            fused = {}
+            for rank, hit in enumerate(vector_hits):
+                fused[hit["id"]] = (
+                    fused.get(hit["id"], 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
+                )
+            for rank, (doc_id, _score) in enumerate(lexical_hits):
+                fused[doc_id] = (
+                    fused.get(doc_id, 0.0) + 1.0 / (self.settings.rrf_k + rank + 1)
+                )
 
         ordered = sorted(fused.keys(), key=lambda i: fused[i], reverse=True)
         by_id = {h["id"]: h for h in vector_hits}
@@ -96,6 +105,31 @@ class SearchEngine:
             elif (p := self.lexical.payload(cid)) is not None:
                 candidates.append({"id": cid, "score": fused[cid], "payload": p})
         return self.reranker.rerank(query, candidates, top_n=top_k)
+
+    @staticmethod
+    def _normalize(scores: dict[str, float]) -> dict[str, float]:
+        if not scores:
+            return {}
+        lo, hi = min(scores.values()), max(scores.values())
+        span = (hi - lo) or 1.0
+        return {k: (v - lo) / span for k, v in scores.items()}
+
+    @staticmethod
+    def _weighted_fuse(
+        vector_hits: list[dict], lexical_hits: list[tuple[str, float]], alpha: float
+    ) -> dict[str, float]:
+        """Min-max normalize each signal to [0,1], then blend: alpha*vector + (1-alpha)*lexical.
+
+        Normalization is required because raw cosine ([-1,1]) and BM25-lite (unbounded) are
+        not comparable — see research/RETRIEVAL_NOTES.md. RRF remains the robust default;
+        weighted fusion is for teams that have an eval set to tune `alpha` against.
+        """
+        vec_scores = {h["id"]: h["score"] for h in vector_hits}
+        lex_scores = {doc_id: score for doc_id, score in lexical_hits}
+        vec_n = SearchEngine._normalize(vec_scores)
+        lex_n = SearchEngine._normalize(lex_scores)
+        ids = set(vec_n) | set(lex_n)
+        return {i: alpha * vec_n.get(i, 0.0) + (1 - alpha) * lex_n.get(i, 0.0) for i in ids}
 
     def ask(self, query: str, top_k: int = 5, use_hyde: bool | None = None) -> dict:
         use_hyde = self.settings.use_hyde if use_hyde is None else use_hyde

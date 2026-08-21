@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Research-grade eval**: `ndcg@k` metric added; `scripts/run_eval.py --compare` now reports recall/precision/ndcg/MRR. Headline lift (recall@5 0.31→0.81) verified against `tests/gold/eval_gold_semantic.json`.
 - **HyDE query expansion**: `SearchEngine.ask(use_hyde=True)` rewrites the query into a hypothetical answer passage for better retrieval (`SIFT_USE_HYDE`). Off by default (ADR-020).
 - **Streaming answers (SSE)**: `LLMProvider.stream` + `SearchEngine.ask_stream` + `GET /ask/stream` (Server-Sent Events: sources then token events). Real token streaming for OpenAI/Anthropic; safe fallback for all. CLI `ask`/`search` gained `--hybrid`/`--hyde` flags (ADR-021).
+- **Configurable hybrid fusion**: `SIFT_HYBRID_MODE` (`rrf` | `weighted`) + `SIFT_HYBRID_ALPHA`. Weighted path min-max-normalizes each signal before blending (ADR-022). RRF remains the default.
 - Transparent retrieval benchmark in `data/retrieval_benchmark.csv` (real, reproducible numbers).
 - README hook leading with the measured ~5× retrieval lift and an honest star CTA.
 - Launch/promo assets in `promo/` (Show HN, Reddit, X drafts) and a real-metrics `SITREP.md`.
