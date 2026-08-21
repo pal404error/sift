@@ -23,6 +23,7 @@ class _Resp:
 def test_fetch_strips_scripts_and_extracts_text(monkeypatch):
     monkeypatch.setattr(fetch.httpx, "get", lambda *a, **k: _Resp())
     monkeypatch.setattr(fetch, "robots_allowed", lambda url: True)
+    monkeypatch.setattr(fetch, "_host_is_safe", lambda url: True)
     doc = fetch_url("http://example.com/p", respect_robots=True)
     assert "Hello world" in doc.text
     assert "bad()" not in doc.text
@@ -32,6 +33,7 @@ def test_fetch_strips_scripts_and_extracts_text(monkeypatch):
 def test_fetch_respects_robots(monkeypatch):
     monkeypatch.setattr(fetch.httpx, "get", lambda *a, **k: _Resp())
     monkeypatch.setattr(fetch, "robots_allowed", lambda url: False)
+    monkeypatch.setattr(fetch, "_host_is_safe", lambda url: True)
     with pytest.raises(RobotDisallowed):
         fetch_url("http://example.com/p", respect_robots=True)
 
@@ -97,12 +99,14 @@ def test_fetch_handles_429_backoff(monkeypatch):
 
     monkeypatch.setattr(fetch.httpx, "get", fake_get)
     monkeypatch.setattr(fetch, "robots_allowed", lambda url: True)
-    
+    monkeypatch.setattr(fetch, "_host_is_safe", lambda url: True)
+
     sleeps: list[float] = []
     doc = fetch_url("http://example.com/p", respect_robots=False, sleep=lambda s: sleeps.append(s))
     assert doc is not None
     assert doc.title == "Hi"
     assert sleeps == [1.5]
+
 
 def test_fetch_handles_429_exponential_backoff(monkeypatch):
     class _Resp429:
@@ -119,7 +123,8 @@ def test_fetch_handles_429_exponential_backoff(monkeypatch):
 
     monkeypatch.setattr(fetch.httpx, "get", fake_get)
     monkeypatch.setattr(fetch, "robots_allowed", lambda url: True)
-    
+    monkeypatch.setattr(fetch, "_host_is_safe", lambda url: True)
+
     sleeps: list[float] = []
     doc = fetch_url("http://example.com/p", respect_robots=False, sleep=lambda s: sleeps.append(s))
     assert doc is not None

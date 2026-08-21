@@ -30,7 +30,9 @@ class LLMProvider(ABC):
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     import math
 
-    dot = sum(x * y for x, y in zip(a, b, strict=False))
+    # strict=True so a dimension mismatch raises instead of silently truncating to the
+    # shorter vector (which would yield a wrong, non-zero similarity and mis-rank results).
+    dot = sum(x * y for x, y in zip(a, b, strict=True))
     na = math.sqrt(sum(x * x for x in a))
     nb = math.sqrt(sum(y * y for y in b))
     if na == 0 or nb == 0:

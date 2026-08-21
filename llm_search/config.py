@@ -6,7 +6,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_prefix="SIFT_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     app_name: str = "llm-search"
     log_level: str = "INFO"
@@ -39,6 +44,7 @@ class Settings(BaseSettings):
     respect_robots: bool = True
     min_crawl_interval: float = 1.0
     crawl_concurrency: int = 4
+    max_fetch_bytes: int = 10 * 1024 * 1024  # cap downloaded page size (SSRF/memory guard)
 
     # Reranking
     reranker: str = "lexical"  # "none" | "lexical" | "fake" | "cross-encoder"

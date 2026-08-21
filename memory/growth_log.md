@@ -145,3 +145,20 @@
 - **Tests:** `tests/test_import_beir.py` (pure build_gold, no network) + integrity test now scans
   all gold JSONs. `scripts/import_beir.py` refactored to expose testable `build_gold`.
 - **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. new tests); coverage 82%. **Committed + pushed.**
+
+## Cycle 13 — 2026-08-22 (multi-agent audit + fixes)
+- **Process:** launched 4 parallel auditors (correctness, security, architecture, docs) then a
+  debate/consolidation agent. All findings confirmed REAL (no false positives). The debate agent
+  resolved the env-prefix conflict: canonical fix = `env_prefix="SIFT_"` + per-field back-compat.
+- **Critical fixes:** (1) `Settings` now `env_prefix="SIFT_"` so every documented `SIFT_*` knob and
+  the CLI `--hybrid`/`--hyde` flags actually work (were silent no-ops). (2) Crawler BFS was dead
+  (link extraction on stripped text) + `_call_fetch` passed `etag` to the wrong positional arg
+  (disabled robots) — both fixed; crawler now expands and respects robots.
+- **Security:** `fetch_url` rejects non-http(s) + private/loopback/link-local IPs, re-validates
+  redirects, caps size (10MB); throttle locked. API inputs bounded (`max_pages`<=500, `top_k`<=50,
+  stream <=4096 tokens). `/health` readiness requires both providers (`and`).
+- **Correctness:** `cosine_similarity` strict=True (no silent dim-truncation). Docs: README "~5×"→
+  "2.6×"; RETRIEVAL_NOTES marks weighted/routing as shipped.
+- **Tests:** `tests/test_audit_fixes.py` (env prefix, SSRF, BFS, robots arg order, cosine strict,
+  API bounds). Updated `test_api_auth`/`.env.example` to `SIFT_` names. All gates green.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. **Committed + pushed.**

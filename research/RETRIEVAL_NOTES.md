@@ -46,8 +46,9 @@ not a naive single-method retriever.
 
 ## 4. Honest gaps & roadmap (per the research)
 The same sources note these as the *next* steps beyond RRF — logged honestly, not claimed:
-- **Weighted fusion / query-style routing**: RRF treats both lists equally; a router could
-  weight BM25 higher for `ERROR-0x...` style queries. Not yet implemented (candidate roadmap item).
+- **Weighted fusion / query-style routing**: SHIPPED (off by default). `SIFT_HYBRID_MODE=weighted`
+  with `SIFT_HYBRID_ALPHA`, plus `SIFT_HYBRID_ROUTE` (biases toward lexical for exact-match queries
+  via `SearchEngine._routed_alpha`). See `llm_search/engine.py` and CHANGELOG ADR-022/023.
 - **Full BM25** vs our BM25-*lite*: we use IDF + TF saturation without full length-norm tuning.
   Adequate for fusion; could be upgraded.
 - **Bigger / out-of-domain gold sets**: our semantic set is small; expanding it strengthens

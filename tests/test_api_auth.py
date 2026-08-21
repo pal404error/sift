@@ -7,8 +7,8 @@ from llm_search.config import get_settings as _gs
 
 
 def test_provider_health_redacts_secrets(monkeypatch):
-    monkeypatch.setenv("LLM_API_KEY", "supersecret")
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "")
+    monkeypatch.setenv("SIFT_LLM_API_KEY", "supersecret")
+    monkeypatch.setenv("SIFT_ANTHROPIC_API_KEY", "")
     _gs.cache_clear()
     with TestClient(app) as c:
         r = c.get("/health/providers")
@@ -20,8 +20,8 @@ def test_provider_health_redacts_secrets(monkeypatch):
 
 
 def test_auth_required_blocks_without_key(monkeypatch):
-    monkeypatch.setenv("REQUIRE_AUTH", "true")
-    monkeypatch.setenv("API_KEYS", "user:GOODKEY")
+    monkeypatch.setenv("SIFT_REQUIRE_AUTH", "true")
+    monkeypatch.setenv("SIFT_API_KEYS", "user:GOODKEY")
     _gs.cache_clear()
     with TestClient(app) as c:
         assert c.get("/ask", params={"q": "hi"}).status_code == 401
@@ -30,8 +30,8 @@ def test_auth_required_blocks_without_key(monkeypatch):
 
 
 def test_auth_wrong_key_401(monkeypatch):
-    monkeypatch.setenv("REQUIRE_AUTH", "true")
-    monkeypatch.setenv("API_KEYS", "user:GOODKEY")
+    monkeypatch.setenv("SIFT_REQUIRE_AUTH", "true")
+    monkeypatch.setenv("SIFT_API_KEYS", "user:GOODKEY")
     _gs.cache_clear()
     with TestClient(app) as c:
         r = c.get("/ask", params={"q": "hi"}, headers={"Authorization": "Bearer WRONGKEY"})
@@ -39,7 +39,7 @@ def test_auth_wrong_key_401(monkeypatch):
 
 
 def test_health_open_without_auth(monkeypatch):
-    monkeypatch.setenv("REQUIRE_AUTH", "true")
+    monkeypatch.setenv("SIFT_REQUIRE_AUTH", "true")
     _gs.cache_clear()
     with TestClient(app) as c:
         assert c.get("/health/live").status_code == 200

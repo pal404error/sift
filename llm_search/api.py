@@ -109,7 +109,7 @@ def health_ready(response: Response) -> dict:
         s = get_settings()
         llm_ok = s.llm_provider == "fake" or bool(s.llm_api_key or s.anthropic_api_key)
         emb_ok = s.embedding_provider == "fake" or bool(s.llm_api_key)
-        if not (llm_ok or emb_ok):
+        if not (llm_ok and emb_ok):
             response.status_code = 503
             return {"status": "error", "detail": "No provider ready"}
         return {"status": "ok"}
@@ -150,6 +150,8 @@ def ingest(url: str) -> dict:
 
 @app.post("/crawl", dependencies=[Depends(require_role("user"))])
 def crawl(url: str, max_pages: int = 20) -> dict:
+    # Bound the crawl to prevent resource exhaustion / amplified SSRF.
+    max_pages = max(1, min(max_pages, 500))
     try:
         stats = get_engine().crawl_site(url, max_pages=max_pages)
     except Exception as e:
@@ -159,12 +161,14 @@ def crawl(url: str, max_pages: int = 20) -> dict:
 
 @app.get("/search", dependencies=[Depends(require_role("user"))])
 def search(q: str, top_k: int = 5) -> dict:
+    top_k = max(1, min(top_k, 50))
     results = get_engine().search(sanitize_query(q), top_k=top_k)
     return {"query": q, "results": results}
 
 
 @app.get("/ask", dependencies=[Depends(require_role("user"))])
 def ask(q: str, top_k: int = 5) -> dict:
+    top_k = max(1, min(top_k, 50))
     return get_engine().ask(sanitize_query(q), top_k=top_k)
 
 
@@ -173,10 +177,18 @@ def ask_stream(q: str, top_k: int = 5, hyde: bool = False) -> StreamingResponse:
     """Stream the answer as Server-Sent Events (one ``data: {json}`` line per event).
 
     Events: ``{"type": "sources", "sources": [...]}`` then ``{"type": "token", "text": "..."}``.
+    Output is capped at ``max_tokens`` to bound generation / connection lifetime.
     """
+    top_k = max(1, min(top_k, 50))
+    max_tokens = 4096
 
     def event_gen():
+        emitted = 0
         for ev in get_engine().ask_stream(sanitize_query(q), top_k=top_k, use_hyde=hyde):
             yield f"data: {json.dumps(ev)}\n\n"
+            if ev.get("type") == "token":
+                emitted += max(1, len(ev.get("text", "")))
+                if emitted >= max_tokens:
+                    break
 
     return StreamingResponse(event_gen(), media_type="text/event-stream")

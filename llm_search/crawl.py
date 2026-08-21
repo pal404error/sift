@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import inspect
 import json
 from collections import deque
 from collections.abc import Callable
@@ -89,17 +88,18 @@ def _call_fetch(
     fetch_fn: Callable[..., Document | None],
     url: str,
     etag: str | None,
+    last_modified: str | None = None,
 ) -> Document | None:
-    """Invoke `fetch_fn` with conditional args only if it accepts them."""
-    params = inspect.signature(fetch_fn).parameters
-    accepts_extra = (
-        len(params) >= 3
-        or any(p.kind == inspect.Parameter.VAR_POSITIONAL for p in params.values())
-        or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values())
-    )
-    if accepts_extra:
-        return fetch_fn(url, etag, None)
-    return fetch_fn(url)
+    """Invoke `fetch_fn` with conditional GET args by keyword.
+
+    Keyword args are used so they map to the correct parameters (the previous
+    positional call mapped `etag` onto `timeout` and `None` onto `respect_robots`,
+    silently bypassing robots.txt). Falls back to a bare call for minimal fakes.
+    """
+    try:
+        return fetch_fn(url, etag=etag, last_modified=last_modified)
+    except TypeError:
+        return fetch_fn(url)
 
 
 def crawl_site(
@@ -145,7 +145,8 @@ def crawl_site(
         ingest_fn(doc)
         state.record(url, doc.etag)
         stats["pages"] += 1
-        for link in extract_links(doc.text, url):
+        # Link extraction needs the raw HTML; doc.text has tags stripped.
+        for link in extract_links(doc.html or doc.text, url):
             if link not in discovered:
                 discovered.add(link)
                 queue.append(link)

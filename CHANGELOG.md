@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Larger, multilingual gold set**: `tests/gold/eval_gold_large.json` (24 factual docs, 32 queries, 8 cross-lingual ES/FR/DE/IT) + `data/retrieval_benchmark_large.csv`. Findings: on keyword-heavy queries lexical recall is already high (semantic wins on ndcg/mrr, not recall); model ranking is dataset-dependent. `tests/test_gold_integrity.py` guards gold-set validity.
 - **External BEIR benchmark**: `scripts/import_beir.py` converts a BEIR dataset (ground-truth qrels, so relevance is not authored by us) into gold format. On BEIR SciFact (2000 docs, 100 queries), semantic gives ~2.2× recall / ~2.5× MRR over lexical; `all-MiniLM-L6-v2` > `paraphrase-MiniLM-L3-v2`. Results in `data/retrieval_benchmark_beir.csv` (generated gold file is git-ignored).
 
+### Fixed (multi-agent audit)
+- **CRITICAL: config env-var prefix** — `Settings` now uses `env_prefix="SIFT_"`, so every documented `SIFT_*` knob (and the `sift` CLI `--hybrid`/`--hyde` flags and `sift demo` hybrid default) actually takes effect. Previously these were silent no-ops. `.env.example` updated to `SIFT_` names.
+- **CRITICAL: crawler BFS was dead** — link extraction read plaintext (tags already stripped), so crawls never expanded past page 1. Now uses the raw HTML (`Document.html`). Also fixed `_call_fetch` passing `etag` into the wrong positional arg (which silently disabled `respect_robots` on crawls); it now passes `etag`/`last_modified` by keyword.
+- **HIGH: SSRF in fetch** — `fetch_url` now rejects non-http(s) schemes and private/loopback/link-local IPs, re-validates every redirect hop, and caps response size (`SIFT_MAX_FETCH_BYTES`, default 10MB). Throttle now uses a lock.
+- **HIGH: unbounded inputs** — `/crawl` `max_pages` clamped to [1,500]; `/search`/`/ask`/`/ask/stream` `top_k` clamped to [1,50]; streaming capped at 4096 tokens.
+- **MEDIUM: `/health` readiness** — `emb_ok` no longer keys off the LLM key, and the readiness check requires BOTH providers ready (`and`, not `or`).
+- **MEDIUM: cosine_similarity** now uses `zip(..., strict=True)` so a dimension mismatch raises instead of silently truncating and mis-ranking.
+- **Docs** — README overstated the lift as "~5×" (now "2.6×"); `SIFT_HYBRID_ROUTE` noted as weighted-mode only; `research/RETRIEVAL_NOTES.md` now records weighted fusion + routing as shipped (not "not implemented").
+
 ## [0.2.0] - 2026-08-21
 
 ### Added

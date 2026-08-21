@@ -2,7 +2,7 @@
 
 > The enterprise-ready, self-hostable RAG search engine that brings your data to life.
 
-**Self-hosted RAG that actually retrieves.** On a deliberately hard gold set — paraphrases, synonyms, and multi-hop questions built to defeat lexical matching — swapping random "fake" embeddings for local MiniLM + a cross-encoder reranker lifts retrieval relevance **~5×** (recall@5: 0.31 → 0.81). No API key required for relevance, and you own your data.
+**Self-hosted RAG that actually retrieves.** On a deliberately hard gold set — paraphrases, synonyms, and multi-hop questions built to defeat lexical matching — swapping random "fake" embeddings for local MiniLM + a cross-encoder reranker lifts retrieval relevance **2.6×** (recall@5: 0.31 → 0.81). No API key required for relevance, and you own your data.
 
 [![⭐ Star Sift](https://img.shields.io/github/stars/pal404error/sift?style=social)](https://github.com/pal404error/sift)
 
@@ -75,7 +75,7 @@ Sift is highly configurable via environment variables. Check out `.env.example` 
 | `SIFT_RRF_K` | `60` | RRF constant for the fusion formula |
 | `SIFT_HYBRID_MODE` | `rrf` | `rrf` (rank fusion) or `weighted` (normalized score blend) |
 | `SIFT_HYBRID_ALPHA` | `0.5` | Vector weight when `weighted` (0 = lexical-only, 1 = vector-only) |
-| `SIFT_HYBRID_ROUTE` | `false` | Opt-in: bias toward lexical when a query has exact-match signals (codes/IDs) |
+| `SIFT_HYBRID_ROUTE` | `false` | Opt-in: bias toward lexical when a query has exact-match signals (codes/IDs). Weighted mode only (`SIFT_HYBRID_MODE=weighted`). |
 
 ## Monitoring
 

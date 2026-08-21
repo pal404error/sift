@@ -95,8 +95,8 @@ def main() -> None:
         uvicorn.run("llm_search.api:app", host="127.0.0.1", port=8000, reload=True)
     elif args.command == "demo":
         # Settings are cached on first use, so apply providers before building.
-        os.environ.setdefault("EMBEDDING_PROVIDER", "local")
-        os.environ.setdefault("RERANKER", "cross-encoder")
+        os.environ.setdefault("SIFT_EMBEDDING_PROVIDER", "local")
+        os.environ.setdefault("SIFT_RERANKER", "cross-encoder")
         if not args.no_hybrid:
             os.environ.setdefault("SIFT_HYBRID", "true")
         get_settings.cache_clear()
