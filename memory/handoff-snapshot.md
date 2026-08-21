@@ -170,3 +170,10 @@ and a "React" UI claim → plain HTML). `docs/index.html` responsive GitHub Page
 **Next action:** Phase 11 options — (a) real gold set + cross-encoder eval to truly tune
 rerank_multiplier, (b) AGY: /metrics Prometheus scrape config / React UI, (c) DB-backed
 CrawlState, (d) future tags v0.1.x as fixes land.
+
+### Update 2026-08-20 — Monitoring stack (Prometheus + Grafana)
+**Done:** `prometheus/prometheus.yml` (scrape sift `/metrics`, 15s); `grafana/provisioning/datasources/datasource.yml`
+(pre-provisioned Prometheus); `docker-compose.yml` adds `prometheus` + `grafana` under a
+`monitoring` profile (`docker compose --profile monitoring up -d`); README "Monitoring" section.
+**Verification:** YAML parses (all 3 configs); `ruff check .` clean; `pytest tests/test_api.py`
+4 passed (metrics/health). Pushed `920982c`.
