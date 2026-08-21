@@ -80,6 +80,28 @@ def test_weighted_fuse_blend_respects_alpha():
     assert pure_vec["a"] > pure_vec["b"]  # vector leader wins when alpha=1
 
 
+def test_looks_lexical_detects_codes():
+    assert SearchEngine._looks_lexical("Outlook 2019 sync error 0x80004005")
+    assert SearchEngine._looks_lexical("rollback runbook for v3.2 deployment")
+    assert not SearchEngine._looks_lexical("what is retrieval augmented generation")
+
+
+def test_query_routing_surfaces_lexical_only_on_code_query():
+    eng = _hybrid_engine()
+    eng.settings.hybrid_mode = "weighted"
+    eng.settings.hybrid_alpha = 1.0  # pure vector by default
+    eng.settings.hybrid_route = True
+    eng.lexical.add(
+        "code1",
+        "error 0x80004005 troubleshooting",
+        {"doc_url": "u", "doc_title": "t", "index": 0, "text": "error 0x80004005"},
+    )
+    # Without routing, alpha=1.0 (pure vector) would miss the lexical-only doc.
+    # With routing on a code query, alpha is capped at 0.3 -> lexical wins.
+    res = eng.search("Outlook 2019 sync error 0x80004005", top_k=3)
+    assert any(r["id"] == "code1" for r in res)
+
+
 def test_hybrid_off_by_default():
     eng = SearchEngine(
         store=InMemoryStore(),

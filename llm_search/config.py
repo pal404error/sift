@@ -50,6 +50,7 @@ class Settings(BaseSettings):
     rrf_k: int = 60
     hybrid_mode: str = "rrf"  # "rrf" (rank fusion) | "weighted" (normalized score blend)
     hybrid_alpha: float = 0.5  # weight on the vector signal when hybrid_mode="weighted"
+    hybrid_route: bool = False  # opt-in: bias toward lexical when query has exact-match signals
 
     # Query expansion (Hypothetical Document Embeddings)
     use_hyde: bool = False

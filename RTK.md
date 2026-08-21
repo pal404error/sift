@@ -242,6 +242,18 @@
   *Rationale:* gives advanced users a tunable lever (and a path to query-style routing later)
   while keeping the safe default. Honest: weighted is only better *with* an eval set to tune.
 
+- **ADR-023 — Query-style routing for hybrid fusion.**
+  *Context:* research (`research/RETRIEVAL_NOTES.md`) notes production queries with codes/IDs/
+  version strings need lexical precision, while paraphrased questions need vector semantics.
+  A router can pick the right weight per query instead of one global alpha.
+  *Decision:* added `Settings.hybrid_route` (default `False`). When on and `hybrid_mode="weighted"`,
+  `SearchEngine._routed_alpha` caps the vector weight at 0.3 for queries whose tokens match
+  exact-match patterns (hex, all-caps acronyms, digit-heavy). Implemented as a transparent
+  regex heuristic (not ML); only active in weighted mode (RRF ignores weights). Covered by
+  `tests/test_hybrid.py`.
+  *Rationale:* a real, opt-in differentiator that composes with the fusion work. Honest caveat
+  documented: the thresholds are heuristics — tune against an eval set (the roadmap's next step).
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

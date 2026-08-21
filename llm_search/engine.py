@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import re
 from collections.abc import Iterator
 
 from llm_search.config import Settings, get_settings
@@ -82,9 +83,10 @@ class SearchEngine:
         # Hybrid: fuse vector + lexical results.
         lexical_hits = self.lexical.search(query, top_n=max(wide, top_k))
         if self.settings.hybrid_mode == "weighted":
-            fused = self._weighted_fuse(
-                vector_hits, lexical_hits, self.settings.hybrid_alpha
-            )
+            alpha = self.settings.hybrid_alpha
+            if self.settings.hybrid_route:
+                alpha = self._routed_alpha(query, alpha)
+            fused = self._weighted_fuse(vector_hits, lexical_hits, alpha)
         else:  # "rrf" (default)
             fused = {}
             for rank, hit in enumerate(vector_hits):
@@ -105,6 +107,33 @@ class SearchEngine:
             elif (p := self.lexical.payload(cid)) is not None:
                 candidates.append({"id": cid, "score": fused[cid], "payload": p})
         return self.reranker.rerank(query, candidates, top_n=top_k)
+
+    # Exact-match signals that research says lexical retrieval handles better than dense
+    # vectors (error codes, hex, version strings, all-caps acronyms, digit-heavy queries).
+    _CODE_PATTERNS = [
+        re.compile(r"0x[0-9a-fA-F]+"),
+        re.compile(r"\b[A-Z]{2,}\b"),
+        re.compile(r"\b\d[\w.\-]*\d\b"),
+    ]
+
+    @staticmethod
+    def _looks_lexical(query: str) -> bool:
+        toks = re.findall(r"[a-z0-9]+", query.lower())
+        if any(p.search(t) for t in toks for p in SearchEngine._CODE_PATTERNS):
+            return True
+        digit_toks = [t for t in toks if any(c.isdigit() for c in t)]
+        return bool(digit_toks) and len(digit_toks) / max(len(toks), 1) >= 0.3
+
+    def _routed_alpha(self, query: str, base: float) -> float:
+        """When query-style routing is on, bias toward lexical for exact-match queries.
+
+        A heuristic, not ML: if the query carries codes/IDs/acronyms it is more likely to need
+        precise lexical matching, so we cap the vector weight. Only active in weighted mode
+        (RRF ignores weights). Honest caveat: tuning needs an eval set — see research notes.
+        """
+        if self._looks_lexical(query):
+            return min(base, 0.3)
+        return base
 
     @staticmethod
     def _normalize(scores: dict[str, float]) -> dict[str, float]:

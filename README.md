@@ -75,6 +75,7 @@ Sift is highly configurable via environment variables. Check out `.env.example` 
 | `SIFT_RRF_K` | `60` | RRF constant for the fusion formula |
 | `SIFT_HYBRID_MODE` | `rrf` | `rrf` (rank fusion) or `weighted` (normalized score blend) |
 | `SIFT_HYBRID_ALPHA` | `0.5` | Vector weight when `weighted` (0 = lexical-only, 1 = vector-only) |
+| `SIFT_HYBRID_ROUTE` | `false` | Opt-in: bias toward lexical when a query has exact-match signals (codes/IDs) |
 
 ## Monitoring
 

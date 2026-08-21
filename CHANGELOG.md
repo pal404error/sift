@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **HyDE query expansion**: `SearchEngine.ask(use_hyde=True)` rewrites the query into a hypothetical answer passage for better retrieval (`SIFT_USE_HYDE`). Off by default (ADR-020).
 - **Streaming answers (SSE)**: `LLMProvider.stream` + `SearchEngine.ask_stream` + `GET /ask/stream` (sources event, then token events). Real token streaming for OpenAI/Anthropic; safe fallback for all. CLI `ask`/`search` gained `--hybrid`/`--hyde` (ADR-021).
 - **Configurable hybrid fusion**: `SIFT_HYBRID_MODE` (`rrf` | `weighted`) + `SIFT_HYBRID_ALPHA`. Weighted path min-max-normalizes each signal before blending (ADR-022). RRF remains the default.
+- **Query-style routing**: `SIFT_HYBRID_ROUTE` biases hybrid toward lexical for exact-match queries (codes/IDs/acronyms) when in weighted mode (ADR-023).
 - **Transparent benchmark**: `data/retrieval_benchmark.csv` with real, reproducible numbers; web UI streams answers with a HyDE toggle; `examples/quickstart.py` (no API keys).
 - **Docs**: `research/RETRIEVAL_NOTES.md` (maps the stack to the 2026 production-RAG consensus), `ROADMAP.md`, and an honest growth log.
 

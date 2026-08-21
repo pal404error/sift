@@ -102,3 +102,12 @@
 - **Self-debate:** community is built on real questions, not seeded engagement. These ask for
   reproducible cases we'll fold into ROADMAP/benchmark — honest flywheel.
 - **Committed + pushed.** Loop continues.
+
+## Cycle 9 — 2026-08-21 (query-style routing)
+- **Feature:** `SIFT_HYBRID_ROUTE` (opt-in) — when hybrid is in weighted mode, caps vector
+  weight at 0.3 for queries with exact-match signals (hex/IDs/acronyms/digit-heavy). Transparent
+  regex heuristic, not ML. ADR-023. Composes with the fusion work from cycle 5.
+- **Self-debate:** routing is the research-endorsed "graduate beyond RRF" step, but a real
+  router needs an eval set to tune. Mitigation: keep it opt-in, document the heuristic caveat
+  in ADR + README, no claim it's better without tuning. Honest.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓ (9 hybrid tests); coverage 82%. **Committed + pushed.**
