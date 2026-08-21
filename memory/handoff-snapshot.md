@@ -177,3 +177,15 @@ CrawlState, (d) future tags v0.1.x as fixes land.
 `monitoring` profile (`docker compose --profile monitoring up -d`); README "Monitoring" section.
 **Verification:** YAML parses (all 3 configs); `ruff check .` clean; `pytest tests/test_api.py`
 4 passed (metrics/health). Pushed `920982c`.
+
+### Update 2026-08-20 — Landing page revamp (vibe-coding framework + AGY)
+**Done (collab with AGY, verified here):** Applied two reference articles — (1) landing-page
+best practices (clear header/main/footer, mobile responsiveness, SEO meta + OG + JSON-LD, strong
+top-fold + CTAs) and (2) the 4-part vibe-coding prompt framework (Identity/Audience/Features/
+Aesthetic with specific technical constraints). AGY rewrote `docs/index.html`: sticky header +
+mobile hamburger, hero with gradient headline + subtle grid bg + copy-to-clipboard install
+snippet, 6-card feature grid, 3-step "How it works", quickstart code block, accessible FAQ
+accordion (`<details>`), final CTA, multi-column footer. Self-contained vanilla HTML/CSS/JS
+(no CDNs/build step). Preserved SEO tags. Fixed hero install to valid PEP 508 (no `all` extra).
+**Verification:** python3 HTML parse OK; zero external resource refs (excl. github/schema);
+all required sections + SEO present; no fabricated social proof/metrics. Pushed `b9d64da`.
