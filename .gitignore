@@ -36,3 +36,6 @@ qdrant_storage/
 # Regenerable, large eval corpora (see scripts/import_beir.py + tests/gold/README)
 tests/gold/eval_gold_beir_*.json
 datasets/
+scifact/
+*.zip
+.coverage
