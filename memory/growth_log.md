@@ -56,3 +56,11 @@
   Credibility > virality for organic growth.
 - **Committed + pushed.** Ready for the human to post (blog + the Show HN/Reddit/X drafts in
   `promo/LAUNCH.md`). Loop continues.
+
+## Cycle 4 — 2026-08-21 (demo UX)
+- **Feature:** wired the static web UI "Ask" to `GET /ask/stream` — answers render
+  token-by-token; sources appear on the first event. Added a HyDE checkbox (passes `hyde=1`).
+- **Self-debate:** the 60s demo is the single biggest organic-growth lever (marathon Cycle 0
+  insight). Streaming makes "it works, and fast" visceral. No fake progress UI.
+- **Committed + pushed.** Loop continues — next candidate: weighted/query-style hybrid fusion
+  (roadmap) or a multi-model benchmark sweep (needs model downloads).
