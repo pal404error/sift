@@ -189,3 +189,13 @@ accordion (`<details>`), final CTA, multi-column footer. Self-contained vanilla 
 (no CDNs/build step). Preserved SEO tags. Fixed hero install to valid PEP 508 (no `all` extra).
 **Verification:** python3 HTML parse OK; zero external resource refs (excl. github/schema);
 all required sections + SEO present; no fabricated social proof/metrics. Pushed `b9d64da`.
+
+### Update 2026-08-20 — Newspaper theme (Helvetica BOLD)
+**Done:** User requested a newspaper theme with Helvetica BOLD font all over. Rewrote
+`docs/index.html` styling: Helvetica/Arial base, `font-weight: 700` body (bold throughout),
+900-weight headlines; newsprint palette (#f4f1e9 / #111 ink), thick rules + double borders,
+masthead with dateline "Vol. 1 — No. 1", kickers/section labels, bordered feature columns,
+terminal "wire" code box, uppercase bold CTAs. Kept all sections/FAQ/copy/hamburger + SEO/OG/JSON-LD;
+still self-contained (no external resources).
+**Verification:** python3 parse OK; Helvetica+bold confirmed; zero external refs; sections/SEO present;
+no fabricated claims. Pushed `74acda9`.
