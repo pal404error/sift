@@ -1,0 +1,38 @@
+{
+  "docs": [
+    {"id": "rag", "text": "Retrieval augmented generation connects a vector index with a language model so the model can answer questions using your private documents."},
+    {"id": "rerank", "text": "A reranker reorders the top retrieved passages with a cross encoder to boost answer relevance."},
+    {"id": "crawl", "text": "The crawler fetches web pages while obeying robots.txt and a per host rate limit so it ingests sites politely."},
+    {"id": "oidc", "text": "OIDC lets users log in through an external identity system; it checks a JWT signature against a JWKS public key for enterprise access control."},
+    {"id": "rbac", "text": "Role based access control assigns each API key a role such as admin or user, and the audit log records every request."},
+    {"id": "metrics", "text": "Prometheus metrics and health endpoints let operators watch the service and connect Grafana dashboards."},
+    {"id": "providers", "text": "You can swap the language model or embedding backend; OpenAI, Anthropic, Ollama, and built in fakes are supported."},
+    {"id": "eval", "text": "The offline evaluation harness measures recall, precision, and mean reciprocal rank to track retrieval quality."},
+    {"id": "incremental", "text": "Incremental crawling uses entity tags and last modified headers to skip pages that have not changed since the last visit."},
+    {"id": "chunk", "text": "Documents are split into overlapping chunks before embedding so each passage fits the model context."},
+    {"id": "qdrant", "text": "The Qdrant vector database can store embeddings at scale instead of the in memory store."},
+    {"id": "cli", "text": "The command line tool can serve the API, ingest a URL, crawl a site, and run a search without writing code."},
+    {"id": "concurrency", "text": "Multiple pages are fetched at once with a bounded worker pool to speed up large crawls."},
+    {"id": "audit", "text": "Every authenticated request is written to an append only audit file for compliance and forensics."},
+    {"id": "webui", "text": "The hosted query console shows retrieved passages together with clickable source links, so a visitor needs no installed software."},
+    {"id": "monitoring", "text": "When the service is healthy it returns a 200 on the live probe and a 503 with no details on the ready probe."}
+  ],
+  "queries": [
+    {"query": "how can staff authenticate using an outside login?", "relevant": ["oidc"]},
+    {"query": "which model rescores the shortlisted results to improve how relevant they are?", "relevant": ["rerank"]},
+    {"query": "why does the fetcher respect a site's machine readable access rules?", "relevant": ["crawl"]},
+    {"query": "what governs what actions a particular credential may perform?", "relevant": ["rbac"]},
+    {"query": "how can I graph request counts over time?", "relevant": ["metrics"]},
+    {"query": "can I substitute the piece that generates the numeric representations?", "relevant": ["providers"]},
+    {"query": "how do I know if my search is actually good?", "relevant": ["eval"]},
+    {"query": "what lets the fetcher ignore material that matches the earlier copy?", "relevant": ["incremental"]},
+    {"query": "why divide a page into interleaved segments ahead of storage?", "relevant": ["chunk"]},
+    {"query": "what grows with me to keep the semantic index once the simple approach is too small?", "relevant": ["qdrant"]},
+    {"query": "how do I start the server and index a webpage from the terminal?", "relevant": ["cli"]},
+    {"query": "what caps how many connections happen at the same time so the origin is protected?", "relevant": ["concurrency"]},
+    {"query": "how are operations archived so they can be reviewed after the fact?", "relevant": ["audit"]},
+    {"query": "is there an in browser tool to submit a search and learn the citation behind the reply?", "relevant": ["webui"]},
+    {"query": "what status check distinguishes a running process from one prepared to accept traffic?", "relevant": ["monitoring"]},
+    {"query": "does rescoring the candidates make the chosen ones more on topic?", "relevant": ["rerank"]}
+  ]
+}

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -76,6 +77,25 @@ def test_run_eval_sweep_prints_table():
     assert result.returncode == 0, result.stderr
     assert "rerank_multiplier sweep" in result.stdout
     assert "best mrr at rerank_multiplier=" in result.stdout
+
+
+def test_semantic_gold_defeats_lexical_matching():
+    """The semantic gold set is designed so lexical token overlap fails.
+
+    A trivial set (queries sharing tokens with answers) scores ~1.0 and proves
+    nothing; this guard ensures the eval stays meaningful (MRR well below 0.7).
+    """
+    gold = ROOT / "tests" / "gold" / "eval_gold_semantic.json"
+    result = subprocess.run(
+        [sys.executable, "scripts/run_eval.py", "--gold", str(gold)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    report = json.loads(result.stdout)
+    assert report["n_queries"] >= 15
+    assert report["mrr"] < 0.7, f"semantic gold too easy (MRR={report['mrr']})"
 
 
 def test_run_eval_gate_passes_above_threshold():

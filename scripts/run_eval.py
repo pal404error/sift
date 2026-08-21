@@ -25,7 +25,8 @@ from llm_search.config import Settings, get_settings
 from llm_search.engine import SearchEngine
 from llm_search.eval import mrr, precision_at_k, recall_at_k
 from llm_search.providers.fake import FakeEmbedding, FakeLLM
-from llm_search.rerank import build_reranker
+from llm_search.providers.local import LocalEmbedding
+from llm_search.rerank import CrossEncoderReranker, build_reranker
 from llm_search.store.memory import InMemoryStore
 
 EMBEDDED_GOLD: dict = {
@@ -85,16 +86,22 @@ def load_gold(path: str | None) -> dict:
     return {"docs": docs, "queries": queries}
 
 
-def run_eval(gold: dict, k: int = 5, rerank_multiplier: int | None = None) -> dict:
+def run_eval(
+    gold: dict,
+    k: int = 5,
+    rerank_multiplier: int | None = None,
+    embedding=None,
+    reranker=None,
+) -> dict:
     settings = get_settings()
     if rerank_multiplier is not None:
         settings = Settings(rerank_multiplier=rerank_multiplier)
     engine = SearchEngine(
         InMemoryStore(),
-        FakeEmbedding(),
+        embedding or FakeEmbedding(),
         FakeLLM(),
         settings,
-        build_reranker(settings),
+        reranker or build_reranker(settings),
     )
     for d in gold["docs"]:
         doc = SimpleNamespace(url=d["id"], title=d.get("title", d["id"]), text=d["text"])
@@ -140,25 +147,74 @@ def main() -> int:
         default=None,
         help="Comma-separated multipliers to sweep (e.g. '1,3,5,10'); prints a comparison table.",
     )
+    ap.add_argument(
+        "--embedding",
+        choices=["fake", "local"],
+        default="fake",
+        help="Embedding provider for the run (local = sentence-transformers MiniLM).",
+    )
+    ap.add_argument(
+        "--reranker",
+        choices=["lexical", "cross-encoder"],
+        default="lexical",
+        help="Reranker for the run.",
+    )
+    ap.add_argument(
+        "--compare",
+        action="store_true",
+        help="Print a side-by-side table: fake+lexical vs local+cross-encoder.",
+    )
     args = ap.parse_args()
 
     gold = load_gold(args.gold)
+
+    if args.compare:
+        base = run_eval(
+            gold,
+            k=args.k,
+            embedding=FakeEmbedding(),
+            reranker=build_reranker(Settings(reranker="lexical")),
+        )
+        sem = run_eval(
+            gold,
+            k=args.k,
+            embedding=LocalEmbedding(),
+            reranker=CrossEncoderReranker(),
+        )
+        print(f"{'config':<26}{'recall@k':>10}{'precision@k':>12}{'mrr':>7}")
+
+        def _row(label: str, r: dict) -> str:
+            return f"{label:<26}{r['recall@k']:>10.3f}{r['precision@k']:>12.3f}{r['mrr']:>7.3f}"
+
+        print(_row("fake + lexical", base))
+        print(_row("local + cross-encoder", sem))
+        return 0
+
+
+    embedding = LocalEmbedding() if args.embedding == "local" else FakeEmbedding()
+    reranker = build_reranker(Settings(reranker=args.reranker))
 
     if args.rerank_multipliers:
         mults = [int(float(x)) for x in args.rerank_multipliers.split(",") if x.strip()]
         rows = []
         for m in mults:
-            rep = run_eval(gold, k=args.k, rerank_multiplier=m)
+            rep = run_eval(
+                gold,
+                k=args.k,
+                rerank_multiplier=m,
+                embedding=embedding,
+                reranker=reranker,
+            )
             rows.append((m, rep["recall@k"], rep["precision@k"], rep["mrr"]))
         best = max(rows, key=lambda r: r[3])
-        print(f"rerank_multiplier sweep (k={args.k}):")
+        print(f"rerank_multiplier sweep (k={args.k}, {args.embedding}+{args.reranker}):")
         print(f"{'mult':>6} {'recall@k':>10} {'precision@k':>12} {'mrr':>6}")
         for m, rec, prec, mrr in rows:
             print(f"{m:>6.1f} {rec:>10.3f} {prec:>12.3f} {mrr:>6.3f}")
         print(f"best mrr at rerank_multiplier={best[0]:.1f}")
         return 0
 
-    report = run_eval(gold, k=args.k)
+    report = run_eval(gold, k=args.k, embedding=embedding, reranker=reranker)
     print(json.dumps(report, indent=2))
 
     if args.gate_mrr is not None and report["mrr"] < args.gate_mrr:
