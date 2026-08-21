@@ -49,6 +49,9 @@ class Settings(BaseSettings):
     hybrid: bool = False
     rrf_k: int = 60
 
+    # Query expansion (Hypothetical Document Embeddings)
+    use_hyde: bool = False
+
     # Auth / enterprise
     require_auth: bool = False
     auth_method: str = "apikey"  # "apikey" | "oidc"

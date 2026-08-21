@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Early exploration for additional managed vector store integrations.
 - **Hybrid retrieval**: lexical + vector fusion via Reciprocal Rank Fusion (`llm_search/lexical_index.py`, `SIFT_HYBRID`). Off by default, dependency-free, fully tested.
 - **Research-grade eval**: `ndcg@k` metric added; `scripts/run_eval.py --compare` now reports recall/precision/ndcg/MRR. Headline lift (recall@5 0.31→0.81) verified against `tests/gold/eval_gold_semantic.json`.
+- **HyDE query expansion**: `SearchEngine.ask(use_hyde=True)` rewrites the query into a hypothetical answer passage for better retrieval (`SIFT_USE_HYDE`). Off by default (ADR-020).
 - Transparent retrieval benchmark in `data/retrieval_benchmark.csv` (real, reproducible numbers).
 - README hook leading with the measured ~5× retrieval lift and an honest star CTA.
 - Launch/promo assets in `promo/` (Show HN, Reddit, X drafts) and a real-metrics `SITREP.md`.

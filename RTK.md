@@ -205,6 +205,19 @@
   *Rationale:* directly multiplies the headline "retrieval quality" metric at zero dependency
   cost; lexical payloads are mirrored in the index so lexical-only hits surface in results.
 
+- **ADR-020 — HyDE query expansion.**
+  *Context:* short natural-language questions are often a poor match for the dense vectors
+  of the passages they seek (query/document vocabulary mismatch). Hypothetical Document
+  Embeddings (HyDE) mitigates this by having the LLM draft a plausible answer passage, then
+  embedding *that* for retrieval.
+  *Decision:* `SearchEngine.ask` gains `use_hyde` (defaults to `Settings.use_hyde`). When on,
+  it asks the LLM for a short passage, concatenates it to the query, and retrieves on the
+  combined text; the final answer is still generated strictly from retrieved context. New
+  setting `use_hyde: bool = False`. Fully testable offline (FakeLLM path exercised in
+  `tests/test_hyde.py`).
+  *Rationale:* a cheap, well-known retrieval booster that composes with hybrid+RRF; off by
+  default so behavior is unchanged unless opted in.
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

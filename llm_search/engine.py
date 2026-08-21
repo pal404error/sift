@@ -96,8 +96,21 @@ class SearchEngine:
                 candidates.append({"id": cid, "score": fused[cid], "payload": p})
         return self.reranker.rerank(query, candidates, top_n=top_k)
 
-    def ask(self, query: str, top_k: int = 5) -> dict:
-        results = self.search(query, top_k=top_k)
+    def ask(self, query: str, top_k: int = 5, use_hyde: bool | None = None) -> dict:
+        use_hyde = self.settings.use_hyde if use_hyde is None else use_hyde
+        search_query = query
+        if use_hyde:
+            # Hypothetical Document Embeddings: rewrite the query into a short, plausible
+            # answer passage, then embed THAT. Denser semantic match than the raw question.
+            hypo = self.llm.generate(
+                system=(
+                    "You are a precise assistant. Write a single short, factual passage "
+                    "that could answer the question. No preamble."
+                ),
+                prompt=f"Question: {query}\nPassage:",
+            )
+            search_query = f"{query}\n{hypo}"
+        results = self.search(search_query, top_k=top_k)
         context = "\n\n".join(
             f"[{r['payload'].get('doc_title', '')}] {r['payload'].get('text', '')}" for r in results
         )
