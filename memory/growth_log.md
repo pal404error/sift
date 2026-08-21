@@ -47,3 +47,12 @@
 - **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82% (>80%). mypy caught 2 real bugs pre-push
   (`cache_clear` is a function attr; Anthropic `stream()` rejects `temperature`).
 - **Committed + pushed:** streaming feature + docs (ADR-021). Loop continues.
+
+## Cycle 3 — 2026-08-21 (content)
+- **Asset:** `promo/blog_hybrid_retrieval.md` — a publishable, honest technical deep-dive. Leads
+  with the reproducible benchmark, explains hybrid+RRF+HyDE+streaming as a composable substrate,
+  and explicitly states honest gaps (BM25-lite, small gold set). No hype rounding.
+- **Self-debate:** blog must earn trust by showing the *trivial* set scores ~1.0 too (we did).
+  Credibility > virality for organic growth.
+- **Committed + pushed.** Ready for the human to post (blog + the Show HN/Reddit/X drafts in
+  `promo/LAUNCH.md`). Loop continues.
