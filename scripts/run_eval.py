@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 
-from llm_search.config import get_settings
+from llm_search.config import Settings, get_settings
 from llm_search.engine import SearchEngine
 from llm_search.eval import mrr, precision_at_k, recall_at_k
 from llm_search.providers.fake import FakeEmbedding, FakeLLM
@@ -85,8 +85,10 @@ def load_gold(path: str | None) -> dict:
     return {"docs": docs, "queries": queries}
 
 
-def run_eval(gold: dict, k: int = 5) -> dict:
+def run_eval(gold: dict, k: int = 5, rerank_multiplier: int | None = None) -> dict:
     settings = get_settings()
+    if rerank_multiplier is not None:
+        settings = Settings(rerank_multiplier=rerank_multiplier)
     engine = SearchEngine(
         InMemoryStore(),
         FakeEmbedding(),
@@ -132,9 +134,30 @@ def main() -> int:
         default=None,
         help="Exit non-zero if MRR is below this threshold.",
     )
+    ap.add_argument(
+        "--rerank-multipliers",
+        type=str,
+        default=None,
+        help="Comma-separated multipliers to sweep (e.g. '1,3,5,10'); prints a comparison table.",
+    )
     args = ap.parse_args()
 
     gold = load_gold(args.gold)
+
+    if args.rerank_multipliers:
+        mults = [int(float(x)) for x in args.rerank_multipliers.split(",") if x.strip()]
+        rows = []
+        for m in mults:
+            rep = run_eval(gold, k=args.k, rerank_multiplier=m)
+            rows.append((m, rep["recall@k"], rep["precision@k"], rep["mrr"]))
+        best = max(rows, key=lambda r: r[3])
+        print(f"rerank_multiplier sweep (k={args.k}):")
+        print(f"{'mult':>6} {'recall@k':>10} {'precision@k':>12} {'mrr':>6}")
+        for m, rec, prec, mrr in rows:
+            print(f"{m:>6.1f} {rec:>10.3f} {prec:>12.3f} {mrr:>6.3f}")
+        print(f"best mrr at rerank_multiplier={best[0]:.1f}")
+        return 0
+
     report = run_eval(gold, k=args.k)
     print(json.dumps(report, indent=2))
 

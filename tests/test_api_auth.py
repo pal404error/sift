@@ -42,4 +42,4 @@ def test_health_open_without_auth(monkeypatch):
     monkeypatch.setenv("REQUIRE_AUTH", "true")
     _gs.cache_clear()
     with TestClient(app) as c:
-        assert c.get("/health").status_code == 200
+        assert c.get("/health/live").status_code == 200

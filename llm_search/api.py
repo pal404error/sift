@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import time
+from collections import defaultdict
 from pathlib import Path
+from threading import Lock
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse
 
 from llm_search.auth import require_role
@@ -12,12 +15,68 @@ from llm_search.ingest import sanitize_query
 from llm_search.providers import build_embedding, build_llm
 from llm_search.store import build_store
 
+
+class Metrics:
+    def __init__(self) -> None:
+        self.lock = Lock()
+        self.total_requests = 0
+        self.route_counts: dict[str, int] = defaultdict(int)
+        self.error_counts = 0
+        self.latencies: list[float] = []
+        self.max_latencies = 1000
+
+    def record(self, route: str, is_error: bool, duration: float) -> None:
+        with self.lock:
+            self.total_requests += 1
+            self.route_counts[route] += 1
+            if is_error:
+                self.error_counts += 1
+            self.latencies.append(duration)
+            if len(self.latencies) > self.max_latencies:
+                self.latencies.pop(0)
+
+
+metrics_store = Metrics()
+
 app = FastAPI(title=get_settings().app_name, version="0.1.0")
+
+
+@app.middleware("http")
+async def metrics_middleware(request: Request, call_next) -> Response:
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    duration = time.perf_counter() - start_time
+
+    route = request.url.path
+    is_error = response.status_code >= 500
+    metrics_store.record(route, is_error, duration)
+    return response
+
+
+@app.get("/metrics")
+def get_metrics() -> Response:
+    with metrics_store.lock:
+        req_total = metrics_store.total_requests
+        err_total = metrics_store.error_counts
+        route_counts = dict(metrics_store.route_counts)
+        lats = metrics_store.latencies
+        avg_lat = sum(lats) / len(lats) if lats else 0.0
+
+    lines = [
+        f"sift_requests_total {req_total}",
+        f"sift_errors_total {err_total}",
+        f"sift_latency_seconds_avg {avg_lat:.4f}",
+    ]
+    for r, c in route_counts.items():
+        lines.append(f'sift_route_requests_total{{route="{r}"}} {c}')
+    return Response("\n".join(lines) + "\n", media_type="text/plain")
+
 
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
     path = Path(__file__).parent.parent / "static" / "index.html"
     return path.read_text(encoding="utf-8")
+
 
 _engine: SearchEngine | None = None
 
@@ -36,9 +95,26 @@ def _redact(value: str | None) -> str:
     return "<set>" if value else "<unset>"
 
 
-@app.get("/health")
-def health() -> dict:
-    return {"status": "ok", "engine": get_settings().app_name}
+@app.get("/health/live")
+def health_live() -> dict:
+    return {"status": "ok"}
+
+
+@app.get("/health/ready")
+def health_ready(response: Response) -> dict:
+    try:
+        engine = get_engine()
+        engine.store.count()
+        s = get_settings()
+        llm_ok = s.llm_provider == "fake" or bool(s.llm_api_key or s.anthropic_api_key)
+        emb_ok = s.embedding_provider == "fake" or bool(s.llm_api_key)
+        if not (llm_ok or emb_ok):
+            response.status_code = 503
+            return {"status": "error", "detail": "No provider ready"}
+        return {"status": "ok"}
+    except Exception:
+        response.status_code = 503
+        return {"status": "error", "detail": "dependency unavailable"}
 
 
 @app.get("/health/providers")

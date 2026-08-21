@@ -66,6 +66,18 @@ def test_run_eval_with_gold_file():
     assert report["mrr"] == 1.0
 
 
+def test_run_eval_sweep_prints_table():
+    result = subprocess.run(
+        [sys.executable, "scripts/run_eval.py", "--rerank-multipliers", "1,5,10"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "rerank_multiplier sweep" in result.stdout
+    assert "best mrr at rerank_multiplier=" in result.stdout
+
+
 def test_run_eval_gate_passes_above_threshold():
     result = subprocess.run(
         [sys.executable, "scripts/run_eval.py", "--gate-mrr", "0.9"],
