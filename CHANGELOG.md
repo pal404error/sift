@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Embedding-model sweep**: `scripts/run_eval.py --embedding-models "m1,m2,..."` builds a fresh index per model and prints a recall/precision/ndcg/MRR comparison; skips models that fail to load. Ran on the semantic gold set: `all-MiniLM-L6-v2` (recall@5 0.812) > `paraphrase-MiniLM-L3-v2` (0.750).
+- **Larger, multilingual gold set**: `tests/gold/eval_gold_large.json` (24 factual docs, 32 queries, 8 cross-lingual ES/FR/DE/IT) + `data/retrieval_benchmark_large.csv`. Findings: on keyword-heavy queries lexical recall is already high (semantic wins on ndcg/mrr, not recall); model ranking is dataset-dependent. `tests/test_gold_integrity.py` guards gold-set validity.
 
 ## [0.2.0] - 2026-08-21
 

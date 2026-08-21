@@ -121,3 +121,15 @@
   benchmark CSV. Honest caveat logged: n=35, single corpus — directional, not definitive.
 - **Tests:** `tests/test_eval_sweep.py` asserts unloadable models are skipped (exit 0).
 - **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. new sweep skip test); coverage 82%. **Committed + pushed.**
+
+## Cycle 11 — 2026-08-21 (larger + multilingual gold set)
+- **Data:** `tests/gold/eval_gold_large.json` — 24 single-fact docs (HTTP/Git/SQL/OAuth/REST),
+  32 queries, 8 cross-lingual (ES/FR/DE/IT). Relevance objective; provenance documented. Robots
+  policy respected (Wikipedia/git-scm disallowed — excluded).
+- **Honest findings (recorded):** (1) on keyword-heavy factual queries lexical recall is already
+  high, so semantic's edge is RANKING QUALITY (ndcg/mrr), not raw recall — this qualifies the
+  v0.2.0 "2.6x recall" headline (true for paraphrase set, not generic factual). (2) Model ranking
+  is dataset-dependent (MiniLM>L3 on semantic set, L3>MiniLM on large set) — no single best model.
+- **Integrity test:** `tests/test_gold_integrity.py` verifies gold files (valid JSON, relevant ids
+  exist). Real, catchable guard.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. gold integrity); coverage 82%. **Committed + pushed.**

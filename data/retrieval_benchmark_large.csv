@@ -1,0 +1,14 @@
+pipeline,recall_at_5,precision_at_5,ndcg_at_5,mrr,requires_api_key,notes
+fake_embeddings_lexical_reranker,0.969,0.194,0.828,0.782,no,"token-hash fake embeddings + lexical reranker on eval_gold_large (keyword-heavy factual)"
+local_minilm_cross_encoder_reranker,0.938,0.188,0.926,0.922,no,"all-MiniLM-L6-v2 + cross-encoder reranker on eval_gold_large"
+paraphrase_minilm_l3_cross_encoder_reranker,0.969,0.194,0.938,0.928,no,"paraphrase-MiniLM-L3-v2 + cross-encoder reranker on eval_gold_large"
+
+# Source:      tests/gold/eval_gold_large.json (24 factual docs: HTTP/Git/SQL/OAuth/REST; 32 queries, 8 cross-lingual ES/FR/DE/IT)
+# Reproduce:   pip install -e ".[semantic]" && python scripts/run_eval.py --gold tests/gold/eval_gold_large.json --compare
+# Note:        On this keyword-heavy set lexical recall is already high; the semantic lift is in RANKING QUALITY (ndcg/mrr), not raw recall.
+#              Model ranking is DATASET-DEPENDENT: on eval_gold_semantic, MiniLM-L6-v2 > paraphrase-L3; here paraphrase-L3 edges ahead.
+# Metric defs: recall@5  = fraction of queries with the relevant doc in top 5
+#              precision@5 = fraction of top-5 retrieved docs that are relevant
+#              ndcg@5     = ranking quality, normalized to [0,1] (binary relevance)
+#              mrr        = mean reciprocal rank of the first relevant result
+# These are the exact numbers the eval harness prints; no rows synthesized.
