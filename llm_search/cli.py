@@ -5,6 +5,7 @@ from types import SimpleNamespace
 import uvicorn
 
 from llm_search.api import app, get_engine
+from llm_search.config import get_settings
 
 # A small bundled corpus so `sift demo` returns real results on first load
 # (no API keys, no crawling required). Uses local MiniLM embeddings +
@@ -68,9 +69,18 @@ def main() -> None:
 
     search_parser = subparsers.add_parser("search", help="Search indexed content")
     search_parser.add_argument("query", help="Search query")
+    search_parser.add_argument(
+        "--hybrid", action="store_true", help="Enable lexical+vector hybrid retrieval"
+    )
 
     ask_parser = subparsers.add_parser("ask", help="Ask a question about indexed content")
     ask_parser.add_argument("query", help="Question to ask")
+    ask_parser.add_argument(
+        "--hybrid", action="store_true", help="Enable lexical+vector hybrid retrieval"
+    )
+    ask_parser.add_argument(
+        "--hyde", action="store_true", help="Use HyDE query expansion"
+    )
 
     demo_parser = subparsers.add_parser("demo", help="Serve with a seeded demo corpus")
     demo_parser.add_argument("--host", default="127.0.0.1")
@@ -84,8 +94,6 @@ def main() -> None:
         # Settings are cached on first use, so apply providers before building.
         os.environ.setdefault("EMBEDDING_PROVIDER", "local")
         os.environ.setdefault("RERANKER", "cross-encoder")
-        from llm_search.config import get_settings
-
         get_settings.cache_clear()
         engine = get_engine()
         for d in DEMO_DOCS:
@@ -101,12 +109,21 @@ def main() -> None:
         stats = engine.crawl_site(args.url, max_pages=args.max_pages)
         print(f"Crawl stats: {stats}")
     elif args.command == "search":
+        if args.hybrid:
+            os.environ["SIFT_HYBRID"] = "true"
+            get_settings.cache_clear()
         engine = get_engine()
         results = engine.search(args.query)
         for r in results:
             print(f"[{r['payload'].get('doc_url')}] {r['payload'].get('doc_title')}")
             print(f"{r['payload'].get('text')}\n")
     elif args.command == "ask":
+        if args.hybrid:
+            os.environ["SIFT_HYBRID"] = "true"
+        if args.hyde:
+            os.environ["SIFT_USE_HYDE"] = "true"
+        if args.hybrid or args.hyde:
+            get_settings.cache_clear()
         engine = get_engine()
         result = engine.ask(args.query)
         print(result["answer"])

@@ -218,6 +218,18 @@
   *Rationale:* a cheap, well-known retrieval booster that composes with hybrid+RRF; off by
   default so behavior is unchanged unless opted in.
 
+- **ADR-021 — Streaming answers (SSE).**
+  *Context:* a 60s demo and interactive UIs feel far more alive when the answer streams in
+  token-by-token rather than appearing all at once after a long generation delay.
+  *Decision:* added `LLMProvider.stream(system, prompt)` (default yields the full `generate`
+  output in one chunk, so every provider streams safely; OpenAI/Anthropic override with native
+  token streaming). `SearchEngine.ask_stream` emits SSE-friendly events — first
+  `{"type":"sources",...}` then `{"type":"token","text":...}` — and `GET /ask/stream` serves
+  them as `text/event-stream`. CLI `ask`/`search` gained `--hybrid`/`--hyde` flags that set the
+  corresponding env vars before the engine is built. Covered by `tests/test_stream.py`.
+  *Rationale:* genuine demo/UX lift, fully testable offline (FakeLLM fallback), and consistent
+  with the "developer-first, batteries-included" posture.
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

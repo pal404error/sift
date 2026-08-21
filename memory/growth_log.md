@@ -37,3 +37,13 @@
 - **Honesty fix:** corrected README hook from "5×" to exact "2.6× recall@5 / 4.8× MRR".
 - **Public infra:** ROADMAP.md (shipped/in-progress/planned), growth_log (this file).
 - **Committed:** baseline hybrid work + HyDE, both with clear messages.
+
+## Cycle 2 — 2026-08-21 (streaming)
+- **Feature:** Server-Sent-Events streaming answers. `LLMProvider.stream` (default yields full
+  text; OpenAI/Anthropic true token streaming) → `SearchEngine.ask_stream` (sources event then
+  token events) → `GET /ask/stream`. CLI `ask`/`search` gained `--hybrid`/`--hyde` flags.
+- **Self-debate:** streaming is a UX/demo lever, not a relevance lever — pairs with the verified
+  benchmark for the "impressive in 60s" hook. Keep it honest (no fake "thinking" tokens).
+- **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82% (>80%). mypy caught 2 real bugs pre-push
+  (`cache_clear` is a function attr; Anthropic `stream()` rejects `temperature`).
+- **Committed + pushed:** streaming feature + docs (ADR-021). Loop continues.

@@ -56,8 +56,8 @@ Sift acts as the intelligent orchestration layer between your data sources and y
 
 ## What You Get
 
-- **API Endpoints**: Clean, documented FastAPI routes for search, ingestion, and admin tasks.
-- **CLI (`sift`)**: Powerful command-line tools to manage indexes, trigger crawls, and evaluate performance.
+- **API Endpoints**: Clean, documented FastAPI routes for search, ingestion, and admin tasks. `GET /ask/stream` streams answers as Server-Sent Events (sources event, then token events).
+- **CLI (`sift`)**: Powerful command-line tools to manage indexes, trigger crawls, and evaluate performance. `sift ask` supports `--hybrid` (lexical+vector fusion) and `--hyde` (query expansion); `sift search` supports `--hybrid`.
 - **Web UI**: A static, customizable HTML interface to search your data right out of the box.
 - **Offline Eval**: Built-in tooling to measure retrieval accuracy and generation quality over time.
 - **Crawl Orchestrator**: Schedule and manage data ingestion pipelines effortlessly.

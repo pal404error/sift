@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import json
 import time
 from collections import defaultdict
 from pathlib import Path
 from threading import Lock
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 
 from llm_search.auth import require_role
 from llm_search.config import get_settings
@@ -165,3 +166,17 @@ def search(q: str, top_k: int = 5) -> dict:
 @app.get("/ask", dependencies=[Depends(require_role("user"))])
 def ask(q: str, top_k: int = 5) -> dict:
     return get_engine().ask(sanitize_query(q), top_k=top_k)
+
+
+@app.get("/ask/stream", dependencies=[Depends(require_role("user"))])
+def ask_stream(q: str, top_k: int = 5, hyde: bool = False) -> StreamingResponse:
+    """Stream the answer as Server-Sent Events (one ``data: {json}`` line per event).
+
+    Events: ``{"type": "sources", "sources": [...]}`` then ``{"type": "token", "text": "..."}``.
+    """
+
+    def event_gen():
+        for ev in get_engine().ask_stream(sanitize_query(q), top_k=top_k, use_hyde=hyde):
+            yield f"data: {json.dumps(ev)}\n\n"
+
+    return StreamingResponse(event_gen(), media_type="text/event-stream")

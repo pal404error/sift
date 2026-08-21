@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+
 from llm_search.providers.base import LLMProvider
 
 try:
@@ -30,3 +32,12 @@ class AnthropicLLM(LLMProvider):
             messages=[{"role": "user", "content": prompt}],
         )  # type: ignore[call-overload]
         return "".join(block.text for block in resp.content if hasattr(block, "text"))
+
+    def stream(self, system: str, prompt: str) -> Iterator[str]:
+        with self._client.messages.stream(
+            model=self.model,
+            max_tokens=1024,
+            system=system,
+            messages=[{"role": "user", "content": prompt}],
+        ) as stream:
+            yield from stream.text_stream

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Iterator
 
 from llm_search.config import Settings, get_settings
 from llm_search.ingest import chunk_document, fetch_url
@@ -123,3 +124,39 @@ class SearchEngine:
         prompt = f"Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
         answer = self.llm.generate(system=system, prompt=prompt)
         return {"answer": answer, "sources": [r["payload"].get("doc_url") for r in results]}
+
+    def ask_stream(
+        self, query: str, top_k: int = 5, use_hyde: bool | None = None
+    ) -> Iterator[dict]:
+        """Stream an answer as SSE-friendly events.
+
+        Yields ``{"type": "sources", "sources": [...]}`` first (once retrieval is done),
+        then ``{"type": "token", "text": "..."}`` chunks as the LLM generates. Retrieval
+        is identical to :meth:`ask`; only answer generation is incremental.
+        """
+        use_hyde = self.settings.use_hyde if use_hyde is None else use_hyde
+        search_query = query
+        if use_hyde:
+            hypo = self.llm.generate(
+                system=(
+                    "You are a precise assistant. Write a single short, factual passage "
+                    "that could answer the question. No preamble."
+                ),
+                prompt=f"Question: {query}\nPassage:",
+            )
+            search_query = f"{query}\n{hypo}"
+        results = self.search(search_query, top_k=top_k)
+        yield {"type": "sources", "sources": [r["payload"].get("doc_url") for r in results]}
+        if not results:
+            yield {"type": "token", "text": "No relevant context found."}
+            return
+        context = "\n\n".join(
+            f"[{r['payload'].get('doc_title', '')}] {r['payload'].get('text', '')}" for r in results
+        )
+        system = (
+            "You are a precise search assistant. Answer ONLY using the provided context. "
+            "If the context is insufficient, say you don't know. Cite source URLs."
+        )
+        prompt = f"Context:\n{context}\n\nQuestion: {query}\n\nAnswer:"
+        for chunk in self.llm.stream(system=system, prompt=prompt):
+            yield {"type": "token", "text": chunk}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterator
 
 from llm_search.providers.base import EmbeddingProvider, LLMProvider
 
@@ -41,3 +42,18 @@ class OpenAILLM(LLMProvider):
             ],
         )
         return resp.choices[0].message.content or ""
+
+    def stream(self, system: str, prompt: str) -> Iterator[str]:
+        resp = self._client.chat.completions.create(
+            model=self.model,
+            temperature=self.temperature,
+            stream=True,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt},
+            ],
+        )
+        for chunk in resp:
+            delta = chunk.choices[0].delta.content
+            if delta:
+                yield delta
