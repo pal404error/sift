@@ -139,4 +139,20 @@ exponential backoff (3 retries, injectable sleep). New tests: `test_crawl_state_
 **Verification (independent re-run):** ruff clean; mypy clean; `pytest --cov-fail-under=80`
 → 67 passed, 4 skipped, 83% coverage.
 
+### Update 2026-08-20 — repo wired + CLI/UI + observability + rerank sweep
+**Done:** Git repo created at github.com/pal404error/sift and `main` pushed (initial commit +
+iterative pushes). Collaborated with AGY (via `agy` CLI, `--dangerously-skip-permissions`):
+ - `sift` CLI (serve/ingest/crawl/search/ask) + console script in pyproject; static web UI at
+   `GET /`; tests in `tests/test_cli.py`.
+ - Observability: thread-safe `Metrics` + `GET /metrics` (Prometheus-style) + `GET /health/live`
+   + `GET /health/ready` (503 generic detail). Tests in `test_api.py`.
+ - Fixed latent mypy errors in optional providers (openai/anthropic/qdrant) that only appeared
+   once SDK deps installed via `pip install -e .` (would have broken CI).
+ - Added `scripts/run_eval.py --rerank-multipliers` sweep (comparison table).
+**Verification (each step, independent re-runs):** ruff clean; mypy clean (41 files); pytest
+74 passed/6 skipped/83% cov. CI workflow now exercises real SDK stubs.
+**Next action:** Phase 11 options — (a) real gold set + lexical-vs-cross-encoder eval to truly
+tune rerank_multiplier, (b) more AGY collab (e.g. /metrics Prometheus scrape config, React UI),
+(c) DB-backed CrawlState, (d) cut a v0.1.0 release tag + CHANGELOG.
+
 **Key references:** `RTK.md` (truth), `trending-insights.md` (seed), `memory/*`, `skills/`.

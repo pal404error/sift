@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sift - Enterprise RAG Search Engine</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Nav */
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem 0 6rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-muted);
+            background-color: var(--surface);
+        }
+
+        /* Why Section */
+        .why-section {
+            padding: 4rem 0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .why-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .why-section p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 4rem 0 8rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero { padding: 4rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">Sift.</div>
+        </nav>
+
+        <section class="hero">
+            <h1>Intelligence, Grounded.</h1>
+            <p>The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data.</p>
+            <div class="buttons">
+                <a href="https://github.com/pal404error/sift#readme" class="btn btn-primary">Quickstart</a>
+                <a href="https://github.com/pal404error/sift" class="btn btn-outline">GitHub</a>
+                <a href="https://github.com/pal404error/sift/tree/main/docs" class="btn btn-outline">Documentation</a>
+            </div>
+        </section>
+
+        <section class="why-section">
+            <h2>Why Sift?</h2>
+            <p>Building generative search shouldn't mean vendor lock-in. Sift provides a powerful, pluggable foundation with a clean API, built-in crawl orchestration, and enterprise SSO—all while staying completely open for your custom embedding and LLM providers.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <h3>🔌 Pluggable Architecture</h3>
+                <p>Swap out vector stores, LLMs, and embedding models with simple config changes. Out-of-the-box support for the heavy hitters, completely open for custom providers.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🛠️ Developer Experience</h3>
+                <p>Clean FastAPI endpoints, a powerful `sift` CLI, and an instant static web UI. We sweat the details so you can ship faster.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🕷️ Crawl & Evaluate</h3>
+                <p>Built-in crawl orchestration to keep your data fresh, and offline evaluation pipelines to ensure your retrieval and generation stay sharp over time.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔐 Enterprise Ready</h3>
+                <p>Deploy securely on your own infrastructure. First-class OIDC/SSO integration, robust audit logging, and deep health metrics.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Released under the MIT License. Built by <a href="https://github.com/pal404error">pal404error</a>.</p>
+        </footer>
+    </div>
+</body>
+</html>

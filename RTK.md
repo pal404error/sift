@@ -173,6 +173,26 @@
   *Rationale:* incremental crawls become durable across restarts; polite backoff avoids
   hammering rate-limited servers. Implemented by the AGY collaborator agent.
 
+- **ADR-017 — Observability: metrics + liveness/readiness probes.**
+  *Context:* an enterprise deployment needs health checks for orchestrators (k8s/Docker)
+  and basic request metrics, with zero new runtime dependencies.
+  *Decision:* `llm_search/api.py` has a thread-safe in-process `Metrics` (total/per-route/
+  5xx counts + rolling latency window capped at 1000) recorded by middleware, exposed at
+  `GET /metrics` (Prometheus-style text). `GET /health/live` always 200; `GET /health/ready`
+  checks store + provider config and returns 503 with a **generic** detail (no exception
+  leakage) otherwise. AGY implemented; we hardened the 503 detail.
+  *Rationale:* operability + secure-by-default health endpoints.
+
+- **ADR-018 — Offline rerank-multiplier sweep.**
+  *Context:* the reranker's `rerank_multiplier` (candidate pool size) needs tuning, but
+  doing so meaningfully requires a real corpus. Offline, the lexical-fake eval still lets
+  us demonstrate the sweep harness.
+  *Decision:* `scripts/run_eval.py --rerank-multipliers 1,3,5,10` builds an engine per value
+  and prints a recall@k/precision@k/MRR comparison + the best. `rerank_multiplier` stays `int`
+  (used as a count). Closes the open "tune rerank_multiplier" item (sweep harness; real tuning
+  needs a semantic gold set + real providers).
+  *Rationale:* makes the eval tool actionable and reproducible.
+
 ### 2.3 Dependency Policy
 - Prefer libraries already in the repo. Add new deps only after review + security scan
   (`pip-audit` / `npm audit` / `cargo audit`).

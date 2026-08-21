@@ -312,6 +312,54 @@
       "meta": {}
     },
     {
+      "id": "llm_search.api.Metrics",
+      "type": "class",
+      "label": "Metrics",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "llm_search.api.metrics_middleware",
+      "type": "function",
+      "label": "metrics_middleware",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "llm_search.api.get_metrics",
+      "type": "function",
+      "label": "get_metrics",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/metrics:get_metrics",
+      "type": "route",
+      "label": "GET /metrics",
+      "meta": {
+        "handler": "llm_search.api.get_metrics"
+      }
+    },
+    {
+      "id": "llm_search.api.index",
+      "type": "function",
+      "label": "index",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/:index",
+      "type": "route",
+      "label": "GET /",
+      "meta": {
+        "handler": "llm_search.api.index"
+      }
+    },
+    {
       "id": "llm_search.api.get_engine",
       "type": "function",
       "label": "get_engine",
@@ -328,19 +376,35 @@
       }
     },
     {
-      "id": "llm_search.api.health",
+      "id": "llm_search.api.health_live",
       "type": "function",
-      "label": "health",
+      "label": "health_live",
       "meta": {
         "module": "llm_search.api"
       }
     },
     {
-      "id": "route:/health:health",
+      "id": "route:/health/live:health_live",
       "type": "route",
-      "label": "GET /health",
+      "label": "GET /health/live",
       "meta": {
-        "handler": "llm_search.api.health"
+        "handler": "llm_search.api.health_live"
+      }
+    },
+    {
+      "id": "llm_search.api.health_ready",
+      "type": "function",
+      "label": "health_ready",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "route:/health/ready:health_ready",
+      "type": "route",
+      "label": "GET /health/ready",
+      "meta": {
+        "handler": "llm_search.api.health_ready"
       }
     },
     {
@@ -424,6 +488,22 @@
       }
     },
     {
+      "id": "llm_search.api.__init__",
+      "type": "function",
+      "label": "__init__",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
+      "id": "llm_search.api.record",
+      "type": "function",
+      "label": "record",
+      "meta": {
+        "module": "llm_search.api"
+      }
+    },
+    {
       "id": "mod:llm_search.engine",
       "type": "module",
       "label": "llm_search.engine",
@@ -483,6 +563,20 @@
       "label": "ask",
       "meta": {
         "module": "llm_search.engine"
+      }
+    },
+    {
+      "id": "mod:llm_search.cli",
+      "type": "module",
+      "label": "llm_search.cli",
+      "meta": {}
+    },
+    {
+      "id": "llm_search.cli.main",
+      "type": "function",
+      "label": "main",
+      "meta": {
+        "module": "llm_search.cli"
       }
     },
     {
@@ -1038,9 +1132,25 @@
       "meta": {}
     },
     {
-      "id": "tests.test_api.test_health",
+      "id": "tests.test_api.test_health_live",
       "type": "function",
-      "label": "test_health",
+      "label": "test_health_live",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "tests.test_api.test_health_ready",
+      "type": "function",
+      "label": "test_health_ready",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "tests.test_api.test_metrics",
+      "type": "function",
+      "label": "test_metrics",
       "meta": {
         "module": "tests.test_api"
       }
@@ -1051,6 +1161,76 @@
       "label": "test_ask_via_api",
       "meta": {
         "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "tests.test_api.fake_count",
+      "type": "function",
+      "label": "fake_count",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "tests.test_api.get_total",
+      "type": "function",
+      "label": "get_total",
+      "meta": {
+        "module": "tests.test_api"
+      }
+    },
+    {
+      "id": "mod:tests.test_cli",
+      "type": "module",
+      "label": "tests.test_cli",
+      "meta": {}
+    },
+    {
+      "id": "tests.test_cli.test_cli_serve",
+      "type": "function",
+      "label": "test_cli_serve",
+      "meta": {
+        "module": "tests.test_cli"
+      }
+    },
+    {
+      "id": "tests.test_cli.test_cli_ingest",
+      "type": "function",
+      "label": "test_cli_ingest",
+      "meta": {
+        "module": "tests.test_cli"
+      }
+    },
+    {
+      "id": "tests.test_cli.test_cli_crawl",
+      "type": "function",
+      "label": "test_cli_crawl",
+      "meta": {
+        "module": "tests.test_cli"
+      }
+    },
+    {
+      "id": "tests.test_cli.test_cli_search",
+      "type": "function",
+      "label": "test_cli_search",
+      "meta": {
+        "module": "tests.test_cli"
+      }
+    },
+    {
+      "id": "tests.test_cli.test_cli_ask",
+      "type": "function",
+      "label": "test_cli_ask",
+      "meta": {
+        "module": "tests.test_cli"
+      }
+    },
+    {
+      "id": "tests.test_cli.test_index_html",
+      "type": "function",
+      "label": "test_index_html",
+      "meta": {
+        "module": "tests.test_cli"
       }
     },
     {
@@ -1327,6 +1507,14 @@
       "id": "tests.test_eval.test_run_eval_with_gold_file",
       "type": "function",
       "label": "test_run_eval_with_gold_file",
+      "meta": {
+        "module": "tests.test_eval"
+      }
+    },
+    {
+      "id": "tests.test_eval.test_run_eval_sweep_prints_table",
+      "type": "function",
+      "label": "test_run_eval_sweep_prints_table",
       "meta": {
         "module": "tests.test_eval"
       }
@@ -2305,6 +2493,36 @@
     },
     {
       "source": "mod:llm_search.api",
+      "target": "llm_search.api.Metrics",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.metrics_middleware",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.get_metrics",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.get_metrics",
+      "target": "route:/metrics:get_metrics",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.index",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.index",
+      "target": "route:/:index",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
       "target": "llm_search.api.get_engine",
       "kind": "defines"
     },
@@ -2315,12 +2533,22 @@
     },
     {
       "source": "mod:llm_search.api",
-      "target": "llm_search.api.health",
+      "target": "llm_search.api.health_live",
       "kind": "defines"
     },
     {
-      "source": "llm_search.api.health",
-      "target": "route:/health:health",
+      "source": "llm_search.api.health_live",
+      "target": "route:/health/live:health_live",
+      "kind": "handles"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.health_ready",
+      "kind": "defines"
+    },
+    {
+      "source": "llm_search.api.health_ready",
+      "target": "route:/health/ready:health_ready",
       "kind": "handles"
     },
     {
@@ -2375,12 +2603,47 @@
     },
     {
       "source": "mod:llm_search.api",
+      "target": "llm_search.api.__init__",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "llm_search.api.record",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.api",
       "target": "ext:__future__",
       "kind": "imports"
     },
     {
       "source": "mod:llm_search.api",
+      "target": "ext:time",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:collections",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:pathlib",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:threading",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
       "target": "ext:fastapi",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.api",
+      "target": "ext:fastapi.responses",
       "kind": "imports"
     },
     {
@@ -2486,6 +2749,26 @@
     {
       "source": "mod:llm_search.engine",
       "target": "ext:llm_search.crawl",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "llm_search.cli.main",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "ext:argparse",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "ext:uvicorn",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:llm_search.cli",
+      "target": "ext:llm_search.api",
       "kind": "imports"
     },
     {
@@ -3055,12 +3338,32 @@
     },
     {
       "source": "mod:tests.test_api",
-      "target": "tests.test_api.test_health",
+      "target": "tests.test_api.test_health_live",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.test_health_ready",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.test_metrics",
       "kind": "defines"
     },
     {
       "source": "mod:tests.test_api",
       "target": "tests.test_api.test_ask_via_api",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.fake_count",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "tests.test_api.get_total",
       "kind": "defines"
     },
     {
@@ -3081,6 +3384,66 @@
     {
       "source": "mod:tests.test_api",
       "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_api",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_cli_serve",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_cli_ingest",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_cli_crawl",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_cli_search",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_cli_ask",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "tests.test_cli.test_index_html",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "ext:sys",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "ext:unittest.mock",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "ext:fastapi.testclient",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "ext:llm_search.api",
+      "kind": "imports"
+    },
+    {
+      "source": "mod:tests.test_cli",
+      "target": "ext:llm_search.cli",
       "kind": "imports"
     },
     {
@@ -3336,6 +3699,11 @@
     {
       "source": "mod:tests.test_eval",
       "target": "tests.test_eval.test_run_eval_with_gold_file",
+      "kind": "defines"
+    },
+    {
+      "source": "mod:tests.test_eval",
+      "target": "tests.test_eval.test_run_eval_sweep_prints_table",
       "kind": "defines"
     },
     {
@@ -4040,7 +4408,7 @@
     }
   ],
   "stats": {
-    "node_count": 250,
-    "edge_count": 422
+    "node_count": 274,
+    "edge_count": 458
   }
 }

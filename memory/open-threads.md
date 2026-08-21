@@ -27,8 +27,12 @@ Track unresolved questions, known limitations, and parked work. Update after eac
 
 - **Eval (RESOLVED 2026-08-20):** `scripts/run_eval.py` runs the harness offline with lexical
   fakes; CI gate via `--gate-mrr` wired into `.github/workflows/ci.yml` + `make eval`/`make ci`.
-  Still open: a real annotated gold set + lexical-vs-cross-encoder comparison to tune
-  `rerank_multiplier`; swap `tests/gold/eval_gold.json` for a semantic gold set.
+  Rerank-multiplier sweep (`--rerank-multipliers`) added (ADR-018). Still open: a real annotated
+  gold set + lexical-vs-cross-encoder comparison; swap `tests/gold/eval_gold.json` for a semantic set.
+
+- **Observability (RESOLVED 2026-08-20):** in-process `Metrics` + `GET /metrics` (Prometheus
+  style) + `GET /health/live` + `GET /health/ready` (503 on missing store/provider). Still open:
+  expose metrics to Prometheus scraping (no push), add per-provider health detail, dashboard.
 
 - **Crawl (RESOLVED 2026-08-20):** concurrent (`CRAWL_CONCURRENCY`) + ETag-aware incremental
   re-crawl (304 -> skip re-ingest) via seeded `CrawlState`. Persistent `CrawlState` JSON
