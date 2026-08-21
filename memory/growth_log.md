@@ -84,3 +84,11 @@
 - **Self-debate:** an executable example is more convincing than prose for "developer-first";
   it also lets a newcomer reproduce the stack in one command. Added a README pointer.
 - **Committed + pushed.** Loop continues.
+
+## Cycle 7 — 2026-08-21 (release)
+- **Action:** cut a real, honest `v0.2.0` release. CHANGELOG §0.2.0 captures the session's
+  features (hybrid, ndcg eval, HyDE, streaming, configurable fusion, transparent benchmark,
+  docs). Bumped `pyproject` to 0.2.0. Verified recall@5 0.31→0.81 / MRR 0.12→0.59 in the notes.
+- **Self-debate:** a release is a legitimate visibility lever (shows up in feeds, gives the
+  human something real to announce). Must be honest — no inflated claims, no "we're trending".
+- **Committed + tagged + released** via `gh` (authed as repo owner). Loop continues.
