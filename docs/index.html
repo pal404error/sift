@@ -7,7 +7,7 @@
     <meta name="description" content="Sift is an enterprise-ready, self-hostable, multi-provider RAG search engine. Bring your own LLMs and embeddings, crawl and index your content, and answer with source-backed retrieval. MIT licensed.">
     <meta name="keywords" content="RAG, search engine, LLM, retrieval augmented generation, self-hosted, semantic search, vector database, embeddings, FastAPI, OIDC, enterprise search, web crawler, cross-encoder, Qdrant">
     <meta name="author" content="pal404error">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#f4f1e9">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -36,16 +36,13 @@
     </script>
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent: #c084fc;
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-2: #334155;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --radius: 0.75rem;
+            --paper: #f4f1e9;
+            --paper-2: #ffffff;
+            --ink: #111111;
+            --ink-soft: #2b2b2b;
+            --rule: #111111;
+            --accent: #b00020;
+            --muted: #555555;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,316 +50,249 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            /* Newspaper: Helvetica, BOLD all over */
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            background-color: var(--paper);
+            color: var(--ink);
+            line-height: 1.45;
             -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
         a { color: inherit; text-decoration: none; }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Header & Nav */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .nav {
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+
+        /* Top dateline bar */
+        .dateline {
+            border-bottom: 3px solid var(--rule);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.5rem 0;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            height: 72px;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: var(--ink);
         }
-        
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.5rem; }
-        .logo span { color: var(--primary); }
-        
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text); }
-        
-        .menu-toggle { display: none; background: transparent; border: none; color: var(--text); cursor: pointer; padding: 0.5rem; }
-        .menu-toggle svg { width: 24px; height: 24px; fill: currentColor; }
-        
+
+        /* Masthead */
+        .masthead { text-align: center; padding: 1.5rem 0 1rem; border-bottom: 6px double var(--rule); }
+        .masthead .title {
+            font-size: clamp(3.5rem, 11vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+        .masthead .tagline {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+
+        /* Top nav */
+        .topnav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 0.75rem 0;
+            border-bottom: 3px solid var(--rule);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .topnav a { padding: 0.2rem 0; border-bottom: 3px solid transparent; }
+        .topnav a:hover { border-bottom-color: var(--accent); }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; font: inherit; color: var(--ink); padding: 0.4rem; }
+
+        /* Generic section */
+        .section { padding: 3rem 0; border-bottom: 3px solid var(--rule); }
+        .kicker {
+            font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 0.6rem; display: block;
+        }
+        .section-head { text-align: center; max-width: 760px; margin: 0 auto 2.5rem; }
+        .section-head h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.05;
+        }
+        .section-head p { margin-top: 0.75rem; color: var(--ink-soft); font-size: 1rem; }
+
         /* Buttons */
         .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            gap: 0.5rem;
+            display: inline-block; padding: 0.7rem 1.4rem; font: inherit;
+            font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+            border: 3px solid var(--ink); background: var(--ink); color: var(--paper);
+            cursor: pointer; transition: 0.15s;
         }
-        .btn-primary { background: var(--primary); color: #fff; border: 1px solid var(--primary); box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39); }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-        .btn-outline:hover { background: var(--surface); border-color: var(--text-muted); }
+        .btn:hover { background: var(--paper); color: var(--ink); }
+        .btn-outline { background: transparent; color: var(--ink); }
+        .btn-outline:hover { background: var(--ink); color: var(--paper); }
 
-        /* Hero */
-        .hero {
-            position: relative;
-            padding: 8rem 0 6rem;
-            text-align: center;
-            overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
-            -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
-        }
+        /* Hero / lead story */
+        .hero { padding: 3.5rem 0 3rem; text-align: center; border-bottom: 3px solid var(--rule); }
         .hero h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #60a5fa, var(--accent), #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
+            font-size: clamp(2.6rem, 7vw, 5rem); font-weight: 900; text-transform: uppercase;
+            letter-spacing: -0.03em; line-height: 0.95; max-width: 14ch; margin: 0 auto;
         }
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 640px;
-            margin: 0 auto 2.5rem;
-        }
-        .hero-actions {
-            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;
-        }
-        .hero-snippet {
-            display: inline-flex; align-items: center; justify-content: space-between;
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 0.5rem 0.5rem 0.5rem 1.25rem; border-radius: 99px;
-            gap: 1rem; margin: 0 auto;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
-        .hero-snippet code { font-family: ui-monospace, monospace; color: var(--text); font-size: 0.9rem; }
-        .hero-snippet button {
-            background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted);
-            padding: 0.4rem 1rem; border-radius: 99px; cursor: pointer; transition: 0.2s;
-            font-size: 0.85rem; font-weight: 600;
-        }
-        .hero-snippet button:hover { background: var(--border); color: var(--text); }
+        .hero .deck { margin: 1.25rem auto 0; max-width: 640px; font-size: 1.15rem; color: var(--ink-soft); }
+        .hero-actions { margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        /* Sections */
-        .section { padding: 6rem 0; border-top: 1px solid var(--border); }
-        .section-header { text-align: center; max-width: 720px; margin: 0 auto 4rem; }
-        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
-        .section-header p { color: var(--text-muted); font-size: 1.1rem; }
-
-        /* Feature Grid */
-        .grid-6 {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;
+        .install-box {
+            margin: 2rem auto 0; max-width: 640px; border: 3px solid var(--ink); background: var(--paper-2);
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0.6rem 0.6rem 1rem;
         }
+        .install-box code { font-family: "Courier New", Courier, monospace; font-weight: 700; font-size: 0.9rem; word-break: break-all; }
+        .install-box button {
+            flex: none; font: inherit; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+            border: 3px solid var(--ink); background: var(--ink); color: var(--paper); padding: 0.45rem 1rem; cursor: pointer;
+        }
+        .install-box button:hover { background: var(--paper); color: var(--ink); }
+
+        /* Feature grid as newspaper columns */
+        .grid-6 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0; }
         .feature-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            border: 3px solid var(--rule); margin: -1.5px; padding: 1.5rem; background: var(--paper-2);
         }
-        .feature-card:hover { transform: translateY(-4px); border-color: var(--primary); }
-        .feature-icon {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 48px; height: 48px; border-radius: 12px;
-            background: rgba(59, 130, 246, 0.1); color: var(--primary);
-            margin-bottom: 1.5rem; font-size: 1.5rem;
-        }
-        .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
-        .feature-card p { color: var(--text-muted); font-size: 1rem; }
+        .feature-card .ficon { font-size: 1.8rem; line-height: 1; }
+        .feature-card h3 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.02em; margin: 0.75rem 0 0.5rem; }
+        .feature-card p { font-size: 0.92rem; color: var(--ink-soft); }
 
-        /* How it works */
-        .steps {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
-            position: relative;
-        }
-        .step {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 2rem;
-            position: relative; z-index: 1;
-        }
-        .step-num {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 3rem; height: 3rem; border-radius: 50%;
-            background: var(--primary); color: white; font-weight: 700; font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0 0 4px var(--bg);
-        }
-        .step h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
-        .step p { color: var(--text-muted); }
+        /* Steps */
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .step { border-top: 6px solid var(--rule); padding-top: 1rem; }
+        .step .num { font-size: 2.5rem; font-weight: 900; line-height: 1; }
+        .step h3 { font-size: 1.1rem; text-transform: uppercase; margin: 0.5rem 0; }
+        .step p { color: var(--ink-soft); font-size: 0.95rem; }
 
-        /* Code Block */
-        .code-block-wrapper {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            max-width: 800px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
+        /* Code block */
+        .code-block-wrapper { max-width: 820px; margin: 0 auto; border: 3px solid var(--ink); background: var(--paper-2); }
         .code-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0.75rem 1.25rem; background: var(--surface-2); border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1rem; border-bottom: 3px solid var(--ink); background: var(--ink); color: var(--paper);
+            font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
         }
-        .code-header .dots { display: flex; gap: 0.5rem; }
-        .code-header .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--border); }
-        .code-header .dot:nth-child(1) { background: #ef4444; }
-        .code-header .dot:nth-child(2) { background: #eab308; }
-        .code-header .dot:nth-child(3) { background: #22c55e; }
-        .code-block {
-            padding: 1.5rem; overflow-x: auto;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.95rem; color: #e2e8f0;
-        }
-        .code-block .comment { color: #64748b; }
-        .code-block .cmd { color: #38bdf8; }
-        
+        .code-block { padding: 1.25rem; overflow-x: auto; font-family: "Courier New", Courier, monospace; font-size: 0.95rem; color: var(--ink); }
+        .code-block .comment { color: var(--accent); }
+        .code-block .cmd { font-weight: 900; }
+
         /* FAQ */
-        .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-        details {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: hidden;
-        }
+        .faq-list { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; border-top: 3px solid var(--rule); }
+        details { border-bottom: 3px solid var(--rule); background: var(--paper-2); }
         summary {
-            padding: 1.5rem; font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            list-style: none; outline: none;
+            padding: 1.1rem 1rem; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.01em;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; outline: none;
         }
         summary::-webkit-details-marker { display: none; }
-        summary::after {
-            content: "+"; font-size: 1.5rem; font-weight: 400; color: var(--text-muted); transition: transform 0.2s;
-        }
-        details[open] summary::after { content: "−"; transform: rotate(180deg); }
-        details[open] summary { border-bottom: 1px solid var(--border); }
-        .faq-content { padding: 1.5rem; color: var(--text-muted); line-height: 1.6; }
+        summary::after { content: "+"; font-size: 1.5rem; }
+        details[open] summary::after { content: "\2212"; }
+        .faq-content { padding: 0 1rem 1.1rem; color: var(--ink-soft); }
 
-        /* CTA Section */
-        .cta-section { text-align: center; background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.05)); }
+        /* CTA */
+        .cta-section { text-align: center; }
+        .cta-section h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase; }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border); padding: 4rem 0 2rem; background: var(--bg); }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
-        .footer-col.brand { grid-column: span 2; }
-        .footer-col h4 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); margin-bottom: 1.5rem; }
-        .footer-col a { display: block; color: var(--text-muted); margin-bottom: 0.75rem; transition: color 0.2s; }
-        .footer-col a:hover { color: var(--primary); }
-        .footer-bottom {
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-            padding-top: 2rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem;
-        }
+        footer { border-top: 6px double var(--rule); padding: 2.5rem 0 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; }
+        .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; border-bottom: 3px solid var(--rule); padding-bottom: 0.4rem; }
+        .footer-col a { display: block; font-size: 0.9rem; margin-bottom: 0.6rem; color: var(--ink-soft); }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { margin-top: 2rem; padding-top: 1.25rem; border-top: 3px solid var(--rule); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-        /* Mobile */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; flex-direction: column; width: 100%; position: absolute;
-                top: 72px; left: 0; background: var(--bg); padding: 1.5rem;
-                border-bottom: 1px solid var(--border); gap: 1.5rem; align-items: flex-start;
-                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
-            }
-            .nav-links.active { display: flex; }
-            .menu-toggle { display: block; }
-            .hero { padding: 5rem 0 4rem; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-snippet { flex-direction: column; width: 100%; padding: 0.75rem; border-radius: 0.75rem; gap: 0.5rem; }
-            .hero-snippet button { width: 100%; }
-            .section { padding: 4rem 0; }
-            .footer-col.brand { grid-column: span 1; }
+        @media (max-width: 720px) {
+            .topnav { display: none; flex-direction: column; gap: 0.75rem; padding: 1rem; text-align: center; }
+            .topnav.active { display: flex; }
+            .menu-toggle { display: inline-block; }
+            .topnav-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--rule); padding: 0.5rem 0; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container nav">
-            <a href="#" class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                Sift<span>.</span>
-            </a>
-            <button class="menu-toggle" id="menu-btn" aria-label="Toggle menu">
-                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            </button>
-            <nav class="nav-links" id="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how">How it works</a>
-                <a href="#faq">FAQ</a>
-                <a href="https://github.com/pal404error/sift#readme">Docs</a>
-                <a href="https://github.com/pal404error/sift" class="btn btn-primary" style="color:white">View on GitHub</a>
-            </nav>
-        </div>
-    </header>
+    <div class="dateline container">
+        <span>The Open-Source Search Edition</span>
+        <span>Est. 2026 &middot; Vol. 1 — No. 1</span>
+        <span>Self-Hosted &middot; MIT</span>
+    </div>
+
+    <div class="masthead container">
+        <h1 class="title">Sift</h1>
+        <p class="tagline">Enterprise, Self-Hostable, Multi-Provider RAG Search Engine</p>
+    </div>
+
+    <div class="topnav-row container" style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--rule); padding:0.5rem 0;">
+        <nav class="topnav" id="nav-links" style="border:0; flex:1; justify-content:flex-start; gap:1.5rem; padding:0;">
+            <a href="#features">Features</a>
+            <a href="#how">How It Works</a>
+            <a href="#quickstart">Quickstart</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://github.com/pal404error/sift#readme">Docs</a>
+        </nav>
+        <a href="https://github.com/pal404error/sift" class="btn" style="font-size:0.75rem; padding:0.5rem 1rem;">GitHub</a>
+        <button class="menu-toggle" id="menu-btn" aria-label="Toggle menu">MENU</button>
+    </div>
 
     <main>
-        <!-- Hero Section -->
+        <!-- Hero / Lead Story -->
         <section class="hero" id="home">
-            <div class="hero-bg"></div>
             <div class="container">
+                <span class="kicker">Front Page &middot; The Search Story</span>
                 <h1>Intelligence, Grounded.</h1>
-                <p>The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data, and answer with source-backed retrieval.</p>
-                
+                <p class="deck">The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data, and answer with source-backed retrieval.</p>
                 <div class="hero-actions">
-                    <a href="#quickstart" class="btn btn-primary">Get Started</a>
+                    <a href="#quickstart" class="btn">Get Started</a>
                     <a href="https://github.com/pal404error/sift" class="btn btn-outline">GitHub Repository</a>
                 </div>
-
-                <div class="hero-snippet">
+                <div class="install-box">
                     <code id="snippet-code">pip install "sift @ git+https://github.com/pal404error/sift.git"</code>
                     <button onclick="copySnippet()" id="snippet-btn">Copy</button>
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
+        <!-- Features -->
         <section class="section" id="features">
             <div class="container">
-                <div class="section-header">
-                    <h2>Everything you need to ship search</h2>
+                <div class="section-head">
+                    <span class="kicker">Section A &middot; Capabilities</span>
+                    <h2>Everything You Need To Ship Search</h2>
                     <p>A clean, pluggable foundation — not a walled garden. Wire in your stack and stay in control.</p>
                 </div>
-                
                 <div class="grid-6">
                     <div class="feature-card">
-                        <div class="feature-icon">🔌</div>
+                        <div class="ficon">&#128268;</div>
                         <h3>Pluggable Providers</h3>
                         <p>Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">💾</div>
+                        <div class="ficon">&#128190;</div>
                         <h3>Flexible Storage</h3>
                         <p>Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🔐</div>
+                        <div class="ficon">&#128274;</div>
                         <h3>Enterprise Security</h3>
                         <p>Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
+                        <div class="ficon">&#127919;</div>
                         <h3>Advanced Retrieval</h3>
                         <p>Achieve higher precision by combining lexical search capabilities with cross-encoder rerankers for top-tier semantic accuracy.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🕷️</div>
+                        <div class="ficon">&#128027;</div>
                         <h3>Concurrent Crawler</h3>
                         <p>Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🛠️</div>
+                        <div class="ficon">&#128295;</div>
                         <h3>Ops &amp; Monitoring</h3>
                         <p>Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana.</p>
                     </div>
@@ -370,26 +300,27 @@
             </div>
         </section>
 
-        <!-- How it works Section -->
+        <!-- How it works -->
         <section class="section" id="how">
             <div class="container">
-                <div class="section-header">
-                    <h2>How it works</h2>
+                <div class="section-head">
+                    <span class="kicker">Section B &middot; The Pipeline</span>
+                    <h2>How It Works</h2>
                     <p>Three stages between your sources and a grounded answer.</p>
                 </div>
                 <div class="steps">
                     <div class="step">
-                        <div class="step-num">1</div>
+                        <div class="num">1</div>
                         <h3>Ingest &amp; Crawl</h3>
                         <p>The orchestrator concurrently pulls pages from your sources, respecting robots.txt and gracefully handling incremental re-crawls via ETags.</p>
                     </div>
                     <div class="step">
-                        <div class="step-num">2</div>
+                        <div class="num">2</div>
                         <h3>Embed &amp; Store</h3>
                         <p>Content is intelligently chunked, passed through your chosen embedding provider, and indexed into your active vector store.</p>
                     </div>
                     <div class="step">
-                        <div class="step-num">3</div>
+                        <div class="num">3</div>
                         <h3>Retrieve &amp; Generate</h3>
                         <p>Queries are vectorized, optionally reranked with cross-encoders, and answered by your preferred LLM with transparent sources attached.</p>
                     </div>
@@ -397,23 +328,16 @@
             </div>
         </section>
 
-        <!-- Quickstart Section -->
+        <!-- Quickstart -->
         <section class="section" id="quickstart">
             <div class="container">
-                <div class="section-header">
-                    <h2>Up and running in seconds</h2>
+                <div class="section-head">
+                    <span class="kicker">Section C &middot; Wire Dispatch</span>
+                    <h2>Up And Running In Seconds</h2>
                     <p>Sift ships with mock providers natively, letting you test the full RAG pipeline offline with zero API keys.</p>
                 </div>
-                
                 <div class="code-block-wrapper">
-                    <div class="code-header">
-                        <div class="dots">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                        </div>
-                        <span style="color: var(--text-muted); font-size: 0.85rem; font-family: monospace;">terminal</span>
-                    </div>
+                    <div class="code-header"><span>Terminal</span><span>bash</span></div>
                     <div class="code-block">
 <span class="comment"># Clone the repository</span><br>
 <span class="cmd">git clone</span> https://github.com/pal404error/sift.git<br>
@@ -432,59 +356,48 @@
             </div>
         </section>
 
-        <!-- FAQ Section -->
+        <!-- FAQ -->
         <section class="section" id="faq">
             <div class="container">
-                <div class="section-header">
+                <div class="section-head">
+                    <span class="kicker">Section D &middot; Q &amp; A</span>
                     <h2>Frequently Asked Questions</h2>
                     <p>Common questions about architecture, hosting, and features.</p>
                 </div>
-                
                 <div class="faq-list">
                     <details name="faq">
-                        <summary>Is Sift fully open source?</summary>
-                        <div class="faq-content">
-                            Yes, Sift is completely open source and released under the permissive MIT license. You can fork it, modify it, and use it freely for both personal and commercial enterprise projects.
-                        </div>
+                        <summary>Is Sift Fully Open Source?</summary>
+                        <div class="faq-content">Yes, Sift is completely open source and released under the permissive MIT license. You can fork it, modify it, and use it freely for both personal and commercial enterprise projects.</div>
                     </details>
                     <details name="faq">
-                        <summary>Which AI models does Sift support?</summary>
-                        <div class="faq-content">
-                            Sift features a highly pluggable architecture. Out of the box, we provide first-class support for OpenAI, Anthropic, and Ollama (for local inference). We also include mock fake providers that let you test the entire pipeline without requiring API keys or internet access.
-                        </div>
+                        <summary>Which AI Models Does Sift Support?</summary>
+                        <div class="faq-content">Sift features a highly pluggable architecture. Out of the box, we provide first-class support for OpenAI, Anthropic, and Ollama (for local inference). We also include mock fake providers that let you test the entire pipeline without requiring API keys or internet access.</div>
                     </details>
                     <details name="faq">
-                        <summary>How does the crawl orchestrator work?</summary>
-                        <div class="faq-content">
-                            The built-in concurrent crawler orchestrator is designed for production efficiency. It strictly obeys <code>robots.txt</code>, supports ETags for bandwidth-saving incremental crawls, and handles chunking securely before passing data to the embedding pipeline.
-                        </div>
+                        <summary>How Does The Crawl Orchestrator Work?</summary>
+                        <div class="faq-content">The built-in concurrent crawler orchestrator is designed for production efficiency. It strictly obeys robots.txt, supports ETags for bandwidth-saving incremental crawls, and handles chunking securely before passing data to the embedding pipeline.</div>
                     </details>
                     <details name="faq">
-                        <summary>Can I integrate this with my existing identity provider?</summary>
-                        <div class="faq-content">
-                            Absolutely. Sift includes enterprise-ready OIDC and JWKS authentication, alongside API-key based Role Based Access Control (RBAC). It's built to drop straight into corporate environments securely.
-                        </div>
+                        <summary>Can I Integrate This With My Existing Identity Provider?</summary>
+                        <div class="faq-content">Absolutely. Sift includes enterprise-ready OIDC and JWKS authentication, alongside API-key based Role Based Access Control (RBAC). It's built to drop straight into corporate environments securely.</div>
                     </details>
                     <details name="faq">
-                        <summary>How do I monitor Sift in production?</summary>
-                        <div class="faq-content">
-                            Sift comes instrumented with <code>/metrics</code> and <code>/health</code> endpoints natively. It seamlessly integrates with Prometheus and Grafana for comprehensive observability, and maintains a robust audit log for security tracing.
-                        </div>
+                        <summary>How Do I Monitor Sift In Production?</summary>
+                        <div class="faq-content">Sift comes instrumented with /metrics and /health endpoints natively. It seamlessly integrates with Prometheus and Grafana for comprehensive observability, and maintains a robust audit log for security tracing.</div>
                     </details>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <!-- CTA -->
         <section class="section cta-section">
             <div class="container">
-                <div class="section-header" style="margin-bottom: 2.5rem;">
-                    <h2>Ready to self-host?</h2>
-                    <p>Bring your own models. Keep your own data. MIT licensed, forever.</p>
-                </div>
-                <div class="hero-actions" style="margin-bottom: 0;">
-                    <a href="https://github.com/pal404error/sift" class="btn btn-primary">Star on GitHub</a>
-                    <a href="https://github.com/pal404error/sift/blob/main/README.md" class="btn btn-outline">Read the docs</a>
+                <span class="kicker">Editorial &middot; The Verdict</span>
+                <h2>Ready To Self-Host?</h2>
+                <p style="margin:0.75rem 0 1.75rem; color:var(--ink-soft);">Bring your own models. Keep your own data. MIT licensed, forever.</p>
+                <div class="hero-actions" style="margin:0;">
+                    <a href="https://github.com/pal404error/sift" class="btn">Star On GitHub</a>
+                    <a href="https://github.com/pal404error/sift/blob/main/README.md" class="btn btn-outline">Read The Docs</a>
                 </div>
             </div>
         </section>
@@ -493,17 +406,10 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col brand">
-                    <a href="#" class="logo" style="margin-bottom: 1rem;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                        Sift<span>.</span>
-                    </a>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 300px;">Enterprise-ready, self-hostable multi-provider RAG search engine over web content.</p>
-                </div>
                 <div class="footer-col">
                     <h4>Product</h4>
                     <a href="#features">Features</a>
-                    <a href="#how">How it works</a>
+                    <a href="#how">How It Works</a>
                     <a href="https://github.com/pal404error/sift/blob/main/CHANGELOG.md">Changelog</a>
                 </div>
                 <div class="footer-col">
@@ -513,56 +419,34 @@
                     <a href="https://github.com/pal404error/sift/blob/main/CONTRIBUTING.md">Contributing</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Community & Legal</h4>
-                    <a href="https://github.com/pal404error/sift/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+                    <h4>Community &amp; Legal</h4>
+                    <a href="https://github.com/pal404error/sift/blob/main/CODE_OF_CONDUCT.md">Code Of Conduct</a>
                     <a href="https://github.com/pal404error/sift/blob/main/SECURITY.md">Security</a>
                     <a href="https://github.com/pal404error/sift/blob/main/LICENSE">MIT License</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>Released under the MIT License.</p>
-                <p>Built by <a href="https://github.com/pal404error" style="color:var(--text); font-weight: 500;">pal404error</a>.</p>
+                <span>Released Under The MIT License</span>
+                <span>Built By <a href="https://github.com/pal404error" style="color:var(--accent);">pal404error</a></span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile Menu Toggle
         const menuBtn = document.getElementById('menu-btn');
         const navLinks = document.getElementById('nav-links');
-        
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu on link click
+        menuBtn.addEventListener('click', () => { navLinks.classList.toggle('active'); });
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
+            link.addEventListener('click', () => { navLinks.classList.remove('active'); });
         });
-
-        // Copy Code Snippet
         function copySnippet() {
             const codeText = document.getElementById('snippet-code').innerText;
             const btn = document.getElementById('snippet-btn');
-            
             navigator.clipboard.writeText(codeText).then(() => {
-                const originalText = btn.innerText;
+                const original = btn.innerText;
                 btn.innerText = 'Copied!';
-                btn.style.backgroundColor = 'var(--primary)';
-                btn.style.color = 'white';
-                btn.style.borderColor = 'var(--primary)';
-                
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = '';
-                    btn.style.color = '';
-                    btn.style.borderColor = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+                setTimeout(() => { btn.innerText = original; }, 2000);
+            }).catch(err => { console.error('Failed to copy: ', err); });
         }
     </script>
 </body>
