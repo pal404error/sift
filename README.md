@@ -61,6 +61,19 @@ Sift acts as the intelligent orchestration layer between your data sources and y
 
 Sift is highly configurable via environment variables. Check out `.env.example` in the repository root for a complete list of options for connecting to different LLMs, vector stores, and setting up authentication.
 
+## Monitoring
+
+Sift exposes Prometheus-style metrics at `GET /metrics` and standardized health probes at `GET /health/live` and `GET /health/ready`. To spin up a full observability stack locally:
+
+```bash
+docker compose --profile monitoring up -d
+```
+
+- **Prometheus** → http://localhost:9090 (scrapes `sift` at `/metrics` every 15s)
+- **Grafana** → http://localhost:3000 (default login `admin`/`admin`; Prometheus pre-provisioned as a datasource)
+
+Bring it down with `docker compose --profile monitoring down`.
+
 ## Get Involved
 
 We love contributions! Whether it's a bug fix, a new provider integration, or a documentation improvement.
