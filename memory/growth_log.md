@@ -76,3 +76,11 @@
 - **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. One test initially asserted a false premise
   (symmetric tie) — corrected, not the code.
 - **Committed + pushed.** Loop continues.
+
+## Cycle 6 — 2026-08-21 (example / smoke test)
+- **Asset:** `examples/quickstart.py` — runs hybrid search + HyDE + streaming with the fake
+  providers (zero API keys). Verified by execution: it prints retrieved docs, sources, and a
+  streamed answer. Doubles as a runnable smoke test and a developer onboarding snippet.
+- **Self-debate:** an executable example is more convincing than prose for "developer-first";
+  it also lets a newcomer reproduce the stack in one command. Added a README pointer.
+- **Committed + pushed.** Loop continues.

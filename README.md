@@ -26,7 +26,7 @@ Whether you're standing up an internal knowledge base, adding semantic search to
 - **Enterprise Ready**: First-class support for OIDC authentication, SSO, and health metrics.
 - **Semantic Retrieval**: Local MiniLM embeddings + a cross-encoder reranker work out of the box — no API key required for relevance.
 - **Hybrid Retrieval**: Optional lexical + vector fusion (Reciprocal Rank Fusion) catches exact-match and rare-term queries dense vectors miss. Enable with `SIFT_HYBRID=true`.
-- **Developer First**: Comprehensive CLI (`sift`), FastAPI endpoints, and a static web UI to hit the ground running.
+- **Developer First**: Comprehensive CLI (`sift`), FastAPI endpoints, and a static web UI to hit the ground running. See `examples/quickstart.py` for a no-API-key tour of hybrid search, HyDE, and streaming.
 - **Self-Hostable**: Simple Docker Compose setup or bare-metal deployment. You own your data.
 
 ## ⚡ 30-Second Quickstart
