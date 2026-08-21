@@ -133,3 +133,15 @@
 - **Integrity test:** `tests/test_gold_integrity.py` verifies gold files (valid JSON, relevant ids
   exist). Real, catchable guard.
 - **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. gold integrity); coverage 82%. **Committed + pushed.**
+
+## Cycle 12 — 2026-08-21 (external BEIR benchmark)
+- **Tool:** `scripts/import_beir.py` converts a BEIR dataset into our gold format. Relevance is
+  BEIR GROUND TRUTH qrels — NOT authored by us. This is the honest, externally-sourced benchmark
+  the roadmap called for. Generated gold file is large + git-ignored; regenerable via the script.
+- **Finding (real data, BEIR scifact, 2000 docs/100 q):** lexical alone weak (recall@5 0.352);
+  semantic (MiniLM+cross-encoder) 0.786 recall / 0.688 mrr → ~2.2× recall, ~2.5× MRR lift.
+  MiniLM-L6-v2 (0.786) > paraphrase-L3 (0.721) — confirms dataset-dependence externally and makes
+  "MiniLM-L6-v2 is the safer default" the defensible takeaway.
+- **Tests:** `tests/test_import_beir.py` (pure build_gold, no network) + integrity test now scans
+  all gold JSONs. `scripts/import_beir.py` refactored to expose testable `build_gold`.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓ (incl. new tests); coverage 82%. **Committed + pushed.**

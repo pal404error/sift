@@ -1,0 +1,17 @@
+pipeline,recall_at_5,precision_at_5,ndcg_at_5,mrr,requires_api_key,notes
+fake_embeddings_lexical_reranker,0.352,0.086,0.300,0.272,no,"token-hash fake embeddings + lexical reranker on BEIR scifact (2000 docs, 100 queries, ground-truth qrels)"
+local_minilm_cross_encoder_reranker,0.786,0.188,0.782,0.688,no,"all-MiniLM-L6-v2 + cross-encoder reranker on BEIR scifact"
+paraphrase_minilm_l3_cross_encoder_reranker,0.721,0.170,0.713,0.642,no,"paraphrase-MiniLM-L3-v2 + cross-encoder reranker on BEIR scifact"
+
+# Source:      tests/gold/eval_gold_beir_scifact.json (regenerated via scripts/import_beir.py; git-ignored)
+# Gold set:    BEIR scifact test split, 2000 docs (relevant + sampled distractors), 100 sampled queries
+# Relevance:   BEIR GROUND TRUTH qrels (NOT authored by us) -> honest external benchmark
+# Reproduce:   pip install beir && python scripts/import_beir.py --dataset scifact --sample 100 --max-docs 2000
+#              python scripts/run_eval.py --gold tests/gold/eval_gold_beir_scifact.json --compare
+# Finding:     On real scientific text, lexical alone is weak (0.352 recall); semantic gives ~2.2x recall,
+#              ~2.5x MRR lift. MiniLM-L6-v2 > paraphrase-L3 here -> model ranking is dataset-dependent.
+# Metric defs: recall@5  = fraction of queries with the relevant doc in top 5
+#              precision@5 = fraction of top-5 retrieved docs that are relevant
+#              ndcg@5     = ranking quality, normalized to [0,1] (binary relevance)
+#              mrr        = mean reciprocal rank of the first relevant result
+# These are the exact numbers the eval harness prints; no rows synthesized.
