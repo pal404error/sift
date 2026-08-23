@@ -62,4 +62,6 @@ def test_index_html():
     client = TestClient(app)
     response = client.get("/")
     assert response.status_code == 200
-    assert "Sift Search" in response.text
+    # Served UI (React + ThreeUI shell when built, else the zero-build static page).
+    assert "Sift" in response.text
+    assert "<!doctype html>" in response.text.lower()

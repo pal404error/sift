@@ -4,7 +4,7 @@
 
 **Self-hosted RAG that actually retrieves.** On a deliberately hard gold set — paraphrases, synonyms, and multi-hop questions built to defeat lexical matching — swapping random "fake" embeddings for local MiniLM + a cross-encoder reranker lifts retrieval relevance **2.6×** (recall@5: 0.31 → 0.81). No API key required for relevance, and you own your data.
 
-[![⭐ Star Sift](https://img.shields.io/github/stars/pal404error/sift?style=social)](https://github.com/pal404error/sift)
+[![ Star Sift](https://img.shields.io/github/stars/pal404error/sift?style=social)](https://github.com/pal404error/sift)
 
 ![CI](https://img.shields.io/github/actions/workflow/status/pal404error/sift/ci.yml?label=ci)
 ![Coverage](https://img.shields.io/badge/coverage-83%25-brightgreen)
@@ -26,10 +26,10 @@ Whether you're standing up an internal knowledge base, adding semantic search to
 - **Enterprise Ready**: First-class support for OIDC authentication, SSO, and health metrics.
 - **Semantic Retrieval**: Local MiniLM embeddings + a cross-encoder reranker work out of the box — no API key required for relevance.
 - **Hybrid Retrieval**: Optional lexical + vector fusion (Reciprocal Rank Fusion) catches exact-match and rare-term queries dense vectors miss. Enable with `SIFT_HYBRID=true`.
-- **Developer First**: Comprehensive CLI (`sift`), FastAPI endpoints, and a static web UI to hit the ground running. See `examples/quickstart.py` for a no-API-key tour of hybrid search, HyDE, and streaming.
+- **Developer First**: Comprehensive CLI (`sift`), FastAPI endpoints, and a polished web UI (built with [ThreeUI](https://github.com/MengTo/threeui)) to hit the ground running. See `examples/quickstart.py` for a no-API-key tour of hybrid search, HyDE, and streaming.
 - **Self-Hostable**: Simple Docker Compose setup or bare-metal deployment. You own your data.
 
-## ⚡ 30-Second Quickstart
+## 30-Second Quickstart
 
 Get up and running locally in seconds. Sift comes with fake providers out of the box so you can test the waters without API keys.
 
@@ -124,6 +124,27 @@ sift demo
 small built-in corpus, so the web UI returns real sourced results immediately. Hybrid
 (lexical + vector) retrieval is enabled by default — pass `--no-hybrid` to disable.
 
+## Web UI (ThreeUI)
+
+The frontend in `ui/` is a React + [ThreeUI](https://github.com/MengTo/threeui) single-page
+app that drives the `/search` and `/ask/stream` endpoints. It is themed by ThreeUI's design
+system and uses its WebGL components (decorative backdrop, `SkeuomorphicToggle` for HyDE,
+`SparkBadge` for relevance scores) behind error boundaries so the page degrades gracefully
+if a shader asset fails to load.
+
+```bash
+# Production: build the UI, then serve it from the FastAPI backend at http://127.0.0.1:8000
+cd ui
+npm install
+npm run build        # outputs ui/dist (served automatically by the API at "/")
+
+# Development: run the Vite dev server with Hot Module Reload; it proxies API
+# calls to a running backend on :8000.
+npm run dev          # open the printed localhost URL
+```
+
+If `ui/dist` is not present, the API falls back to the zero-build `static/index.html`.
+
 ## Get Involved
 
 We love contributions! Whether it's a bug fix, a new provider integration, or a documentation improvement.
@@ -141,4 +162,4 @@ We love contributions! Whether it's a bug fix, a new provider integration, or a 
   process.
 
 ---
-*Built with ❤️ for developers who love clean architecture and great search.*
+*Built with love for developers who love clean architecture and great search.*

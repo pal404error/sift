@@ -35,6 +35,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Known issue documented**: faiss-cpu + torch (sentence-transformers) segfault in one process
   (BLAS conflict); README + Known Issues note the supported provider combinations.
 
+### Improved (UI, Cycle 15)
+- **React + ThreeUI web UI** — replaced the bare `static/index.html` with a Vite + React SPA in
+  `ui/` built on [ThreeUI](https://github.com/MengTo/threeui): glassmorphism search/ask shell,
+  streaming answers, source lists, `SkeuomorphicToggle` (HyDE), `SparkBadge` (relevance), and a
+  WebGL backdrop — all behind `ThreeUIBoundary` error boundaries with graceful fallbacks.
+  `vite.config.ts` proxies `/search`,`/ask`,`/crawl`,`/health` to the backend in dev; `npm run
+  build` emits `ui/dist`, which the API now serves at `/` (with `/assets` mounted) and falls back
+  to the old `static/index.html` when `ui/dist` is absent.
+
 ## [0.2.0] - 2026-08-21
 
 ### Added
@@ -53,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-08-21
 
 ### Added
-- **Initial professional release!** 🚀
+- **Initial professional release!** 
 - **Pluggable Architecture**: Core framework supporting interchangeable LLM and embedding providers.
 - **Vector Store Integration**: Robust, generic interfaces for vector storage and retrieval.
 - **Crawl Orchestrator**: Built-in scheduling and management for data ingestion pipelines.

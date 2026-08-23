@@ -8,6 +8,7 @@ from threading import Lock
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 
 from llm_search.auth import require_role
 from llm_search.config import get_settings
@@ -73,10 +74,22 @@ def get_metrics() -> Response:
     return Response("\n".join(lines) + "\n", media_type="text/plain")
 
 
+# Serve the built React + ThreeUI frontend (ui/dist) when present; otherwise fall
+# back to the zero-build static/index.html. Run `cd ui && npm install && npm run build`
+# to produce the ThreeUI-powered UI.
+_UI_DIR = Path(__file__).parent.parent / "ui" / "dist"
+_STATIC_DIR = Path(__file__).parent.parent / "static"
+
+
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
-    path = Path(__file__).parent.parent / "static" / "index.html"
-    return path.read_text(encoding="utf-8")
+    if (_UI_DIR / "index.html").exists():
+        return (_UI_DIR / "index.html").read_text(encoding="utf-8")
+    return (_STATIC_DIR / "index.html").read_text(encoding="utf-8")
+
+
+if (_UI_DIR / "assets").is_dir():
+    app.mount("/assets", StaticFiles(directory=str(_UI_DIR / "assets")), name="ui-assets")
 
 
 _engine: SearchEngine | None = None

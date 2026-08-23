@@ -190,3 +190,19 @@
 - **Caveat documented** in README Known Issues: don't combine faiss + sentence-transformers in one
   process.
 - **Gates:** ruff ✓ mypy ✓ pytest ✓ (82% cov). **Committed + pushed.**
+
+## Cycle 15 — 2026-08-22 (React + ThreeUI web UI)
+- Replaced the bare `static/index.html` with a Vite + React + TypeScript SPA in `ui/` using
+  [@designcodeio/threeui](https://github.com/MengTo/threeui) (v0.3.0). Themed by threeui's
+  design system (style.css); uses SkeuomorphicToggle (HyDE), SparkBadge (score), and a WebGL
+  backdrop behind a `ThreeUIBoundary` error boundary (graceful native fallback if a shader
+  asset fails). API client in `src/api.ts` calls `/search` and parses `/ask/stream` SSE.
+- `vite.config.ts` dev-proxies API routes to :8000; `npm run build` -> `ui/dist`.
+- Wired FastAPI: serves `ui/dist/index.html` at `/`, mounts `/assets`, falls back to
+  `static/index.html` when dist absent. Verified: build OK, `/` returns the React shell,
+  hashed JS/CSS assets return 200 via TestClient.
+- `ui/node_modules` + `ui/dist` already covered by top-level gitignores. README "Web UI"
+  section documents build/dev; Features bullet updated. CHANGELOG added.
+- **Caveat:** no browser/visual verification performed (headless env); build + serve + asset
+  delivery verified programmatically.
+- **Gates:** `npm run build` ✓; Python ruff/mypy/pytest ✓. **Committed + pushed.**
