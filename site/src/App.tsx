@@ -2,18 +2,35 @@ import React, { useState } from "react";
 import * as ThreeUI from "@designcodeio/threeui";
 import { ThreeUIBoundary } from "./ThreeUIBoundary";
 
-const Backdrop = (ThreeUI.TopoField ?? ThreeUI.StreamConvergenceBackground) as any;
-const Badge = ThreeUI.SparkBadge as any;
+const T = ThreeUI as any;
+
+function renderBackdrop() {
+  if (T.TopoField)
+    return (
+      <T.TopoField
+        className="backdrop"
+        style={{ position: "fixed", inset: 0, zIndex: -1 }}
+      />
+    );
+  if (T.StreamConvergenceBackground)
+    return (
+      <T.StreamConvergenceBackground
+        className="backdrop"
+        style={{ position: "fixed", inset: 0, zIndex: -1 }}
+      />
+    );
+  return <div className="backdrop-fallback" />;
+}
 
 const INSTALL = 'pip install "sift @ git+https://github.com/pal404error/sift.git"';
 
 const FEATURES = [
-  { icon: "🧩", title: "Pluggable Providers", body: "Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing." },
-  { icon: "🗄️", title: "Flexible Storage", body: "Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration." },
-  { icon: "🔐", title: "Enterprise Security", body: "Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log." },
-  { icon: "🎯", title: "Advanced Retrieval", body: "Achieve higher precision by combining lexical search with cross-encoder rerankers for top-tier semantic accuracy." },
-  { icon: "🕷️", title: "Concurrent Crawler", body: "Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh." },
-  { icon: "📈", title: "Ops & Monitoring", body: "Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana." },
+  { icon: "P", title: "Pluggable Providers", body: "Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing." },
+  { icon: "V", title: "Flexible Storage", body: "Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration." },
+  { icon: "S", title: "Enterprise Security", body: "Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log." },
+  { icon: "R", title: "Advanced Retrieval", body: "Achieve higher precision by combining lexical search with cross-encoder rerankers for top-tier semantic accuracy." },
+  { icon: "C", title: "Concurrent Crawler", body: "Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh." },
+  { icon: "O", title: "Ops & Monitoring", body: "Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana." },
 ];
 
 const STEPS = [
@@ -44,9 +61,7 @@ export default function App() {
   return (
     <div className="page">
       <ThreeUIBoundary fallback={<div className="backdrop-fallback" />}>
-        <div className="backdrop">
-          <Backdrop />
-        </div>
+        {renderBackdrop()}
       </ThreeUIBoundary>
 
       <header className="nav glass">
@@ -59,7 +74,7 @@ export default function App() {
           <a href="https://github.com/pal404error/sift#readme" onClick={() => setMenuOpen(false)}>Docs</a>
         </nav>
         <a href="https://github.com/pal404error/sift" className="gh-btn">GitHub</a>
-        <button className="menu-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">☰</button>
+        <button className="menu-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">Menu</button>
       </header>
 
       <main>
