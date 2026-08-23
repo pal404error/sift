@@ -21,6 +21,8 @@ build/
 # Node/TS
 node_modules/
 dist/
+!ui/dist/
+*.tsbuildinfo
 coverage/
 
 # Tooling / data
