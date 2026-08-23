@@ -74,22 +74,32 @@ def get_metrics() -> Response:
     return Response("\n".join(lines) + "\n", media_type="text/plain")
 
 
-# Serve the built React + ThreeUI frontend (ui/dist) when present; otherwise fall
-# back to the zero-build static/index.html. Run `cd ui && npm install && npm run build`
-# to produce the ThreeUI-powered UI.
+# Serve the built React + ThreeUI frontend. Precedence:
+#   1. ui/dist        -> dev build produced by `cd ui && npm run build` (picked up live)
+#   2. llm_search/_uidist -> the same build bundled into the wheel so an installed
+#      `sift` package also serves the ThreeUI UI, not just a checkout.
+#   3. static/index.html -> last-resort zero-build fallback.
 _UI_DIR = Path(__file__).parent.parent / "ui" / "dist"
+_PKG_UI_DIR = Path(__file__).parent / "_uidist"
 _STATIC_DIR = Path(__file__).parent.parent / "static"
 
 
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
-    if (_UI_DIR / "index.html").exists():
-        return (_UI_DIR / "index.html").read_text(encoding="utf-8")
-    return (_STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    for cand in (_UI_DIR, _PKG_UI_DIR, _STATIC_DIR):
+        p = cand / "index.html"
+        if p.exists():
+            return p.read_text(encoding="utf-8")
+    raise HTTPException(status_code=404, detail="UI not found")
 
 
-if (_UI_DIR / "assets").is_dir():
-    app.mount("/assets", StaticFiles(directory=str(_UI_DIR / "assets")), name="ui-assets")
+_ui_assets = (
+    _UI_DIR
+    if (_UI_DIR / "assets").is_dir()
+    else (_PKG_UI_DIR if (_PKG_UI_DIR / "assets").is_dir() else None)
+)
+if _ui_assets is not None:
+    app.mount("/assets", StaticFiles(directory=str(_ui_assets / "assets")), name="ui-assets")
 
 
 _engine: SearchEngine | None = None

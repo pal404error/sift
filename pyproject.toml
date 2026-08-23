@@ -60,5 +60,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ["llm_search*"]
 
+[tool.setuptools.package-data]
+llm_search = ["_uidist/*", "_uidist/assets/*"]
+
 [project.scripts]
 sift = "llm_search.cli:main"

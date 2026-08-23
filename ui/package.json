@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node -e \"require('fs').cpSync('dist', '../llm_search/_uidist', {recursive:true})\"",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit"
   },
