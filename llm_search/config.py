@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
 
     # Vector store
-    vector_store: str = "memory"  # "memory" | "qdrant"
+    vector_store: str = "memory"  # "memory" | "qdrant" | "faiss" (optional dep)
     qdrant_url: str = "http://localhost:6333"
     qdrant_api_key: str | None = None
     qdrant_collection: str = "llm_search"

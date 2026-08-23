@@ -26,6 +26,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Prompt-injection hardening** — `ask`/`ask_stream` now wrap retrieved passages in `<context>` tags and instruct the model they are **UNTRUSTED external data, not instructions**, explicitly ignoring any instructions inside them. Mitigates indirect injection from scraped pages.
 - **Result de-duplication** — `_unique_sources` returns distinct source URLs (first-seen order) so the answer `sources` list no longer repeats the same document when multiple chunks rank.
 
+### Improved (deferred audit item, Cycle 14)
+- **Optional FAISS vector store** — `llm_search/store/faiss_store.py`: `FaissStore` (`IndexFlatIP`,
+  L2-normalized so scores are exact cosine) backs `SIFT_VECTOR_STORE=faiss`. Same relevance as the
+  in-memory store but the scan runs in optimized C and scales to large corpora. Added as a non-base
+  optional extra (`pip install "llm-search[faiss]"`); in-memory remains the default. `build_store`
+  wires it; dimension is inferred from the first upserted vector; upsert replaces existing ids.
+- **Known issue documented**: faiss-cpu + torch (sentence-transformers) segfault in one process
+  (BLAS conflict); README + Known Issues note the supported provider combinations.
+
 ## [0.2.0] - 2026-08-21
 
 ### Added

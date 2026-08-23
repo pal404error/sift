@@ -28,6 +28,9 @@ dev = [
 semantic = [
     "sentence-transformers>=2.3",
 ]
+faiss = [
+    "faiss-cpu>=1.8",
+]
 
 [tool.ruff]
 line-length = 100

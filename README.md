@@ -22,7 +22,7 @@ Whether you're standing up an internal knowledge base, adding semantic search to
 ## Features at a Glance
 
 - **Pluggable Architecture**: Bring your own LLMs and embedding models (OpenAI, Anthropic, local models, or write your own provider).
-- **Batteries Included**: Vector store integration, crawling orchestration, and offline evaluation are built right in.
+- **Batteries Included**: Vector store integration (in-memory, Qdrant, or optional FAISS ANN), crawling orchestration, and offline evaluation are built right in.
 - **Enterprise Ready**: First-class support for OIDC authentication, SSO, and health metrics.
 - **Semantic Retrieval**: Local MiniLM embeddings + a cross-encoder reranker work out of the box — no API key required for relevance.
 - **Hybrid Retrieval**: Optional lexical + vector fusion (Reciprocal Rank Fusion) catches exact-match and rare-term queries dense vectors miss. Enable with `SIFT_HYBRID=true`.
@@ -131,6 +131,14 @@ We love contributions! Whether it's a bug fix, a new provider integration, or a 
 - Read our [Contributing Guide](CONTRIBUTING.md) to get started.
 - Check out the full documentation in the [`docs/`](docs/) directory.
 - Review our [Security Policy](SECURITY.md) and [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Known Issues
+
+- **FAISS + sentence-transformers (torch) conflict**: `faiss-cpu` and `torch` can segfault when
+  loaded in the same process due to a BLAS/OpenBLAS conflict. Use the FAISS backend
+  (`SIFT_VECTOR_STORE=faiss`) with the `fake`/`openai`/`anthropic` embedding providers, or use
+  `sentence-transformers` (local embeddings) with the in-memory/Qdrant store — not both in one
+  process.
 
 ---
 *Built with ❤️ for developers who love clean architecture and great search.*

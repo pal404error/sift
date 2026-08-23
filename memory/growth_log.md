@@ -176,3 +176,17 @@
 - **Gates:** ruff ✓ mypy ✓ pytest ✓; coverage 82%. **Committed + pushed.**
 - **Deferred (documented future work):** FAISS/ANN vector store (in-memory store is fine <10k
   docs per auditors); these changeset is enough to keep quality gates honest.
+
+## Cycle 14 — 2026-08-22 (FAISS vector store)
+- Implemented the last deferred audit item: **optional FAISS backend** (`FaissStore`, `IndexFlatIP`,
+  normalized vectors => exact cosine). Wired into `build_store` via `SIFT_VECTOR_STORE=faiss`; added
+  non-base `faiss` extra in pyproject (`pip install "llm-search[faiss]"`). Dimension inferred lazily;
+  upsert replaces existing ids.
+- **Tests:** `tests/test_store_faiss.py` (build_store selection, cosine-ranking parity, id-replace,
+  empty search, end-to-end engine). Guarded to `importorskip("faiss")` AND skip when torch is
+  importable (faiss+torch same-process segfault — a BLAS conflict, not our bug). Verified green in a
+  faiss-only run; full suite green (faiss tests skip here because sentence-transformers/torch is
+  installed in this venv).
+- **Caveat documented** in README Known Issues: don't combine faiss + sentence-transformers in one
+  process.
+- **Gates:** ruff ✓ mypy ✓ pytest ✓ (82% cov). **Committed + pushed.**
