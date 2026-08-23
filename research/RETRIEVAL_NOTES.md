@@ -26,11 +26,11 @@ Multiple independent 2026 sources converge on the same production pattern:
 ## 2. How Sift maps to the pattern
 | Best-practice component | Sift implementation | Status |
 | --- | --- | --- |
-| Lexical retriever (BM25-lite) | `llm_search/lexical_index.py` (inverted index, IDF + TF saturation) | ✅ shipped (ADR-019) |
-| Dense vector retriever | pluggable `EmbeddingProvider` (local MiniLM, OpenAI, Ollama) | ✅ shipped |
-| RRF fusion, k=60 | `SearchEngine.search` when `SIFT_HYBRID=true` | ✅ shipped (default off) |
-| Cross-encoder reranker | `llm_search/rerank.py::CrossEncoderReranker` | ✅ shipped |
-| HyDE query expansion | `SearchEngine.ask(use_hyde=True)` | ✅ shipped (ADR-020) |
+| Lexical retriever (BM25-lite) | `llm_search/lexical_index.py` (inverted index, IDF + TF saturation) |  shipped (ADR-019) |
+| Dense vector retriever | pluggable `EmbeddingProvider` (local MiniLM, OpenAI, Ollama) |  shipped |
+| RRF fusion, k=60 | `SearchEngine.search` when `SIFT_HYBRID=true` |  shipped (default off) |
+| Cross-encoder reranker | `llm_search/rerank.py::CrossEncoderReranker` |  shipped |
+| HyDE query expansion | `SearchEngine.ask(use_hyde=True)` |  shipped (ADR-020) |
 
 This means Sift is architecturally aligned with the documented 2026 production standard,
 not a naive single-method retriever.

@@ -1,6 +1,6 @@
 # Contributing to Sift
 
-Hey there! 👋 First off, thank you for considering contributing to Sift. It's people like you that make open-source software such a fantastic community.
+Hey there! First off, thank you for considering contributing to Sift. It's people like you that make open-source software such a fantastic community.
 
 Whether you're fixing a typo, adding a new model provider, or building out a massive new feature, we are thrilled to have your help.
 
@@ -65,4 +65,4 @@ Don't worry if your PR isn't perfect on the first try. We're here to review, hel
 - `tests/` - Unit and integration tests.
 - `docs/` - Project documentation. If you're updating docs, this is the place to be!
 
-Thanks again for being part of the Sift journey! 🚀
+Thanks again for being part of the Sift journey! 

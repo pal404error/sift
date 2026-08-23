@@ -56,7 +56,7 @@ Same thread as above, framed for practitioners:
 
 ## 4. Twitter / X thread (honest, ~10 tweets)
 
-1/ We open-sourced Sift, a self-hostable RAG search engine. Thread on what we learned measuring retrieval quality for real. 🧵
+1/ We open-sourced Sift, a self-hostable RAG search engine. Thread on what we learned measuring retrieval quality for real. 
 
 2/ The trap: most RAG demos eval on sets that score ~1.0. That proves nothing. So we built a gold set with paraphrases, synonyms, and multi-hop questions.
 
@@ -72,7 +72,7 @@ Same thread as above, framed for practitioners:
 
 8/ What's next: more embedding models in the benchmark, a reranker sweep, and community-requested providers.
 
-9/ Repo: https://github.com/pal404error/sift — ⭐ if you want to follow along.
+ 9/ Repo: https://github.com/pal404error/sift — if you want to follow along.
 
 10/ Genuinely want feedback: what's the hardest retrieval case you've hit in production RAG?
 
