@@ -1,6 +1,10 @@
 import importlib.util
 from pathlib import Path
 
+import pytest
+
+pytest.importorskip("beir")  # scripts/import_beir.py imports beir; skip when absent (CI).
+
 
 def _load_import_beir():
     p = Path(__file__).resolve().parent.parent / "scripts" / "import_beir.py"
