@@ -54,16 +54,6 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   color: var(--ink-soft);
 }
-.hero-badge { display: inline-block; margin-top: 1rem; width: 120px; height: 120px; }
-.hero-badge-fallback {
-  display: inline-block;
-  margin-top: 1rem;
-  border: 3px solid var(--rule);
-  padding: 0.4rem 0.9rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
 
 /* Top nav */
 .topnav-row {
@@ -119,25 +109,7 @@ a { color: inherit; text-decoration: none; }
 .hero .deck { margin: 1.25rem auto 0; max-width: 640px; font-size: 1.15rem; color: var(--ink-soft); font-weight: 700; }
 .hero-actions { margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* ThreeUI hero exhibit */
-.exhibit { margin: 2.5rem auto 0; max-width: 460px; }
-.exhibit-frame {
-  width: 100%; height: 300px; border: 3px solid var(--rule); background: #fff;
-  overflow: hidden;
-}
-.hero-3d { width: 100%; height: 100%; display: block; }
-.exhibit-fallback {
-  width: 100%; height: 100%;
-  background:
-    radial-gradient(60% 60% at 30% 30%, rgba(176,0,32,0.25), transparent 60%),
-    radial-gradient(50% 50% at 80% 70%, rgba(17,17,17,0.18), transparent 60%),
-    #fff;
-}
-.exhibit-caption {
-  display: block; margin-top: 0.6rem; font-size: 0.7rem; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--muted);
-}
-
+/* Install box */
 .install-box {
   margin: 2rem auto 0; max-width: 640px; border: 3px solid var(--ink); background: var(--paper-2);
   display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0.6rem 0.6rem 1rem;

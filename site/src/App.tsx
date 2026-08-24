@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import * as ThreeUI from "@designcodeio/threeui";
-import { ThreeUIBoundary } from "./ThreeUIBoundary";
-
-const T = ThreeUI as any;
 
 const INSTALL = 'pip install "sift @ git+https://github.com/pal404error/sift.git"';
 const INSTALL_DOCKER = "docker compose up -d";
@@ -34,8 +30,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [method, setMethod] = useState<"pip" | "docker">("pip");
-  const [hero3dFailed, setHero3dFailed] = useState(false);
-  const [badgeFailed, setBadgeFailed] = useState(false);
 
   const code = method === "pip" ? INSTALL : INSTALL_DOCKER;
 
@@ -57,13 +51,6 @@ export default function App() {
       <header className="masthead container">
         <h1 className="title">Sift</h1>
         <p className="tagline">Enterprise, Self-Hostable, Multi-Provider RAG Search Engine</p>
-        {badgeFailed ? (
-          <span className="hero-badge-fallback">MIT Licensed</span>
-        ) : (
-          <ThreeUIBoundary fallback={<span className="hero-badge-fallback">MIT Licensed</span>} onError={() => setBadgeFailed(true)}>
-            <T.SparkBadge className="hero-badge" />
-          </ThreeUIBoundary>
-        )}
       </header>
 
       <div className="topnav-row container">
@@ -84,19 +71,6 @@ export default function App() {
             <span className="kicker">Front Page &middot; The Search Story</span>
             <h1>Intelligence, Grounded.</h1>
             <p className="deck">The enterprise-ready, self-hostable multi-provider RAG search engine. Bring your own models, keep your own data, and answer with source-backed retrieval.</p>
-
-            <div className="exhibit">
-              <div className="exhibit-frame">
-                {hero3dFailed ? (
-                  <div className="exhibit-fallback" />
-                ) : (
-                  <ThreeUIBoundary fallback={<div className="exhibit-fallback" />} onError={() => setHero3dFailed(true)}>
-                    <T.TopoField className="hero-3d" style={{ width: "100%", height: "100%" }} />
-                  </ThreeUIBoundary>
-                )}
-              </div>
-              <span className="exhibit-caption">Fig. 1 — The Retrieval Field (ThreeUI)</span>
-            </div>
 
             <div className="hero-actions">
               <a href="#quickstart" className="btn">Get Started</a>
