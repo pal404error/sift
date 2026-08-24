@@ -3,18 +3,18 @@ import React, { useState } from "react";
 const INSTALL = 'pip install "sift @ git+https://github.com/pal404error/sift.git"';
 
 const FEATURES = [
-  { icon: "P", title: "Pluggable Providers", body: "Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing." },
-  { icon: "V", title: "Flexible Storage", body: "Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration." },
-  { icon: "S", title: "Enterprise Security", body: "Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log." },
-  { icon: "R", title: "Advanced Retrieval", body: "Achieve higher precision by combining lexical search with cross-encoder rerankers for top-tier semantic accuracy." },
-  { icon: "C", title: "Concurrent Crawler", body: "Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh." },
-  { icon: "O", title: "Ops & Monitoring", body: "Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana." },
+  { title: "Pluggable Providers", body: "Swap LLMs and embeddings via config. First-class OpenAI, Anthropic, Ollama support, plus fakes for local testing." },
+  { title: "Flexible Storage", body: "Store your vector embeddings in-memory for quick iteration, or scale seamlessly with built-in Qdrant vector store integration." },
+  { title: "Enterprise Security", body: "Deploy confidently with OIDC/JWKS authentication, API-key Role Based Access Control (RBAC), and a comprehensive audit log." },
+  { title: "Advanced Retrieval", body: "Achieve higher precision by combining lexical search with cross-encoder rerankers for top-tier semantic accuracy." },
+  { title: "Concurrent Crawler", body: "Built-in crawl orchestrator fully respects robots.txt, supports ETags, and enables incremental updates to keep your index fresh." },
+  { title: "Ops & Monitoring", body: "Ships with a powerful CLI, static web UI, offline eval harness, /metrics and /health probes for Prometheus + Grafana." },
 ];
 
 const STEPS = [
-  { n: "1", title: "Ingest & Crawl", body: "The orchestrator concurrently pulls pages from your sources, respecting robots.txt and gracefully handling incremental re-crawls via ETags." },
-  { n: "2", title: "Embed & Store", body: "Content is intelligently chunked, passed through your chosen embedding provider, and indexed into your active vector store." },
-  { n: "3", title: "Retrieve & Generate", body: "Queries are vectorized, optionally reranked with cross-encoders, and answered by your preferred LLM with transparent sources attached." },
+  { n: "I", title: "Ingest & Crawl", body: "The orchestrator concurrently pulls pages from your sources, respecting robots.txt and gracefully handling incremental re-crawls via ETags." },
+  { n: "II", title: "Embed & Store", body: "Content is intelligently chunked, passed through your chosen embedding provider, and indexed into your active vector store." },
+  { n: "III", title: "Retrieve & Generate", body: "Queries are vectorized, optionally reranked with cross-encoders, and answered by your preferred LLM with transparent sources attached." },
 ];
 
 const FAQ = [
@@ -44,23 +44,31 @@ export default function App() {
         <span className="aurora c" />
       </div>
 
-      <header className="nav glass">
-        <a className="brand" href="#home">Sift</a>
-        <nav className={menuOpen ? "nav-links open" : "nav-links"}>
-          <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
-          <a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
-          <a href="#quickstart" onClick={() => setMenuOpen(false)}>Quickstart</a>
-          <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
-          <a href="https://github.com/pal404error/sift#readme" onClick={() => setMenuOpen(false)}>Docs</a>
+      <header className="masthead">
+        <div className="masthead-top">
+          <span>Enterprise RAG</span>
+          <span className="dateline">Vol. I &middot; The Retrieval Engine</span>
+          <span>Est. 2024</span>
+        </div>
+        <div className="masthead-rule" />
+        <nav className={menuOpen ? "masthead-nav open" : "masthead-nav"}>
+          <a className="wordmark" href="#home" onClick={() => setMenuOpen(false)}>Sift</a>
+          <div className="nav-links">
+            <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
+            <a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
+            <a href="#quickstart" onClick={() => setMenuOpen(false)}>Quickstart</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
+            <a href="https://github.com/pal404error/sift#readme" onClick={() => setMenuOpen(false)}>Docs</a>
+          </div>
+          <a href="https://github.com/pal404error/sift" className="gh-btn">GitHub</a>
+          <button className="menu-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">Menu</button>
         </nav>
-        <a href="https://github.com/pal404error/sift" className="gh-btn">GitHub</a>
-        <button className="menu-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Menu">Menu</button>
       </header>
 
       <main>
         <section className="hero" id="home">
-          <span className="kicker">Enterprise, Self-Hostable RAG</span>
-          <h1>Intelligence,<br />Grounded.</h1>
+          <span className="kicker">The Intelligence Edition</span>
+          <h1 className="display">Intelligence,<br />Grounded.</h1>
           <p className="deck">
             The enterprise-ready, self-hostable multi-provider RAG search engine.
             Bring your own models, keep your own data, and answer with source-backed retrieval.
@@ -69,7 +77,7 @@ export default function App() {
             <a href="#quickstart" className="btn primary">Get Started</a>
             <a href="https://github.com/pal404error/sift" className="btn ghost">GitHub Repository</a>
           </div>
-          <div className="install glass">
+          <div className="install">
             <code>{INSTALL}</code>
             <button onClick={copyInstall}>{copied ? "Copied!" : "Copy"}</button>
           </div>
@@ -77,14 +85,14 @@ export default function App() {
 
         <section className="section" id="features">
           <div className="section-head">
-            <span className="kicker">Capabilities</span>
-            <h2>Everything You Need To Ship Search</h2>
-            <p>A clean, pluggable foundation — not a walled garden. Wire in your stack and stay in control.</p>
+            <span className="kicker">In This Edition</span>
+            <h2 className="headline">Everything You Need To Ship Search</h2>
+            <p className="standfirst">A clean, pluggable foundation &mdash; not a walled garden. Wire in your stack and stay in control.</p>
           </div>
           <div className="grid">
-            {FEATURES.map((f) => (
-              <article className="card glass" key={f.title}>
-                <div className="ficon">{f.icon}</div>
+            {FEATURES.map((f, i) => (
+              <article className="entry" key={f.title}>
+                <span className="folio">{String(i + 1).padStart(2, "0")}</span>
                 <h3>{f.title}</h3>
                 <p>{f.body}</p>
               </article>
@@ -95,13 +103,13 @@ export default function App() {
         <section className="section" id="how">
           <div className="section-head">
             <span className="kicker">The Pipeline</span>
-            <h2>How It Works</h2>
-            <p>Three stages between your sources and a grounded answer.</p>
+            <h2 className="headline">How It Works</h2>
+            <p className="standfirst">Three movements between your sources and a grounded answer.</p>
           </div>
           <div className="steps">
             {STEPS.map((s) => (
-              <div className="step glass" key={s.n}>
-                <div className="num">{s.n}</div>
+              <div className="step" key={s.n}>
+                <div className="folio-lg">{s.n}</div>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </div>
@@ -112,10 +120,10 @@ export default function App() {
         <section className="section" id="quickstart">
           <div className="section-head">
             <span className="kicker">Wire Dispatch</span>
-            <h2>Up And Running In Seconds</h2>
-            <p>Sift ships with mock providers natively, letting you test the full RAG pipeline offline with zero API keys.</p>
+            <h2 className="headline">Up And Running In Seconds</h2>
+            <p className="standfirst">Sift ships with mock providers natively, letting you test the full RAG pipeline offline with zero API keys.</p>
           </div>
-          <div className="code glass">
+          <div className="code">
             <div className="code-head"><span>Terminal</span><span>bash</span></div>
             <pre>{`# Clone the repository
 git clone https://github.com/pal404error/sift.git
@@ -134,9 +142,9 @@ docker compose up -d`}</pre>
 
         <section className="section" id="faq">
           <div className="section-head">
-            <span className="kicker">Q & A</span>
-            <h2>Frequently Asked Questions</h2>
-            <p>Common questions about architecture, hosting, and features.</p>
+            <span className="kicker">Corrections &amp; Clarifications</span>
+            <h2 className="headline">Frequently Asked Questions</h2>
+            <p className="standfirst">Common questions about architecture, hosting, and features.</p>
           </div>
           <div className="faq">
             {FAQ.map((item) => (
@@ -150,8 +158,8 @@ docker compose up -d`}</pre>
 
         <section className="section cta">
           <span className="kicker">The Verdict</span>
-          <h2>Ready To Self-Host?</h2>
-          <p>Bring your own models. Keep your own data. MIT licensed, forever.</p>
+          <h2 className="headline">Ready To Self-Host?</h2>
+          <p className="standfirst">Bring your own models. Keep your own data. MIT licensed, forever.</p>
           <div className="hero-actions">
             <a href="https://github.com/pal404error/sift" className="btn primary">Star On GitHub</a>
             <a href="https://github.com/pal404error/sift/blob/main/README.md" className="btn ghost">Read The Docs</a>
@@ -174,7 +182,7 @@ docker compose up -d`}</pre>
             <a href="https://github.com/pal404error/sift/blob/main/CONTRIBUTING.md">Contributing</a>
           </div>
           <div>
-            <h4>Community & Legal</h4>
+            <h4>Community &amp; Legal</h4>
             <a href="https://github.com/pal404error/sift/blob/main/CODE_OF_CONDUCT.md">Code Of Conduct</a>
             <a href="https://github.com/pal404error/sift/blob/main/SECURITY.md">Security</a>
             <a href="https://github.com/pal404error/sift/blob/main/LICENSE">MIT License</a>
