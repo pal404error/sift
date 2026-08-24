@@ -30,6 +30,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [method, setMethod] = useState<"pip" | "docker">("pip");
+  const [faqQuery, setFaqQuery] = useState("");
 
   const code = method === "pip" ? INSTALL : INSTALL_DOCKER;
 
@@ -40,8 +41,15 @@ export default function App() {
     });
   }
 
+  const q = faqQuery.trim().toLowerCase();
+  const faqFiltered = q
+    ? FAQ.filter((item) => item.q.toLowerCase().includes(q) || item.a.toLowerCase().includes(q))
+    : FAQ;
+
   return (
     <div className="page">
+      <a className="skip-link" href="#main">Skip to content</a>
+
       <div className="dateline container">
         <span>The Open-Source Search Edition</span>
         <span>Est. 2026 &middot; Vol. 1 — No. 1</span>
@@ -54,7 +62,7 @@ export default function App() {
       </header>
 
       <div className="topnav-row container">
-        <nav className={menuOpen ? "topnav active" : "topnav"} id="nav-links">
+        <nav className={menuOpen ? "topnav active" : "topnav"} id="nav-links" aria-label="Primary">
           <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
           <a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a>
           <a href="#quickstart" onClick={() => setMenuOpen(false)}>Quickstart</a>
@@ -62,10 +70,18 @@ export default function App() {
           <a href="https://github.com/pal404error/sift#readme" onClick={() => setMenuOpen(false)}>Docs</a>
         </nav>
         <a href="https://github.com/pal404error/sift" className="btn" style={{ fontSize: "0.75rem", padding: "0.5rem 1rem" }}>GitHub</a>
-        <button className="menu-toggle" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu">MENU</button>
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="nav-links"
+        >
+          MENU
+        </button>
       </div>
 
-      <main>
+      <main id="main">
         <section className="hero" id="home">
           <div className="container">
             <span className="kicker">Front Page &middot; The Search Story</span>
@@ -79,12 +95,12 @@ export default function App() {
 
             <div className="install-box">
               <code>{code}</code>
-              <button onClick={copyInstall}>{copied ? "Copied!" : "Copy"}</button>
+              <button onClick={copyInstall} aria-label={copied ? "Copied to clipboard" : "Copy install command"}>{copied ? "Copied!" : "Copy"}</button>
             </div>
 
-            <div className="method-switch">
-              <button className={method === "pip" ? "active" : ""} onClick={() => setMethod("pip")}>pip</button>
-              <button className={method === "docker" ? "active" : ""} onClick={() => setMethod("docker")}>docker</button>
+            <div className="method-switch" role="group" aria-label="Installation method">
+              <button className={method === "pip" ? "active" : ""} onClick={() => setMethod("pip")} aria-pressed={method === "pip"}>pip</button>
+              <button className={method === "docker" ? "active" : ""} onClick={() => setMethod("docker")} aria-pressed={method === "docker"}>docker</button>
             </div>
           </div>
         </section>
@@ -98,7 +114,7 @@ export default function App() {
           <div className="grid-6">
             {FEATURES.map((f) => (
               <article className="feature-card" key={f.title}>
-                <div className="ficon">{f.n}</div>
+                <div className="ficon" aria-hidden="true">{f.n}</div>
                 <h3>{f.title}</h3>
                 <p>{f.body}</p>
               </article>
@@ -115,7 +131,7 @@ export default function App() {
           <div className="steps">
             {STEPS.map((s) => (
               <div className="step" key={s.n}>
-                <div className="num">{s.n}</div>
+                <div className="num" aria-hidden="true">{s.n}</div>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </div>
@@ -152,13 +168,32 @@ docker compose up -d`}</pre>
             <h2>Frequently Asked Questions</h2>
             <p>Common questions about architecture, hosting, and features.</p>
           </div>
+
+          <div className="faq-search" role="search">
+            <label htmlFor="faq-search-input" className="visually-hidden">Search frequently asked questions</label>
+            <input
+              id="faq-search-input"
+              type="search"
+              placeholder="Search the archives…"
+              value={faqQuery}
+              onChange={(e) => setFaqQuery(e.target.value)}
+            />
+          </div>
+          <p className="faq-count" aria-live="polite">
+            {faqFiltered.length} {faqFiltered.length === 1 ? "result" : "results"}
+          </p>
+
           <div className="faq-list">
-            {FAQ.map((item) => (
-              <details key={item.q}>
-                <summary>{item.q}</summary>
-                <div className="faq-content">{item.a}</div>
-              </details>
-            ))}
+            {faqFiltered.length === 0 ? (
+              <p className="faq-empty">No matching questions. Try a different term.</p>
+            ) : (
+              faqFiltered.map((item) => (
+                <details key={item.q}>
+                  <summary>{item.q}</summary>
+                  <div className="faq-content">{item.a}</div>
+                </details>
+              ))
+            )}
           </div>
         </section>
 
@@ -199,7 +234,8 @@ docker compose up -d`}</pre>
           </div>
           <div className="footer-bottom">
             <span>Released Under The MIT License</span>
-            <span>Built By pal404error</span>
+            <span>Built By <a href="https://github.com/pal404error">pal404error</a></span>
+            <a href="#main" className="back-to-top">Back to top &uarr;</a>
           </div>
         </div>
       </footer>
