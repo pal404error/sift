@@ -1,26 +1,4 @@
 import React, { useState } from "react";
-import * as ThreeUI from "@designcodeio/threeui";
-import { ThreeUIBoundary } from "./ThreeUIBoundary";
-
-const T = ThreeUI as any;
-
-function renderBackdrop() {
-  if (T.TopoField)
-    return (
-      <T.TopoField
-        className="backdrop"
-        style={{ position: "fixed", inset: 0, zIndex: -1 }}
-      />
-    );
-  if (T.StreamConvergenceBackground)
-    return (
-      <T.StreamConvergenceBackground
-        className="backdrop"
-        style={{ position: "fixed", inset: 0, zIndex: -1 }}
-      />
-    );
-  return <div className="backdrop-fallback" />;
-}
 
 const INSTALL = 'pip install "sift @ git+https://github.com/pal404error/sift.git"';
 
@@ -60,9 +38,11 @@ export default function App() {
 
   return (
     <div className="page">
-      <ThreeUIBoundary fallback={<div className="backdrop-fallback" />}>
-        {renderBackdrop()}
-      </ThreeUIBoundary>
+      <div className="backdrop" aria-hidden="true">
+        <span className="aurora a" />
+        <span className="aurora b" />
+        <span className="aurora c" />
+      </div>
 
       <header className="nav glass">
         <a className="brand" href="#home">Sift</a>
